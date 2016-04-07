@@ -5,17 +5,22 @@ end
 local game = {
 }
 
-function game:enter(current, map)
-  self.world = bump.newWorld();
+function game:enter(current, def)
+  self.world = love.physics.newWorld(0, 0, false)
   self.camera = Camera()
+  self.entities = {}
   self.players = {}
-  self.tiled = Tiled.load('assets/map', Entity, self)
 end
 
 
 function game:update(dt)
-  self.tiled:update(dt)
+  self.world:update(dt)
 
+  for k, entity in pairs(self.entities) do
+    entity:update(dt)
+  end
+  
+  --[[
   local left = self.tiled.width * 16
   local right = 0
   local top = self.tiled.height * 16
@@ -42,13 +47,16 @@ function game:update(dt)
   local x, y = math.floor((centerX - self.camera.x) * dt * 4), math.floor((centerY - self.camera.y) * dt * 4)
 
   self.camera:move(x, y)
+  ]]--
 end
 
 function game:draw()
   love.graphics.clear(0,0,0,0)
   love.graphics.push()
     self.camera:attach()
-    self.tiled:draw()
+    for k, entity in pairs(self.entities) do
+      entity:draw()
+    end
     self.camera:detach()
   love.graphics.pop()
 end

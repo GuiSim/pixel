@@ -1,19 +1,6 @@
 local Player = {}
 Player.__index = Player
 
-local image = love.graphics.newImage('assets/player.png')
-local g = anim8.newGrid(16, 18, image:getWidth(), image:getHeight())
-
-local runSpeed = 200;
-local jumpSpeed = -130;
-local gravity =  150;
-local maxSpeed = 150;
-local maxVelocityX, maxVelocityY = runSpeed, _jumpPower;
-
-local animations = {
-  stand = anim8.newAnimation(g(1, 1), 0.1),
-  walk = anim8.newAnimation(g(2, 1, 1, 1, 3, 1), 0.1)
-}
 
 function Player.create(def, game)
   local joysticks = love.joystick.getJoysticks()
