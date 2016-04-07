@@ -9,11 +9,9 @@ Camera = require "hump.camera"
 anim8 = require "anim8"
 bump = require 'bump'
 
-Tiled = require "tiled"
 debugWorld = require "debugWorld"
 
 -- entities
-
 Entity = {
   Player = require "entity.player",
   Enemy = require "entity.enemy",

@@ -6,7 +6,7 @@ end
 
 function menu:keyreleased(key, code)
     if key == 'return' then
-        Gamestate.switch(require('state.game'), 'assets/map.lua')
+        Gamestate.switch(require('state.game'), require('assets.maps.a'))
     end
 end
 
