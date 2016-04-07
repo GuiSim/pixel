@@ -1,7 +1,10 @@
 return {
   entities = {
-    type = 'Player',
-    x = 32,
-    y = 32
+    {
+      type = 'Player',
+      no = 1,
+      x = 32,
+      y = 32
+    }
   }
 }

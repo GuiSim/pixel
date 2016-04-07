@@ -7,7 +7,7 @@ function Player.create(def, game)
   local joysticks = love.joystick.getJoysticks()
   local player = {
     game = game,
-    joystick = joysticks[tonumber(def.properties.no)],
+    joystick = joysticks[tonumber(def.no)],
   }
   setmetatable(player, Player)
   
@@ -33,7 +33,7 @@ function Player:update(dt)
 end
 
 function Player:draw()
-  self.animation:circle('fill', self.body.getX(), self.body.getY(), radius)
+  love.graphics.circle('fill', self.body:getX(), self.body:getY(), radius)
 end
 
 return Player
