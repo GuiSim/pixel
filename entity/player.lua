@@ -1,6 +1,8 @@
 local Player = {}
 Player.__index = Player
 
+local radius = 16;
+
 function Player.create(def, game)
   local joysticks = love.joystick.getJoysticks()
   local player = {
@@ -8,6 +10,10 @@ function Player.create(def, game)
     joystick = joysticks[tonumber(def.properties.no)],
   }
   setmetatable(player, Player)
+  
+  player.body = love.physics.newBody(game.world, def.x, def.y, "dynamic")
+  
+  love.physics.newFixture(player.body, love.physics.newCircleShape(radius), 1)
   
   table.insert(game.players, player)
 
@@ -27,7 +33,7 @@ function Player:update(dt)
 end
 
 function Player:draw()
-  --self.animation:circle(image, self.x, self.y, 0, -1, 1, 16)
+  self.animation:circle('fill', self.body.getX(), self.body.getY(), radius)
 end
 
 return Player

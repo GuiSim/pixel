@@ -10,6 +10,11 @@ function game:enter(current, def)
   self.camera = Camera()
   self.entities = {}
   self.players = {}
+  for k, entity in pairs(def.entities) do
+    if EntityTypes[entity.type] ~= nil then
+      layer.entities[key] = EntityTypes[entity.type].create(entity, self);
+    end
+  end
 end
 
 

@@ -12,7 +12,7 @@ bump = require 'bump'
 debugWorld = require "debugWorld"
 
 -- entities
-Entity = {
+EntityTypes = {
   Player = require "entity.player",
   Enemy = require "entity.enemy",
   Platform = require "entity.platform",
