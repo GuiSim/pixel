@@ -5,9 +5,7 @@ function menu:draw()
 end
 
 function menu:joystickpressed(joystick, button)
-    if button == 9 then -- Start button
-        Gamestate.switch(require('state.game'), require('assets.maps.a'))
-    end
+  Gamestate.switch(require('state.game'), require('assets.maps.a'))
 end
 
 return menu
