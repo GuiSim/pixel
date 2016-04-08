@@ -11,7 +11,9 @@ function Player.create(def, game)
     joystick = joysticks[tonumber(def.no)],
     no = def.no,
     hitpoints = PLAYER_HITPOINTS,
-    power = 0
+    power = 1000,
+    keys = { a = false, b = false, x = false, y = false },
+    pushCd = 0
   }
   
   setmetatable(player, Player)
@@ -42,9 +44,10 @@ function Player:collisionBegin(other, collision)
 end
 
 function Player:control()
-  if self.joystick == nil then
-    return 0, 0, 0
+  if self.joystick == nil then -- no connector
+    return 0, 0, 0, false
   end
+  
   x = self.joystick:getGamepadAxis('leftx')
   y = self.joystick:getGamepadAxis('lefty')
   tl = self.joystick:getGamepadAxis('triggerleft')
@@ -58,25 +61,58 @@ function Player:control()
     tl = 0
   end
   
-  return x, y, tl
+  local keys = {
+    a = self.joystick:isGamepadDown('a'),
+    b = self.joystick:isGamepadDown('b'),
+    x = self.joystick:isGamepadDown('x'),
+    y = self.joystick:isGamepadDown('y')
+  }
+  
+  for k, pressed in pairs(keys) do
+    if pressed and self.keys[k] then
+      keys[k] = false --not released
+    elseif (not pressed) and self.keys[k] then
+      self.keys[k] = false
+    else
+      self.keys[k] = pressed
+    end
+  end
+  
+  local pushing = keys['a'] and self.power >= PUSH_COST and self.pushCd == 0 
+  
+  return x, y, tl, pushing
 end
 
 function Player:update(dt)
-  local jx, jy, jpull = self:control()
+  local jx, jy, jpull, pushing = self:control()
+  local pulling = jpull > 0;
+  
   self.body:applyForce(vector.mul(PLAYER_FORCE, jx, jy));
   
   local x, y = self.body:getPosition();
   
-  if jpull > 0 then
+  if self.pushCd > 0 then
+    self.pushCd = math.max(0, self.pushCd - dt);
+  end
+  
+  if pushing then
+    self.power = self.power - PUSH_COST
+    self.pushCd = PUSH_COOLDOWN;
+  end
+  
+  if pulling or pushing then
     local energieCost = 0;
     for k, ball in pairs(self.game.balls) do
       local ballX, ballY = ball.body:getPosition();
       local diffX, diffY =  vector.sub(x,y, ballX, ballY);
-      local len2 = vector.len2(diffX, diffY);
-      if len2 < PULL_LENGTH2 then
-        local energie = jpull * (1 - len2 / PULL_LENGTH2);
-        energieCost = energieCost + energie;
-        ball.body:applyForce(vector.mul(energie * PULL_FORCE / math.sqrt(len2), diffX, diffY))
+      local len = vector.len(diffX, diffY);
+      if pulling and len < PULL_LENGTH then
+          local energie = jpull * (1 - len / PULL_LENGTH);
+          energieCost = energieCost + energie;
+          ball.body:applyForce(vector.mul(energie * PULL_FORCE / len, diffX, diffY))
+      end
+      if pushing and len < PUSH_LENGTH then
+          ball.body:setLinearVelocity(vector.mul((1 - len / PUSH_LENGTH) * PUSH_FORCE / len, diffX, diffY))
       end
     end
     if energieCost > 0 then
@@ -97,8 +133,6 @@ function Player:draw()
   else 
       love.graphics.setColor(255, 255, 255, self.hitpoints*255/100)
   end
-      
-      
 
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), PLAYER_RADIUS)
   love.graphics.setColor(255,255,255)
