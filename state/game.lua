@@ -66,7 +66,7 @@ end
 function game:update(dt)
   self.world:update(dt)
   
-  if love.keyboard.isDown("escape") or love.joystick.getJoysticks()[1]:isGamepadDown("guide") then
+  if love.keyboard.isDown("escape") or (love.joystick.getJoysticks()[1] and love.joystick.getJoysticks()[1]:isGamepadDown("guide")) then 
     Gamestate.switch(require('state.menu'))
   end
 
