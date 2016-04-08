@@ -1,9 +1,6 @@
 local Pusher = {}
 Pusher.__index = Pusher
 
-Pusher.category = -1;
-
-
 function Pusher.create(def, game)
   local pusher = {
     game = game,

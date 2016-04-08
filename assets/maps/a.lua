@@ -62,18 +62,16 @@ return {
       }
     },
     {
-      type = 'Puller',
+      type = 'Bump',
       no = 1,
       x = 300,
-      y = 300,
-      direction = 1
+      y = 300
     },
     {
-      type = 'Pusher',
+      type = 'Bump',
       no = 1,
       x = 300,
-      y = 100,
-      direction = -1
+      y = 100
     },
     {
       type = 'Ball',

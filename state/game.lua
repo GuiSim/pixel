@@ -26,7 +26,7 @@ function game.collisionBegin(a, b, collision)
   bUserData = b:getBody():getUserData()
   
   if aUserData ~= nil and aUserData.collisionBegin ~= nil then
-    aUserData:collisionBegin(bUserData, collision)
+    aUserData:collisionBegin(b, collision)
   end
   
   if bUserData ~= nil and bUserData.collisionBegin ~= nil then

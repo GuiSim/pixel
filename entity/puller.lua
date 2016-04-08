@@ -1,9 +1,6 @@
 local Puller = {}
 Puller.__index = Puller
 
-Puller.category = -1;
-
-
 function Puller.create(def, game)
   local puller = {
     game = game,

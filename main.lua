@@ -16,6 +16,7 @@ require "particles"
 
 -- entities
 EntityTypes = {
+  Bump = require "entity.bump",
   Puller = require "entity.puller",
   Pusher = require "entity.pusher",
   Player = require "entity.player",
