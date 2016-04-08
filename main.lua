@@ -29,6 +29,9 @@ EntityTypes = {
   StaticImage = require "entity.staticImage"
 }
 
+
+Game = require('state.game');
+
 function love.load()
   
     -- Conf

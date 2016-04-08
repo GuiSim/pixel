@@ -17,9 +17,9 @@ PLAYER_HITPOINTS = 100;
 
 CONTROLL_RANGE = 0;
 
-BALL_DENSITY = 0.09;
+BALL_DENSITY =0.95;
 BALL_DAMAGE = 8;
-BALL_RADIUS = 32;
+BALL_RADIUS = 16;
 BALL_DAMAGE_SPEED_SCALING = 450; -- Higher leads to less damage based on speed
 BALL_MAX_DAMAGE = 25;
 BALL_MAX_VELOCITY = 1500
@@ -28,7 +28,7 @@ PLAYER_RADIUS = 16; -- Size of the player's circle
 
 PLAYER_ENERGIE_GIVEN = 10; -- pull give energie to other
 PLAYER_ENERGIE_MAX = 10; -- pull give energie to other
-PLAYER_INVULNERABILITY_DURATION = 1; -- Duration of invulnerability following a player's hit (s)
+PLAYER_INVULNERABILITY_DURATION = 1.5; -- Duration of invulnerability following a player's hit (s)
 
 PULLER_FORCE = 3000
 PULLER_RANGE = 50

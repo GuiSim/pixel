@@ -49,7 +49,7 @@ end
 
 function menu:joystickpressed(joystick, button)
   if joystick:isGamepadDown("start") then
-    Gamestate.switch(require('state.game'), require('assets.maps.b'), menu.selections[menu.selection].playerCount)
+    Gamestate.switch(Game, require('assets.maps.b'), menu.selections[menu.selection].playerCount)
   end
 
   if not joystick:isGamepadDown("dpleft") and not joystick:isGamepadDown("dpright") then

@@ -8,6 +8,11 @@ music:setVolume( 0.5 )
 local game = {
 }
 
+function game:init()
+  local width, height = love.graphics.getWidth(), love.graphics.getHeight();
+  -- to create canvas
+end
+
 function game:enter(current, def, numberOfPlayer)
   self.world = love.physics.newWorld(0, 0, false)
   self.camera = Camera()

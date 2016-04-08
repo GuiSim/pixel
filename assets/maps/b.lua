@@ -88,6 +88,24 @@ return {
       team = 2
     },
     {
+      type = 'Player',
+      no = 3,
+      x = TOP_LEFT_X + 32;
+      y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2,
+      texture = love.graphics.newImage("assets/textures/red.png"),
+      startDirection = 1,
+      team = 1
+    },
+    {
+      type = 'Player',
+      no = 4,
+      x = TOP_LEFT_X + BAR_LENGTH_HORIZONTAL - 32,
+      y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2,
+      texture = love.graphics.newImage("assets/textures/blue.png"),
+      startDirection = -1,
+      team = 2
+    },
+    {
       type = "StaticImage",
       x = 0,
       y = 0,

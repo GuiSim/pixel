@@ -39,20 +39,21 @@ function Ball.create(def, game)
 end
 
 function Ball:collisionBegin(other, collision)
+  local x, y = collision:getPositions( );
+  local nx, ny = collision:getNormal( )
   local body = other:getBody();
   if (body:getUserData() ~= nil and body:getUserData().type == "Player") then
-    table.insert(self.particleSystems, Particle.ballImpactWithPlayer())
+    table.insert(self.particleSystems, Particle.ballImpactWithPlayer(nx, ny, x, y))
     love.audio.play(ballplayercollionSound:clone())
   else
     local r = love.math.random( 1, #wallCollision )
     love.audio.play(wallCollision[r]:clone())
-    table.insert(self.particleSystems, Particle.ballImpactWithWall())
+    table.insert(self.particleSystems, Particle.ballImpactWithWall(nx, ny, x, y))
   end
 end
 
 function Ball:update(dt)
   for k, particleSystem in pairs(self.particleSystems) do
-    particleSystem:setPosition(self.body:getX(), self.body:getY())
     particleSystem:update(dt)
   end
 end
