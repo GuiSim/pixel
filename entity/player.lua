@@ -17,7 +17,7 @@ function Player.create(def, game)
     game = game,
     joystick = joysticks[tonumber(def.no)],
     no = def.no,
-    hitPoints = PLAYER_HITPOINTS
+    hitpoints = PLAYER_HITPOINTS
   }
   
   setmetatable(player, Player)
@@ -31,12 +31,14 @@ function Player.create(def, game)
   fixture:setFilterData( Player.category, Player.mask, 0 )
   table.insert(game.players, player)
 
+  game.entities["player_" .. def.no] = EntityTypes.HitPoints.create({player = player}, game);
+
   return player
 end
 
 function Player:collisionBegin(other, collision)
   if other.type == "Ball" then
-    self.hitPoints = self.hitPoints - BALL_DAMAGE
+    self.hitpoints = self.hitpoints - BALL_DAMAGE
   end
 end
 
@@ -62,15 +64,16 @@ end
 
 function Player:draw()
   if self.no == 1 then
-    love.graphics.setColor(255, 50, 50, self.hitPoints*255/100)    
+    love.graphics.setColor(255, 50, 50, self.hitpoints*255/100)    
   elseif self.no == 2 then 
-      love.graphics.setColor(50, 50, 255, self.hitPoints*255/100)
+      love.graphics.setColor(50, 50, 255, self.hitpoints*255/100)
   else 
-      love.graphics.setColor(255, 255, 255, self.hitPoints*255/100)
+      love.graphics.setColor(255, 255, 255, self.hitpoints*255/100)
   end
 
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), radius)
-  love.graphics.setColor()
+  love.graphics.setColor(255,255,255)
+
 end
 
 return Player
