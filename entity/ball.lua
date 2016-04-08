@@ -52,6 +52,7 @@ end
 
 function Ball:update(dt)
   for k, particleSystem in pairs(self.particleSystems) do
+    particleSystem:setPosition(self.body:getX(), self.body:getY())
     particleSystem:update(dt)
   end
 end
