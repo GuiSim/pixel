@@ -57,7 +57,8 @@ return {
       x = 0,
       y = 0,
       texture = love.graphics.newImage("assets/textures/arena_b_runes.png"),
-      pulseCycle = 5
+      pulseCycle = 3,
+      pulseMin = 100
     },
     {
       type = 'Ball',
