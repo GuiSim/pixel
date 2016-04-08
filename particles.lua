@@ -75,3 +75,28 @@ function Particle.ballMovement()
   emitter:setColors(255,255,255,255 )
   return emitter;
 end
+
+function Particle.sunMenu()
+  local tex = love.graphics.newImage("assets/textures/startscreen_particle.png")
+  emitter = love.graphics.newParticleSystem(tex,200)
+  emitter:setDirection(1.6000000238419)
+  emitter:setAreaSpread("normal",200,80)
+  emitter:setEmissionRate(36)
+  emitter:setEmitterLifetime(-1)
+  emitter:setLinearAcceleration(0,0,0,0)
+  emitter:setParticleLifetime(5,5)
+  emitter:setRadialAcceleration(0,0)
+  emitter:setRotation(0,0)
+  emitter:setTangentialAcceleration(0,0)
+  emitter:setSpeed(3,73)
+  emitter:setSpin(0,0)
+  emitter:setSpinVariation(0)
+  emitter:setLinearDamping(0,0)
+  emitter:setSpread(6.1999998092651)
+  emitter:setRelativeRotation(false)
+  emitter:setOffset(88,95)
+  emitter:setSizes(1)
+  emitter:setSizeVariation(0)
+  emitter:setColors(255,255,255,100 )
+  return emitter;
+end

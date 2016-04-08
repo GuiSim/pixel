@@ -296,6 +296,7 @@ function Player:draw()
     
   end
   
+  love.graphics.setColor(255,255,255,255);
   
   for k, particleSystem in pairs(self.particleSystems) do
     local x, y = self.body:getPosition()

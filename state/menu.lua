@@ -11,6 +11,7 @@ local menu = {
 
 
 
+local sunParticles = Particle.sunMenu();
 local menuBackground = love.graphics.newImage("assets/textures/startscreen_bg.jpg")
 local menuTitle = love.graphics.newImage("assets/textures/startscreen_title.png")
 local menuTwoPlayers = love.graphics.newImage("assets/textures/startscreen_2player.png")
@@ -18,6 +19,7 @@ local menuFourPlayers = love.graphics.newImage("assets/textures/startscreen_4pla
 local cursor = love.graphics.newImage("assets/textures/startscreen_arrow.png")
 
 function menu:update(dt)
+  sunParticles:update(dt);
   -- Hold escape to quit
   if love.keyboard.isDown("escape") or love.joystick.getJoysticks()[1]:isGamepadDown("guide") then 
     menu.escapeHeldFor = menu.escapeHeldFor + dt
@@ -34,6 +36,7 @@ end
 
 function menu:draw()
   love.graphics.draw(menuBackground, 0, 0);
+  love.graphics.draw(sunParticles,menuBackground:getWidth()/2, 300)
   love.graphics.draw(menuTitle, 0, 0);
   love.graphics.draw(menuTwoPlayers, 0, 0);
   love.graphics.draw(menuFourPlayers,0 ,0);
