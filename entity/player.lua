@@ -19,7 +19,9 @@ function Player.create(def, game)
     keys = { a = false, b = false, x = false, y = false },
     pushCd = 0,
     
-    pullApplied = 0
+    pullApplied = 0,
+    particleSystems = {}
+
   }
   
   setmetatable(player, Player)
@@ -48,7 +50,10 @@ function Player:collisionBegin(other, collision)
     damage = math.min(damage, BALL_MAX_DAMAGE)
     self.hitpoints = self.hitpoints - math.floor(damage)
     self.invulnerabilityTime = PLAYER_INVULNERABILITY_DURATION;
+    
   end
+  
+  table.insert(self.particleSystems, Particle.ballImpactWithPlayer())
 end
 
 function Player:control()
@@ -140,6 +145,10 @@ function Player:update(dt)
       end
     end
   end
+  
+  for k, particleSystem in pairs(self.particleSystems) do
+    particleSystem:update(dt)
+  end
 end
 
 function Player:canPush()
@@ -177,6 +186,12 @@ function Player:draw()
   love.graphics.setColor(r,g,b,a);
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), PLAYER_RADIUS)
   love.graphics.setColor(255,255,255)
+  
+  
+  for k, particleSystem in pairs(self.particleSystems) do
+    local x, y = self.body:getPosition()
+    love.graphics.draw(particleSystem, x, y)
+  end
 end
 
 function Player:reset()
