@@ -56,7 +56,8 @@ return {
       type = 'Ball',
       no = 2,
       x = MAP_WIDTH/2,
-      y = MAP_HEIGHT/2
+      y = MAP_HEIGHT/2,
+      texture = love.graphics.newImage("assets/textures/fireball.png")
     },
     {
       type = 'Player',
