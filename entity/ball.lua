@@ -31,10 +31,6 @@ function Ball:collisionBegin(other, collision)
   
 end
 
-
-function Ball:control()
-end
-
 function Ball:update(dt)
 end
 
