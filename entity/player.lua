@@ -27,7 +27,11 @@ function Player.create(def, game)
     pullSound = pullSound:clone(),
     texture = def.texture,
     direction = def.startDirection,
-    startDirection = def.startDirection
+    startDirection = def.startDirection,
+    
+    team = def.team,
+    active = true,
+    deathTimer = 0,
   }
   
   setmetatable(player, Player)
@@ -45,7 +49,6 @@ function Player.create(def, game)
   table.insert(game.players, player)
 
   game.entities["player_health_" .. def.no] = EntityTypes.HitPoints.create({player = player}, game);
-  game.entities["player_score_" .. def.no] = EntityTypes.Scoreboard.create({player = player}, game);
 
   return player
 end
@@ -96,101 +99,121 @@ function Player:control()
 end
 
 function Player:update(dt)
-  local keys;
-  -- Update key (Just pressed)
-  if self.joystick ~= nil then
-    keys = {
-      a = self.joystick:isGamepadDown('a'),
-      b = self.joystick:isGamepadDown('b'),
-      x = self.joystick:isGamepadDown('x'),
-      y = self.joystick:isGamepadDown('y')
-    }
-  else 
-  keys = {
-      a = false,
-      b = false,
-      x = false,
-      y = false
-    }
+  if self.active and self.hitpoints <= 0 then
+    self.hitpoints = 0;
+    self.deathTimer = DEATH_TIMER;
+    self.active = false;
+    self.body:setActive( false )
+    love.audio.stop( self.pullSound )
+    self.joystick:setVibration( 1, 1 )
   end
+  
+  if self.active then
+    
+    local keys;
+    -- Update key (Just pressed)
+    if self.joystick ~= nil then
+      keys = {
+        a = self.joystick:isGamepadDown('a'),
+        b = self.joystick:isGamepadDown('b'),
+        x = self.joystick:isGamepadDown('x'),
+        y = self.joystick:isGamepadDown('y')
+      }
+    else 
+      keys = {
+        a = false,
+        b = false,
+        x = false,
+        y = false
+      }
+    end
 
-  for k, pressed in pairs(keys) do
-    if pressed and self.keys[k] then
-      keys[k] = false --not released
-    elseif (not pressed) and self.keys[k] then
-      self.keys[k] = false
-    else
-      self.keys[k] = pressed
+    for k, pressed in pairs(keys) do
+      if pressed and self.keys[k] then
+        keys[k] = false --not released
+      elseif (not pressed) and self.keys[k] then
+        self.keys[k] = false
+      else
+        self.keys[k] = pressed
+      end
     end
-  end
-  
-  local pushing = keys['a'] and self:canPush()
-  
-  local jx, jy, j2x, j2y, jpull = self:control()
-  local pulling = jpull > 0;
-  self.pullApplied = jpull;
-  
-  self.invulnerabilityTime = math.max(0, self.invulnerabilityTime - dt);
-  self.body:applyForce(vector.mul(PLAYER_FORCE, jx, jy));
-  
-  local x, y = self.body:getPosition();
-  
-  if self.pushCd > 0 then
-    self.pushCd = math.max(0, self.pushCd - dt);
-  end
-  
-  if pushing then
-    self.power = self.power - PUSH_COST
-    self.pushCd = PUSH_COOLDOWN;
-  end
-  
-  if self.joystick ~= nil then
+    
+    local pushing = keys['a'] and self:canPush()
+    
+    local jx, jy, j2x, j2y, jpull = self:control()
+    local pulling = jpull > 0;
+    self.pullApplied = jpull;
+    
+    self.invulnerabilityTime = math.max(0, self.invulnerabilityTime - dt);
+    self.body:applyForce(vector.mul(PLAYER_FORCE, jx, jy));
+    
+    local x, y = self.body:getPosition();
+    
+    if self.pushCd > 0 then
+      self.pushCd = math.max(0, self.pushCd - dt);
+    end
+    
+    if pushing then
+      self.power = self.power - PUSH_COST
+      self.pushCd = PUSH_COOLDOWN;
+    end
+    
+    if self.joystick ~= nil then
+      if pulling then
+        self.joystick:setVibration( jpull * VIRATION, jpull * VIRATION)
+      else
+        self.joystick:setVibration( 0, 0 )
+      end
+    end
+    
     if pulling then
-      self.joystick:setVibration( jpull * VIRATION, jpull * VIRATION)
+      love.audio.play( self.pullSound )
     else
-      self.joystick:setVibration( 0, 0 )
+      love.audio.stop( self.pullSound )
     end
     
-  end
-  
-  if pulling then
-    love.audio.play( self.pullSound )
-  end
-  
-  if pulling or pushing then
-    local energieCost = 0;
-    for k, ball in pairs(self.game.balls) do
-      local ballX, ballY = ball.body:getPosition();
-      local pullx, pully = vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE)
-      local diffX, diffY =  vector.sub(pullx,pully, ballX, ballY);
-      local len = vector.len(diffX, diffY);
+    if pulling or pushing then
+      local energieCost = 0;
       
-      -- Pull skill
-      if pulling and len < PULL_LENGTH then
-          local energie = jpull * (1 - len / PULL_LENGTH);
-          energieCost = energieCost + energie;
-          ball.body:applyForce(vector.mul(energie * PULL_FORCE / len, diffX, diffY))
+      for k, ball in pairs(self.game.balls) do
+        
+        local ballX, ballY = ball.body:getPosition();
+        local pullx, pully = vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE)
+        local diffX, diffY =  vector.sub(pullx,pully, ballX, ballY);
+        local len = vector.len(diffX, diffY);
+        
+        -- Pull skill
+        if pulling and len < PULL_LENGTH then
+            local energie = jpull * (1 - len / PULL_LENGTH);
+            energieCost = energieCost + energie;
+            ball.body:applyForce(vector.mul(energie * PULL_FORCE / len, diffX, diffY))
+        end
+        
+        
+        -- Push skill
+        if pushing and len < PUSH_LENGTH then
+          local normalX, normalY = vector.div( len, diffX, diffY)
+          local velocity = math.min(BALL_MAX_VELOCITY, (1 - len / PUSH_LENGTH) * PUSH_FORCE)
+          ball.body:setLinearVelocity(vector.mul(-1 * velocity, normalX, normalY))
+        end
+        
       end
       
       
-      -- Push skill
-      if pushing and len < PUSH_LENGTH then
-        local normalX, normalY = vector.div( len, diffX, diffY)
-        local velocity = math.min(BALL_MAX_VELOCITY, (1 - len / PUSH_LENGTH) * PUSH_FORCE)
-        ball.body:setLinearVelocity(vector.mul(-1 * velocity, normalX, normalY))
-      end
-      
-    end
-    
-    
-    -- Give energie to other player
-    if energieCost > 0 then
-      for k, player in pairs(self.game.players) do
-        if player ~= self then
-          player.power = math.max(player.power + energieCost * dt * PLAYER_ENERGIE_GIVEN, PLAYER_ENERGIE_MAX)
+      -- Give energie to other player
+      if energieCost > 0 then
+        for k, player in pairs(self.game.players) do
+          if player ~= self then
+            player.power = math.max(player.power + energieCost * dt * PLAYER_ENERGIE_GIVEN, PLAYER_ENERGIE_MAX)
+          end
         end
       end
     end
+  elseif self.deathTimer > 0 then
+    self.deathTimer = self.deathTimer - dt;
+  else
+    self.deathTimer = 0;
+    self.joystick:setVibration( 0, 0 )
   end
   
   for k, particleSystem in pairs(self.particleSystems) do
@@ -202,61 +225,75 @@ function Player:canPush()
   return self.power >= PUSH_COST and self.pushCd == 0 
 end
 
-function Player:draw()
-  
-  local jx, jy, j2x, j2y, jpull = self:control()
-  
+function Player:draw()  
   local r = 50;
   local g = 50;
   local b = 50;
   local a = 255;
   
-  if self.no == 1 then
+  if self.team == 1 then
     r = 255;
-  elseif self.no == 2 then 
+  elseif self.team == 2 then 
+    b = 255; 
+  elseif self.team == 3 then 
+    g = 255; 
+  elseif self.team == 4 then 
+    r = 255; 
     b = 255; 
   end
   
-  local x, y = self.body:getPosition();
-  local pullx, pully = vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE)
-  
-  love.graphics.setColor(r, g, b, self.pullApplied * 100)
-  love.graphics.circle('fill', pullx, pully, PULL_LENGTH)
-  
-  if self:canPush() then
-    love.graphics.setLineWidth(3);
-    love.graphics.setColor(r, g, b, 255)
-    love.graphics.circle('line', pullx, pully, PUSH_LENGTH)
+  if not self.active and self.deathTimer > 0 then
+    a = (self.deathTimer / DEATH_TIMER) * 255
   end
-  
-  if self.invulnerabilityTime > 0 then
+    
+  if self.active and self.invulnerabilityTime > 0 then
     r = 255;
     g = 255;
     b = 255;
   end
-      
-  love.graphics.setColor(r,g,b,a);
-  love.graphics.circle('fill', x, y, PLAYER_RADIUS)
+    
+  if self.active or self.deathTimer > 0 then
   
-  if self.texture then
-    love.graphics.setColor(255,255,255, a)
-    if jx > 0 then
-      self.direction = 1;
-    elseif jx < 0 then
-      self.direction = -1;
+    local jx, jy, j2x, j2y, jpull = self:control()
+
+    local x, y = self.body:getPosition();
+    local pullx, pully = vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE)
+    
+    if self.active then
+      
+      love.graphics.setColor(r, g, b, self.pullApplied * 100)
+      love.graphics.circle('fill', pullx, pully, PULL_LENGTH)
+      
+      if self:canPush() then
+        love.graphics.setLineWidth(3);
+        love.graphics.setColor(r, g, b, 255)
+        love.graphics.circle('line', pullx, pully, PUSH_LENGTH)
+      end
+      
+      love.graphics.setColor(r,g,b,a);
+      love.graphics.circle('fill', x, y, PLAYER_RADIUS)
     end
     
---    love.graphics.draw(self.texture, x-self.texture:getWidth()/2, y-self.texture:getHeight())
-    love.graphics.draw(self.texture, x, y, 0, self.direction, 1, self.texture:getWidth()/2, self.texture:getHeight())
+    if self.texture then
+      love.graphics.setColor(255,255,255, a)
+      if jx > 0 then
+        self.direction = 1;
+      elseif jx < 0 then
+        self.direction = -1;
+      end
+      
+  --    love.graphics.draw(self.texture, x-self.texture:getWidth()/2, y-self.texture:getHeight())
+      love.graphics.draw(self.texture, x, y, 0, self.direction, 1, self.texture:getWidth()/2, self.texture:getHeight())
+    end
+    
   end
   
+  love.graphics.setColor(255,255,255,255);
   
   for k, particleSystem in pairs(self.particleSystems) do
     local x, y = self.body:getPosition()
     love.graphics.draw(particleSystem, x+PLAYER_RADIUS/2, y+PLAYER_RADIUS/2)
   end
-  
-    love.graphics.setColor(255,255,255,255);
 end
 
 function Player:reset()
@@ -264,6 +301,9 @@ function Player:reset()
   self.body:setLinearVelocity(0,0,0)
   self.hitpoints = PLAYER_HITPOINTS
   self.direction = self.startDirection
+  self.body:setActive(true)
+  self.active = true;
+  self.deathTimer = 0;
 end
 
 

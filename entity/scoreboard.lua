@@ -4,17 +4,16 @@ Scoreboard.__index = Scoreboard
 
 function Scoreboard.create(def, game)
   local scoreboard = {
-    player = def.player
+    game = game,
+    team = def.team
   }
   setmetatable(scoreboard, Scoreboard)
-  
   
   return scoreboard
 end
 
 function Scoreboard:draw()
-  local playerNo = self.player.no;
-  love.graphics.print("Player " .. playerNo ..": " .. self.player.score, (playerNo -1) * 200, 550)
+  love.graphics.print("Team " .. self.team ..": " .. self.game.teamScores[self.team], (self.team -1) * 200, 550)
 end
 
 function Scoreboard:update(dt)

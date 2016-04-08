@@ -7,13 +7,15 @@ return {
       type = 'Player',
       no = 1,
       x = 32,
-      y = 32
+      y = 32,
+      team = 1
     },
     {
       type = 'Player',
       no = 2,
       x = BAR_LENGTH * 2 - 32,
-      y = 32
+      y = 32,
+      team = 2
     },
     {
       type = 'Arena',
@@ -77,7 +79,7 @@ return {
       type = 'Ball',
       no = 2,
       x = 64,
-      y = 32
+      y = 32,
     }
   }
 }

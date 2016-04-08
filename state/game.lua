@@ -8,18 +8,30 @@ music:setVolume( 0.5 )
 local game = {
 }
 
-function game:enter(current, def)
+function game:enter(current, def, numberOfPlayer)
   self.world = love.physics.newWorld(0, 0, false)
   self.camera = Camera()
   self.entities = {}
   self.balls = {}
   self.players = {}
+  self.teamScores = {}
+  self.numberOfTeam = 0
+  
   for k, entity in pairs(def.entities) do
     if EntityTypes[entity.type] ~= nil then
-      self.entities[k] = EntityTypes[entity.type].create(entity, self);
-      self.entities[k].type = entity.type
+      if entity.type ~= 'Player' or entity.no <= numberOfPlayer then
+        self.entities[k] = EntityTypes[entity.type].create(entity, self);
+        self.entities[k].type = entity.type
+        self.numberOfTeam = math.max(self.numberOfTeam, entity.team or 0)
+      end
     end
   end
+  
+  for i= 1, self.numberOfTeam do
+    self.teamScores[i] = 0
+    game.entities["team_score_" .. i] = EntityTypes.Scoreboard.create({team = i}, game);
+  end
+  
   love.audio.play( music )
   
   self.world:setCallbacks(game.collisionBegin, collisionEnd, preSolve, postSolve)
@@ -50,28 +62,32 @@ function game:update(dt)
     entity:update(dt)
   end
   
-  local playerThatDied = nil
+  local teamAlive = 0;
+  local nbTeamAlive = 0;
   for k, player in pairs(self.players) do
-    if player.hitpoints <= 0 then
-      playerThatDied = player;
-      -- TODO: Play death animation
+    if player.hitpoints > 0 then
+      nbTeamAlive = nbTeamAlive + 1;
+      teamAlive = player.team
     end
   end
   
-  if playerThatDied ~= nil then
+  if nbTeamAlive == 1 then
+    self.teamScores[nbTeamAlive] = self.teamScores[nbTeamAlive] + 1
+    local stillAnimated = false;
     for k, player in pairs(self.players) do
-      if player ~= playerThatDied then
-        player.score = player.score + 1;
+      if player.deathTimer > 0 then
+        stillAnimated = true
       end
     end
-    -- Reset scene
-    for k, player in pairs(self.players) do
-      player:reset()
+    if not stillAnimated then
+      -- Reset scene
+      for k, player in pairs(self.players) do
+        player:reset()
+      end
+      for k, ball in pairs(self.balls) do
+        ball:reset()
+      end
     end
-    for k, ball in pairs(self.balls) do
-      ball:reset()
-    end
-    
   end
 end
 
