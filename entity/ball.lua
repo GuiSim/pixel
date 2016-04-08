@@ -34,7 +34,6 @@ function Ball:collisionBegin(other, collision)
   else
     table.insert(self.particleSystems, Particle.ballImpactWithWall())
   end
-  
 end
 
 function Ball:update(dt)
