@@ -32,6 +32,8 @@ function Ball.create(def, game)
   fixture:setRestitution(1)
   fixture:setFilterData( Ball.category, Ball.mask, 0 )
   table.insert(game.balls, ball)
+  
+  table.insert(ball.particleSystems, Particle.ballMovement())
 
   return ball
 end
@@ -50,11 +52,16 @@ end
 
 function Ball:update(dt)
   for k, particleSystem in pairs(self.particleSystems) do
+    particleSystem:setPosition(self.body:getX(), self.body:getY())
     particleSystem:update(dt)
   end
 end
 
 function Ball:draw()
+  for k, particleSystem in pairs(self.particleSystems) do
+        love.graphics.draw(particleSystem, 0, 0)
+  end
+  
   if self.texture then
     love.graphics.draw(self.texture, self.body:getX(), self.body:getY(), self.body:getAngle(), 1, 1, BALL_RADIUS, BALL_RADIUS)
   else
@@ -63,11 +70,6 @@ function Ball:draw()
   end
   love.graphics.setColor(255, 255, 255);
   
-  
-  for k, particleSystem in pairs(self.particleSystems) do
-    local x, y = self.body:getPosition()
-    love.graphics.draw(particleSystem, x+BALL_RADIUS/2, y+BALL_RADIUS/2)
-  end
 end
 
 function Ball:reset()

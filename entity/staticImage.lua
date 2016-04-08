@@ -9,7 +9,8 @@ function StaticImage.create(def, game)
     y = def.y,
     pulseCycle = def.pulseCycle,
     pulseDt = 0,
-    pulseDirection = 1
+    pulseDirection = 1,
+    pulseMin = def.pulseMin or 0;
   }
   setmetatable(staticImage, StaticImage)
   
@@ -19,7 +20,8 @@ end
 
 function StaticImage:draw()
   if self.pulseCycle then
-      love.graphics.setColor(255,255,255, math.min(1, self.pulseDt / self.pulseCycle)*255)
+      local alpha = math.min(1, self.pulseDt / self.pulseCycle)*(255-self.pulseMin) + self.pulseMin;
+      love.graphics.setColor(255,255,255, alpha)
   end
 
   love.graphics.draw(self.texture, self.x, self.y)
