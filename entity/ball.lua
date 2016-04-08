@@ -7,8 +7,7 @@ Ball.mask = -1;
 local ballplayercollionSound = love.audio.newSource("assets/sounds/ballPlayerCollision.mp3", "static")
 local wallCollision = {
   love.audio.newSource("assets/sounds/fireballWallCollision.mp3", "static"),
-  love.audio.newSource("assets/sounds/fireballWallCollision2.mp3", "static"),
-  love.audio.newSource("assets/sounds/fireballWallCollision3.mp3", "static")
+  love.audio.newSource("assets/sounds/fireballWallCollision2.mp3", "static")
 }
 
 function Ball.create(def, game)

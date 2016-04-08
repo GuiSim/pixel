@@ -54,10 +54,10 @@ end
 
 function Particle.ballMovement()
   local tex = love.graphics.newImage("assets/textures/particle.png")
-  local emitter = love.graphics.newParticleSystem(tex,120)
+  local emitter = love.graphics.newParticleSystem(tex,100)
   emitter:setDirection(0)
-  emitter:setAreaSpread("uniform",18,18)
-  emitter:setEmissionRate(120)
+  emitter:setAreaSpread("uniform",8,8)
+  emitter:setEmissionRate(100)
   emitter:setEmitterLifetime(-1)
   emitter:setLinearAcceleration(0,0,0,0)
   emitter:setParticleLifetime(0.5,0.2)
