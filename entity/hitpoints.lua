@@ -14,7 +14,7 @@ end
 
 function HitPoints:draw()
   local playerNo = self.player.no;
-    love.graphics.print("Player " .. playerNo ..": " .. self.player.hitpoints, (playerNo -1) * 100, 700)
+    love.graphics.print("Player " .. playerNo ..": " .. self.player.hitpoints, (playerNo -1) * 200, 500)
 end
 
 function HitPoints:update(dt)
