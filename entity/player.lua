@@ -14,7 +14,9 @@ function Player.create(def, game)
   local player = {
     game = game,
     joystick = joysticks[tonumber(def.no)],
+    no = def.no
   }
+  
   setmetatable(player, Player)
   
   player.body = love.physics.newBody(game.world, def.x, def.y, "dynamic")
@@ -50,6 +52,16 @@ function Player:update(dt)
 end
 
 function Player:draw()
+  if self.no == 1 then
+    love.graphics.setColor(255, 50, 50)    
+  elseif self.no == 2 then 
+      love.graphics.setColor(50, 50, 255)
+  else 
+      love.graphics.setColor(255, 255, 255)
+  end
+      
+      
+
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), radius)
 end
 
