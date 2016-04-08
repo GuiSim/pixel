@@ -1,6 +1,6 @@
 Particle = {}
 
-function Particle.ballImpactWithPlayer()
+function Particle.playerImpactWithBall()
   local tex = love.graphics.newImage("assets/textures/smoke.png")
   local emitter = love.graphics.newParticleSystem(tex,10)
   emitter:setDirection(0)
