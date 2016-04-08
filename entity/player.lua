@@ -3,7 +3,7 @@ Player.__index = Player
 
 
 local PULL_LENGTH2 = 300 * 300;
-local PULL_FORCE = 300;
+local PULL_FORCE = 600;
 
 local PLAYER_FORCE = 5000;
 local PLAYER_DAMPENING = 10;
@@ -28,6 +28,8 @@ function Player.create(def, game)
   
   player.body = love.physics.newBody(game.world, def.x, def.y, "dynamic")
   player.body:setLinearDamping(PLAYER_DAMPENING)
+  
+  player.body:setUserData(player)
   
   local fixture = love.physics.newFixture(player.body, love.physics.newCircleShape(radius), PLAYER_DENSITY)  fixture:setFilterData( Player.category, Player.mask, 0 )
   table.insert(game.players, player)
@@ -93,12 +95,7 @@ function Player:draw()
       
 
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), radius)
-<<<<<<< HEAD
   love.graphics.setColor(255,255,255)
-
-=======
-  love.graphics.setColor(255, 255, 255, 255)
->>>>>>> 33171d27d91ddf03ce20f3f17c95819e20286982
 end
 
 return Player
