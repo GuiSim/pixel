@@ -53,6 +53,13 @@ return {
       }
     },
     {
+      type = "StaticImage",
+      x = 0,
+      y = 0,
+      texture = love.graphics.newImage("assets/textures/arena_b_runes.png"),
+      pulseCycle = 5
+    },
+    {
       type = 'Ball',
       no = 2,
       x = MAP_WIDTH/2,
@@ -63,20 +70,17 @@ return {
       type = 'Player',
       no = 1,
       x = TOP_LEFT_X + 32;
-      y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2
+      y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2,
+      texture = love.graphics.newImage("assets/textures/red.png"),
+      startDirection = 1
     },
     {
       type = 'Player',
       no = 2,
       x = TOP_LEFT_X + BAR_LENGTH_HORIZONTAL - 32,
-      y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2
-    },
-    {
-      type = "StaticImage",
-      x = 0,
-      y = 0,
-      texture = love.graphics.newImage("assets/textures/arena_b_runes.png"),
-      pulseCycle = 5
+      y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2,
+      texture = love.graphics.newImage("assets/textures/blue.png"),
+      startDirection = -1
     },
     {
       type = "StaticImage",

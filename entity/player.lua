@@ -20,7 +20,10 @@ function Player.create(def, game)
     pushCd = 0,
     
     pullApplied = 0,
-    particleSystems = {}
+    particleSystems = {},
+    texture = def.texture,
+    direction = def.startDirection,
+    startDirection = def.startDirection
   }
   
   setmetatable(player, Player)
@@ -212,7 +215,6 @@ function Player:draw()
   love.graphics.setColor(r, g, b, self.pullApplied * 100)
   love.graphics.circle('fill', pullx, pully, PULL_LENGTH)
   
-  
   if self:canPush() then
     love.graphics.setLineWidth(3);
     love.graphics.setColor(r, g, b, 255)
@@ -228,19 +230,33 @@ function Player:draw()
       
   love.graphics.setColor(r,g,b,a);
   love.graphics.circle('fill', x, y, PLAYER_RADIUS)
-  love.graphics.setColor(255,255,255)
+  
+  if self.texture then
+    love.graphics.setColor(255,255,255, a)
+    if jx > 0 then
+      self.direction = 1;
+    elseif jx < 0 then
+      self.direction = -1;
+    end
+    
+--    love.graphics.draw(self.texture, x-self.texture:getWidth()/2, y-self.texture:getHeight())
+    love.graphics.draw(self.texture, x, y, 0, self.direction, 1, self.texture:getWidth()/2, self.texture:getHeight())
+  end
   
   
   for k, particleSystem in pairs(self.particleSystems) do
     local x, y = self.body:getPosition()
     love.graphics.draw(particleSystem, x+PLAYER_RADIUS/2, y+PLAYER_RADIUS/2)
   end
+  
+    love.graphics.setColor(255,255,255,255);
 end
 
 function Player:reset()
   self.body:setPosition(self.startingX, self.startingY)
   self.body:setLinearVelocity(0,0,0)
   self.hitpoints = PLAYER_HITPOINTS
+  self.direction = self.startDirection
 end
 
 
