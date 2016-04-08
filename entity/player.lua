@@ -137,7 +137,7 @@ function Player:update(dt)
   
   if self.joystick ~= nil then
     if pulling then
-      self.joystick:setVibration( jpull, jpull )
+      self.joystick:setVibration( jpull * VIRATION, jpull * VIRATION)
     else
       self.joystick:setVibration( 0, 0 )
     end
