@@ -13,6 +13,9 @@ PLAYER_FORCE = 6000; -- Force put on the player to move the joystick
 PLAYER_DAMPENING = 5; -- Dampening on player movement
 PLAYER_DENSITY = 10; -- Player density (higher means more mass)
 PLAYER_HITPOINTS = 100;
+
+CONTROLL_RANGE = 150;
+
 BALL_DAMAGE = 8;
 
 BALL_RADIUS = 8;

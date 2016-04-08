@@ -29,7 +29,7 @@ function Ball.create(def, game)
 end
 
 function Ball:collisionBegin(other, collision)
-    table.insert(self.particleSystems, Particle.ballImpactWithAnything())
+    --table.insert(self.particleSystems, Particle.ballImpactWithAnything())
 end
 
 function Ball:update(dt)

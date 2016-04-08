@@ -60,11 +60,13 @@ end
 
 function Player:control()
   if self.joystick == nil then -- no connector
-    return 0, 0, 0, false
+    return 0, 0, 0, 0, 0, false
   end
   
   local x = self.joystick:getGamepadAxis('leftx')
   local y = self.joystick:getGamepadAxis('lefty')
+  local x2 = self.joystick:getGamepadAxis('rightx')
+  local y2 = self.joystick:getGamepadAxis('righty')
   local t = math.max(self.joystick:getGamepadAxis('triggerleft'), self.joystick:getGamepadAxis('triggerright'))
   
   if vector.len2(x,y) < 0.2 then
@@ -72,15 +74,21 @@ function Player:control()
     y = 0
   end
   
+  if vector.len2(x2,y2) < 0.2 then
+    x2 = 0
+    y2 = 0
+  end
+  
   if t < 0.1 then
     t = 0
   end
   
-  return x, y, t
+  return x, y, x2, y2, t
 end
 
 function Player:update(dt)
   local keys;
+  -- Update key (Just pressed)
   if self.joystick ~= nil then
     keys = {
       a = self.joystick:isGamepadDown('a'),
@@ -96,8 +104,7 @@ function Player:update(dt)
       y = false
     }
   end
-  
-  
+
   for k, pressed in pairs(keys) do
     if pressed and self.keys[k] then
       keys[k] = false --not released
@@ -110,7 +117,7 @@ function Player:update(dt)
   
   local pushing = keys['a'] and self:canPush()
   
-  local jx, jy, jpull = self:control()
+  local jx, jy, j2x, j2y, jpull = self:control()
   local pulling = jpull > 0;
   self.pullApplied = jpull;
   
@@ -141,19 +148,29 @@ function Player:update(dt)
     local energieCost = 0;
     for k, ball in pairs(self.game.balls) do
       local ballX, ballY = ball.body:getPosition();
-      local diffX, diffY =  vector.sub(x,y, ballX, ballY);
+      local pullx, pully = vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE)
+      local diffX, diffY =  vector.sub(pullx,pully, ballX, ballY);
       local len = vector.len(diffX, diffY);
+      
+      -- Pull skill
       if pulling and len < PULL_LENGTH then
           local energie = jpull * (1 - len / PULL_LENGTH);
           energieCost = energieCost + energie;
           ball.body:applyForce(vector.mul(energie * PULL_FORCE / len, diffX, diffY))
       end
+      
+      
+      -- Push skill
       if pushing and len < PUSH_LENGTH then
         local normalX, normalY = vector.div( len, diffX, diffY)
         local velocity = math.min(BALL_MAX_VELOCITY, (1 - len / PUSH_LENGTH) * PUSH_FORCE)
         ball.body:setLinearVelocity(vector.mul(-1 * velocity, normalX, normalY))
       end
+      
     end
+    
+    
+    -- Give energie to other player
     if energieCost > 0 then
       for k, player in pairs(self.game.players) do
         if player ~= self then
@@ -174,6 +191,8 @@ end
 
 function Player:draw()
   
+  local jx, jy, j2x, j2y, jpull = self:control()
+  
   local r = 50;
   local g = 50;
   local b = 50;
@@ -185,14 +204,19 @@ function Player:draw()
     b = 255; 
   end
   
+  local x, y = self.body:getPosition();
+  local pullx, pully = vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE)
+  
   love.graphics.setColor(r, g, b, self.pullApplied * 100)
-  love.graphics.circle('fill', self.body:getX(), self.body:getY(), PULL_LENGTH)
+  love.graphics.circle('fill', pullx, pully, PULL_LENGTH)
+  
   
   if self:canPush() then
     love.graphics.setLineWidth(3);
     love.graphics.setColor(r, g, b, 255)
-    love.graphics.circle('line', self.body:getX(), self.body:getY(), PUSH_LENGTH)
+    love.graphics.circle('line', pullx, pully, PUSH_LENGTH)
   end
+  
   
   if self.invulnerabilityTime > 0 then
     r = 255;
@@ -201,7 +225,7 @@ function Player:draw()
   end
       
   love.graphics.setColor(r,g,b,a);
-  love.graphics.circle('fill', self.body:getX(), self.body:getY(), PLAYER_RADIUS)
+  love.graphics.circle('fill', x, y, PLAYER_RADIUS)
   love.graphics.setColor(255,255,255)
   
   
