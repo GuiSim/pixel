@@ -11,3 +11,4 @@ BALL_DAMAGE_SPEED_SCALING = 500; -- Higher leads to less damage based on speed
 BALL_MAX_DAMAGE = 20;
 
 PLAYER_RADIUS = 16; -- Size of the player's circle
+PLAYER_INVULNERABILITY_DURATION = 1; -- Duration of invulnerability following a player's hit (s)

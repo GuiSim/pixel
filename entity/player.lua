@@ -10,7 +10,8 @@ function Player.create(def, game)
     game = game,
     joystick = joysticks[tonumber(def.no)],
     no = def.no,
-    hitpoints = PLAYER_HITPOINTS
+    hitpoints = PLAYER_HITPOINTS,
+    invulnerabilityTime = 0
   }
   
   setmetatable(player, Player)
@@ -29,7 +30,7 @@ function Player.create(def, game)
 end
 
 function Player:collisionBegin(other, collision)
-  if other.type == "Ball" then
+  if other.type == "Ball" and self.invulnerabilityTime <= 0 then
     local vx, vy = other.body:getLinearVelocity()
     
     local velocity = vector.len(vx, vy)
@@ -37,6 +38,7 @@ function Player:collisionBegin(other, collision)
     local damage = BALL_DAMAGE * velocity/BALL_DAMAGE_SPEED_SCALING
     damage = math.min(damage, BALL_MAX_DAMAGE)
     self.hitpoints = self.hitpoints - math.floor(damage)
+    self.invulnerabilityTime = PLAYER_INVULNERABILITY_DURATION;
   end
 end
 
@@ -62,6 +64,7 @@ end
 
 function Player:update(dt)
   local jx, jy, jpull = self:control()
+  self.invulnerabilityTime = math.max(0, self.invulnerabilityTime - dt);
   self.body:applyForce(vector.mul(PLAYER_FORCE, jx, jy));
   
   local x, y = self.body:getPosition();
@@ -79,16 +82,24 @@ function Player:update(dt)
 end
 
 function Player:draw()
+  local r = 50;
+  local g = 50;
+  local b = 50;
+  local a = self.hitpoints*255/100;
+  
   if self.no == 1 then
-    love.graphics.setColor(255, 50, 50, self.hitpoints*255/100)    
+    r = 255;
   elseif self.no == 2 then 
-      love.graphics.setColor(50, 50, 255, self.hitpoints*255/100)
-  else 
-      love.graphics.setColor(255, 255, 255, self.hitpoints*255/100)
+    b = 255; 
+  end
+  
+  if self.invulnerabilityTime > 0 then
+    r = 255;
+    g = 255;
+    b = 255;
   end
       
-      
-
+  love.graphics.setColor(r,g,b,a);
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), PLAYER_RADIUS)
   love.graphics.setColor(255,255,255)
 end
