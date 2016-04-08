@@ -300,7 +300,7 @@ function Player:draw()
       if self.active then
         local shieldTextureToUse;
         if self.invulnerabilityTime > 0 then
-          love.graphics.setColor(255,255,255);
+          love.graphics.setColor(255,255,255, 150);
           shieldTextureToUse = self.shieldInvincibleTexture;
         else
           love.graphics.setColor(255,255,255,(self.hitpoints/PLAYER_HITPOINTS)*255)

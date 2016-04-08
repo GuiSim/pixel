@@ -2,7 +2,7 @@ local orderZ = function(a,b)
   return a.z < b.z
 end
 
-local music = love.audio.newSource("assets/sounds/fightLoopedMusic.mp3")
+local music = love.audio.newSource("assets/sounds/musicArena1.mp3", "stream")
 music:setLooping(true)
 music:setVolume( 0.5 )
 local game = {

@@ -9,7 +9,8 @@ local menu = {
   escapeHeldFor = 0
 }
 
-
+local menuChangeSound = love.audio.newSource("assets/sounds/menuChange.mp3", "static")
+local menuMusic = love.audio.newSource("assets/sounds/musicStartScreen.mp3", "stream")
 
 local sunParticles = Particle.sunMenu();
 local menuBackground = love.graphics.newImage("assets/textures/startscreen_bg.jpg")
@@ -17,6 +18,15 @@ local menuTitle = love.graphics.newImage("assets/textures/startscreen_title.png"
 local menuTwoPlayers = love.graphics.newImage("assets/textures/startscreen_2player.png")
 local menuFourPlayers = love.graphics.newImage("assets/textures/startscreen_4player.png")
 local cursor = love.graphics.newImage("assets/textures/startscreen_arrow.png")
+
+function menu:enter()
+  love.audio.play(menuMusic);
+end
+
+function menu:leave()
+  love.audio.stop(menuMusic);
+end
+
 
 function menu:update(dt)
   sunParticles:update(dt);
@@ -31,6 +41,12 @@ function menu:update(dt)
     love.event.quit()
   end
   
+end
+
+function menu.moveSelection(change)
+  menu.selection = menu.selection + change;
+  love.audio.stop(menuChangeSound);
+  love.audio.play(menuChangeSound);
 end
 
 
@@ -55,11 +71,11 @@ function menu:joystickpressed(joystick, button)
   if not joystick:isGamepadDown("dpleft") and not joystick:isGamepadDown("dpright") then
     -- Handle navigation with dpad
     if joystick:isGamepadDown("dpdown") then
-      menu.selection = menu.selection + 1;
+      menu.moveSelection(1)
     elseif joystick:isGamepadDown("dpup") then
-      menu.selection = menu.selection - 1;
+      menu.moveSelection(-1)
     elseif joystick:isGamepadDown("back") then
-      menu.selection = menu.selection + 1;
+      menu.moveSelection(1)
     end
     
   end
