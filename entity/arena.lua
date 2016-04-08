@@ -7,6 +7,7 @@ local polygons = {};
 
 function Arena.create(def, game)
   local arena = {
+    texture = def.texture
   }
   setmetatable(arena, Arena)
   
@@ -22,12 +23,10 @@ end
 
 function Arena:draw()
   
-  love.graphics.draw(self.texture,0,0);
-  
-  for k, polygon in pairs(polygons) do
-    love.graphics.setColor(100, 100, 255)
-    love.graphics.polygon("fill", polygon.points)
+  if (self.texture) then
+    love.graphics.draw(self.texture,0,0);
   end
+  
 end
 
 function Arena:update(dt)

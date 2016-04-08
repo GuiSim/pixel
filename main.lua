@@ -22,7 +22,8 @@ EntityTypes = {
   HitPoints = require "entity.hitpoints",
   Ball = require "entity.ball",
   Scoreboard = require "entity.scoreboard",
-  Layer = require "entity.layer"
+  Layer = require "entity.layer",
+  StaticImage = require "entity.staticImage"
 }
 
 function love.load()
