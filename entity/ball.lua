@@ -29,7 +29,12 @@ function Ball.create(def, game)
 end
 
 function Ball:collisionBegin(other, collision)
-    table.insert(self.particleSystems, Particle.ballImpactWithAnything())
+  if (other:getUserData() ~= nil and other:getUserData().type == "Player") then
+    table.insert(self.particleSystems, Particle.ballImpactWithPlayer())
+  else
+    table.insert(self.particleSystems, Particle.ballImpactWithWall())
+  end
+  
 end
 
 function Ball:update(dt)
