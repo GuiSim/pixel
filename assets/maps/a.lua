@@ -11,7 +11,10 @@ return {
     },
     {
       type = 'PlayerBlock',
-      points = {64, 0, 64, 300, 96, 300, 96, 0}
+      points = {BAR_LENGTH - BAR_WIDTH/2, 0, 
+                BAR_LENGTH + BAR_WIDTH/2, 0,
+                BAR_LENGTH + BAR_WIDTH/2, BAR_LENGTH,
+                BAR_LENGTH - BAR_WIDTH/2, BAR_LENGTH}
     },
     {
       type = 'Arena',

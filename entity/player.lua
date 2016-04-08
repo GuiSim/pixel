@@ -14,7 +14,7 @@ function Player.create(def, game)
   setmetatable(player, Player)
   
   player.body = love.physics.newBody(game.world, def.x, def.y, "dynamic")
-  player.body:setLinearDamping(20)
+  player.body:setLinearDamping(2)
   
   local fixture = love.physics.newFixture(player.body, love.physics.newCircleShape(radius), 1)
   fixture:setFilterData( Player.category, Player.mask, 0 )
