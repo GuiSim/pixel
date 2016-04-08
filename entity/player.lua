@@ -21,7 +21,8 @@ function Player.create(def, game)
     game = game,
     joystick = joysticks[tonumber(def.no)],
     no = def.no,
-    hitpoints = PLAYER_HITPOINTS
+    hitpoints = PLAYER_HITPOINTS,
+    power = 0
   }
   
   setmetatable(player, Player)
@@ -72,12 +73,22 @@ function Player:update(dt)
   local x, y = self.body:getPosition();
   
   if jpull > 0 then
+    local energieCost = 0;
     for k, ball in pairs(self.game.balls) do
       local ballX, ballY = ball.body:getPosition();
       local diffX, diffY =  vector.sub(x,y, ballX, ballY);
       local len2 = vector.len2(diffX, diffY);
       if len2 < PULL_LENGTH2 then
-        ball.body:applyForce(vector.mul(jpull * PULL_FORCE * (1 - len2 / PULL_LENGTH2) / math.sqrt(len2), diffX, diffY))
+        local energie = jpull * (1 - len2 / PULL_LENGTH2);
+        energieCost = energieCost + energie;
+        ball.body:applyForce(vector.mul(energie * PULL_FORCE / math.sqrt(len2), diffX, diffY))
+      end
+    end
+    if energieCost > 0 then
+      for k, player in pairs(self.game.players) do
+        if player ~= self then
+          player.power = math.max(player.power + energieCost * dt * PLAYER_ENERGIE_GIVEN, PLAYER_ENERGIE_MAX)
+        end
       end
     end
   end
@@ -91,9 +102,7 @@ function Player:draw()
   else 
       love.graphics.setColor(255, 255, 255, self.hitpoints*255/100)
   end
-      
-      
-
+  
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), radius)
   love.graphics.setColor(255,255,255)
 end
