@@ -275,7 +275,6 @@ function Player:draw()
       love.graphics.setColor(255, 255, 255, self.pullApplied * 100)
       love.graphics.draw(self.pull1Texture, x, y, 0, 1, 1, self.pull1Texture:getWidth()/2, self.pull1Texture:getHeight()/2);
       love.graphics.draw(self.pull2Texture, x, y, 0, 1, 1, self.pull2Texture:getWidth()/2, self.pull2Texture:getHeight()/2);
---      love.graphics.circle('fill', pullx, pully, PULL_LENGTH)
       
       if self:canPush() then
         love.graphics.setLineWidth(3);
@@ -284,7 +283,6 @@ function Player:draw()
       end
       
       love.graphics.setColor(r,g,b,a);
---      love.graphics.circle('fill', x, y, PLAYER_RADIUS)
     end
     
     if self.texture then
