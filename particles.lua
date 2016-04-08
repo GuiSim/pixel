@@ -96,7 +96,7 @@ function Particle.sunMenu()
   emitter:setSpread(6.1999998092651)
   emitter:setRelativeRotation(false)
   emitter:setOffset(88,95)
-  emitter:setSizes(1)
+  emitter:setSizes(0,1,0)
   emitter:setSizeVariation(0)
   emitter:setColors(255,255,255,100 )
   return emitter;
