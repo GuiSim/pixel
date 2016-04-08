@@ -74,6 +74,13 @@ return {
       type = "StaticImage",
       x = 0,
       y = 0,
+      texture = love.graphics.newImage("assets/textures/arena_b_runes.png"),
+      pulseCycle = 5
+    },
+    {
+      type = "StaticImage",
+      x = 0,
+      y = 0,
       texture = love.graphics.newImage("assets/textures/arena_b_overlay.png")
     }
   }

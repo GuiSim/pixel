@@ -44,8 +44,10 @@ function Player.create(def, game)
 end
 
 function Player:collisionBegin(other, collision)
-  if other ~= nil and other.type == "Ball" and self.invulnerabilityTime <= 0 then
-    local vx, vy = other.body:getLinearVelocity()
+  local body = other:getBody();
+  local entity = body:getUserData();
+  if entity ~= nil and entity.type == "Ball" and self.invulnerabilityTime <= 0 then
+    local vx, vy = body:getLinearVelocity()
     
     local velocity = vector.len(vx, vy)
     
@@ -54,7 +56,7 @@ function Player:collisionBegin(other, collision)
     self.hitpoints = self.hitpoints - math.floor(damage)
     self.invulnerabilityTime = PLAYER_INVULNERABILITY_DURATION;
   
-    table.insert(self.particleSystems, Particle.playerImpactWithBall())
+    --table.insert(self.particleSystems, Particle.playerImpactWithBall())
   end
 end
 
