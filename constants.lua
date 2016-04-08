@@ -1,12 +1,12 @@
 VIRATION = 0.2 -- HMMMMMMMM 0 to 1
 
-PULL_LENGTH = 325; -- How far player can pull
+PULL_LENGTH = 450; -- How far player can pull
 PULL_LENGTH2 = PULL_LENGTH * PULL_LENGTH; -- Square of how far player can pull
 PULL_FORCE = 500; -- Force at which the player pulls the ball
 
 PUSH_COST = 100;
 PUSH_COOLDOWN = 5;
-PUSH_LENGTH = 300; -- How far player can push
+PUSH_LENGTH = 500; -- How far player can push
 PUSH_LENGTH2 = PUSH_LENGTH * PUSH_LENGTH; -- Square of how far player can push
 PUSH_FORCE = 2500; -- Force at which the player pulls the ball
 
@@ -15,7 +15,7 @@ PLAYER_DAMPENING = 5; -- Dampening on player movement
 PLAYER_DENSITY = 10; -- Player density (higher means more mass)
 PLAYER_HITPOINTS = 100;
 
-CONTROLL_RANGE = 150;
+CONTROLL_RANGE = 75;
 
 BALL_DAMAGE = 8;
 
