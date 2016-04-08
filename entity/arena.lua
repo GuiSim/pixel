@@ -27,6 +27,11 @@ function Arena:draw()
     love.graphics.draw(self.texture,0,0);
   end
   
+  for k, polygon in pairs(polygons) do
+    love.graphics.setColor(100, 100, 255)
+    love.graphics.polygon("fill", polygon.points)
+  end
+  
 end
 
 function Arena:update(dt)

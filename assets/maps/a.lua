@@ -62,6 +62,18 @@ return {
       }
     },
     {
+      type = 'Bump',
+      no = 1,
+      x = 300,
+      y = 300
+    },
+    {
+      type = 'Bump',
+      no = 1,
+      x = 300,
+      y = 100
+    },
+    {
       type = 'Ball',
       no = 2,
       x = 64,

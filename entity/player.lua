@@ -24,6 +24,10 @@ function Player.create(def, game)
   }
   
   setmetatable(player, Player)
+
+  if player.joystick then
+    player.joystick:setVibration( 1, 1 )
+  end
   
   player.body = love.physics.newBody(game.world, def.x, def.y, "dynamic")
   player.body:setLinearDamping(PLAYER_DAMPENING)
