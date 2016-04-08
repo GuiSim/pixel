@@ -11,7 +11,10 @@ function Player.create(def, game)
     joystick = joysticks[tonumber(def.no)],
     no = def.no,
     hitpoints = PLAYER_HITPOINTS,
-    invulnerabilityTime = 0
+    invulnerabilityTime = 0,
+    score = 0,
+    startingX = def.x,
+    startingY = def.y
   }
   
   setmetatable(player, Player)
@@ -24,7 +27,8 @@ function Player.create(def, game)
   local fixture = love.physics.newFixture(player.body, love.physics.newCircleShape(PLAYER_RADIUS), PLAYER_DENSITY)  fixture:setFilterData( Player.category, Player.mask, 0 )
   table.insert(game.players, player)
 
-  game.entities["player_" .. def.no] = EntityTypes.HitPoints.create({player = player}, game);
+  game.entities["player_health_" .. def.no] = EntityTypes.HitPoints.create({player = player}, game);
+  game.entities["player_score_" .. def.no] = EntityTypes.Scoreboard.create({player = player}, game);
 
   return player
 end
@@ -64,6 +68,7 @@ end
 
 function Player:update(dt)
   local jx, jy, jpull = self:control()
+  
   self.invulnerabilityTime = math.max(0, self.invulnerabilityTime - dt);
   self.body:applyForce(vector.mul(PLAYER_FORCE, jx, jy));
   
@@ -85,7 +90,7 @@ function Player:draw()
   local r = 50;
   local g = 50;
   local b = 50;
-  local a = self.hitpoints*255/100;
+  local a = self.hitpoints*255/PLAYER_HITPOINTS;
   
   if self.no == 1 then
     r = 255;
@@ -103,5 +108,12 @@ function Player:draw()
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), PLAYER_RADIUS)
   love.graphics.setColor(255,255,255)
 end
+
+function Player:reset()
+  self.body:setPosition(self.startingX, self.startingY)
+  self.body:setLinearVelocity(0,0,0)
+  self.hitpoints = PLAYER_HITPOINTS
+end
+
 
 return Player

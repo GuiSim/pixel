@@ -19,7 +19,6 @@ function game:enter(current, def)
   end
   
   self.world:setCallbacks(game.collisionBegin, collisionEnd, preSolve, postSolve)
-  
 end
 
 function game.collisionBegin(a, b, collision)
@@ -45,15 +44,30 @@ function game:update(dt)
     entity:update(dt)
   end
   
+  local playerThatDied = nil
   for k, player in pairs(self.players) do
     if player.hitpoints <= 0 then
+      playerThatDied = player;
       -- TODO: Play death animation
       -- TODO: Scoreboard must persist.
-      Gamestate.switch(require('state.game'), require('assets.maps.a'))
     end
   end
   
-  
+  if playerThatDied ~= nil then
+    for k, player in pairs(self.players) do
+      if player ~= playerThatDied then
+        player.score = player.score + 1;
+      end
+    end
+    -- Reset scene
+    for k, player in pairs(self.players) do
+      player:reset()
+    end
+    for k, ball in pairs(self.balls) do
+      ball:reset()
+    end
+    
+  end
 end
 
 function game:draw()

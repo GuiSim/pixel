@@ -7,7 +7,9 @@ Ball.mask = -1;
 function Ball.create(def, game)
   local joysticks = love.joystick.getJoysticks()
   local ball = {
-    game = game
+    game = game,
+    startingX = def.x,
+    startingY = def.y
   }
   
   setmetatable(ball, Ball)
@@ -40,6 +42,11 @@ function Ball:draw()
   love.graphics.setColor(255, 255, 0);
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), BALL_RADIUS)
     love.graphics.setColor(255, 255, 255);
+end
+
+function Ball:reset()
+  self.body:setPosition(self.startingX, self.startingY)
+  self.body:setLinearVelocity(0,0,0)
 end
 
 return Ball
