@@ -138,7 +138,7 @@ function Player:draw()
   local r = 50;
   local g = 50;
   local b = 50;
-  local a = self.hitpoints*255/PLAYER_HITPOINTS;
+  local a = 255;
   
   if self.no == 1 then
     r = 255;

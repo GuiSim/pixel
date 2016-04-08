@@ -7,12 +7,12 @@ PUSH_COST = 100;
 PUSH_COOLDOWN = 5;
 PUSH_LENGTH = 100; -- How far player can push
 PUSH_LENGTH2 = PUSH_LENGTH * PUSH_LENGTH; -- Square of how far player can push
-PUSH_FORCE = -800; -- Force at which the player pulls the ball
+PUSH_FORCE = -3000; -- Force at which the player pulls the ball
 
 PLAYER_FORCE = 6000; -- Force put on the player to move the joystick
 PLAYER_DAMPENING = 5; -- Dampening on player movement
 PLAYER_DENSITY = 10; -- Player density (higher means more mass)
-PLAYER_HITPOINTS = 1;
+PLAYER_HITPOINTS = 100;
 BALL_DAMAGE = 8;
 
 BALL_RADIUS = 8;
