@@ -25,10 +25,14 @@ function Player.create(def, game)
     pullApplied = 0,
     particleSystems = {},
     pullSound = pullSound:clone(),
+    
     texture = def.texture,
     pullTexture = def.pullTexture,
     shieldTexture = def.shieldTexture,
     shieldInvincibleTexture = def.shieldInvincibleTexture,
+    pull1Texture = def.pull1Texture,
+    pull2Texture = def.pull2Texture,
+    
     direction = def.startDirection,
     startDirection = def.startDirection,
     
@@ -268,8 +272,10 @@ function Player:draw()
     
     if self.active then
       
-      love.graphics.setColor(r, g, b, self.pullApplied * 100)
-      love.graphics.circle('fill', pullx, pully, PULL_LENGTH)
+      love.graphics.setColor(255, 255, 255, self.pullApplied * 100)
+      love.graphics.draw(self.pull1Texture, x, y, 0, 1, 1, self.pull1Texture:getWidth()/2, self.pull1Texture:getHeight()/2);
+      love.graphics.draw(self.pull2Texture, x, y, 0, 1, 1, self.pull2Texture:getWidth()/2, self.pull2Texture:getHeight()/2);
+--      love.graphics.circle('fill', pullx, pully, PULL_LENGTH)
       
       if self:canPush() then
         love.graphics.setLineWidth(3);
