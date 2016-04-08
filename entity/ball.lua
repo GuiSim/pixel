@@ -17,7 +17,8 @@ function Ball.create(def, game)
     game = game,
     startingX = def.x,
     startingY = def.y,
-    particleSystems = {}
+    particleSystems = {},
+    texture = def.texture
   }
   
   setmetatable(ball, Ball)
@@ -27,7 +28,7 @@ function Ball.create(def, game)
   
   ball.body:setUserData(ball)
 
-  local fixture = love.physics.newFixture(ball.body, love.physics.newCircleShape(BALL_RADIUS), 3)
+  local fixture = love.physics.newFixture(ball.body, love.physics.newCircleShape(BALL_RADIUS), BALL_DENSITY)
   fixture:setRestitution(1)
   fixture:setFilterData( Ball.category, Ball.mask, 0 )
   table.insert(game.balls, ball)
@@ -54,9 +55,14 @@ function Ball:update(dt)
 end
 
 function Ball:draw()
-  love.graphics.setColor(255, 255, 0);
-  love.graphics.circle('fill', self.body:getX(), self.body:getY(), BALL_RADIUS)
+  if self.texture then
+    love.graphics.draw(self.texture, self.body:getX(), self.body:getY(), self.body:getAngle(), 1, 1, BALL_RADIUS, BALL_RADIUS)
+  else
+    love.graphics.setColor(255, 255, 0);
+    love.graphics.circle('fill', self.body:getX(), self.body:getY(), BALL_RADIUS)
+  end
   love.graphics.setColor(255, 255, 255);
+  
   
   for k, particleSystem in pairs(self.particleSystems) do
     local x, y = self.body:getPosition()
