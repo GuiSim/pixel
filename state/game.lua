@@ -4,7 +4,7 @@ end
 
 local music = love.audio.newSource("assets/sounds/musicArena1.mp3", "stream")
 music:setLooping(true)
-music:setVolume( 0.5 )
+music:setVolume( 0.7 )
 local game = {
 }
 

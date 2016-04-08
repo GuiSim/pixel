@@ -76,6 +76,8 @@ return {
       pullTexture = love.graphics.newImage("assets/textures/red_pull.png"),
       shieldTexture = love.graphics.newImage("assets/textures/shield.png"),
       shieldInvincibleTexture = love.graphics.newImage("assets/textures/shield_invincible.png"),
+      pull1Texture = love.graphics.newImage("assets/textures/pull1.png"),
+      pull2Texture = love.graphics.newImage("assets/textures/pull2.png"),
       startDirection = 1,
       team = 1
     },
@@ -88,6 +90,8 @@ return {
       pullTexture = love.graphics.newImage("assets/textures/blue_pull.png"),
       shieldTexture = love.graphics.newImage("assets/textures/shield.png"),
       shieldInvincibleTexture = love.graphics.newImage("assets/textures/shield_invincible.png"),
+      pull1Texture = love.graphics.newImage("assets/textures/pull1.png"),
+      pull2Texture = love.graphics.newImage("assets/textures/pull2.png"),
       startDirection = -1,
       team = 2
     },
@@ -100,6 +104,8 @@ return {
       pullTexture = love.graphics.newImage("assets/textures/red_pull.png"),
       shieldTexture = love.graphics.newImage("assets/textures/shield.png"),
       shieldInvincibleTexture = love.graphics.newImage("assets/textures/shield_invincible.png"),
+      pull1Texture = love.graphics.newImage("assets/textures/pull1.png"),
+      pull2Texture = love.graphics.newImage("assets/textures/pull2.png"),
       startDirection = 1,
       team = 1
     },
@@ -112,6 +118,8 @@ return {
       pullTexture = love.graphics.newImage("assets/textures/blue_pull.png"),
       shieldTexture = love.graphics.newImage("assets/textures/shield.png"),
       shieldInvincibleTexture = love.graphics.newImage("assets/textures/shield_invincible.png"),
+      pull1Texture = love.graphics.newImage("assets/textures/pull1.png"),
+      pull2Texture = love.graphics.newImage("assets/textures/pull2.png"),
       startDirection = -1,
       team = 2
     },
