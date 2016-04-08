@@ -1,7 +1,6 @@
 local Ball = {}
 Ball.__index = Ball
 
-local BALL_RADIUS = 8;
 Ball.category = 2;
 Ball.mask = -1;
 
@@ -14,7 +13,7 @@ function Ball.create(def, game)
   setmetatable(ball, Ball)
   
   ball.body = love.physics.newBody(game.world, def.x, def.y, "dynamic")
-  ball.body:setAngularDamping( 2 )
+  ball.body:setAngularDamping(2)
   
   ball.body:setUserData(ball)
 

@@ -1,7 +1,6 @@
 local PlayerBlock = {}
 PlayerBlock.__index = PlayerBlock
 
-local radius = 16;
 PlayerBlock.category = -1;
 
 

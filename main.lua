@@ -11,6 +11,8 @@ bump = require 'bump'
 
 debugWorld = require "debugWorld"
 
+require "constants"
+
 -- entities
 EntityTypes = {
   Ball = require "entity.ball",
