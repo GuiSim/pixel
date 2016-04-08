@@ -21,7 +21,6 @@ function Player.create(def, game)
     
     pullApplied = 0,
     particleSystems = {}
-
   }
   
   setmetatable(player, Player)
@@ -45,7 +44,7 @@ function Player.create(def, game)
 end
 
 function Player:collisionBegin(other, collision)
-  if other.type == "Ball" and self.invulnerabilityTime <= 0 then
+  if other ~= nil and other.type == "Ball" and self.invulnerabilityTime <= 0 then
     local vx, vy = other.body:getLinearVelocity()
     
     local velocity = vector.len(vx, vy)
@@ -54,10 +53,9 @@ function Player:collisionBegin(other, collision)
     damage = math.min(damage, BALL_MAX_DAMAGE)
     self.hitpoints = self.hitpoints - math.floor(damage)
     self.invulnerabilityTime = PLAYER_INVULNERABILITY_DURATION;
-    
-  end
   
-  table.insert(self.particleSystems, Particle.ballImpactWithPlayer())
+    table.insert(self.particleSystems, Particle.playerImpactWithBall())
+  end
 end
 
 function Player:control()
@@ -82,13 +80,23 @@ function Player:control()
 end
 
 function Player:update(dt)
-    
-  local keys = {
-    a = self.joystick:isGamepadDown('a'),
-    b = self.joystick:isGamepadDown('b'),
-    x = self.joystick:isGamepadDown('x'),
-    y = self.joystick:isGamepadDown('y')
-  }
+  local keys;
+  if self.joystick ~= nil then
+    keys = {
+      a = self.joystick:isGamepadDown('a'),
+      b = self.joystick:isGamepadDown('b'),
+      x = self.joystick:isGamepadDown('x'),
+      y = self.joystick:isGamepadDown('y')
+    }
+  else 
+  keys = {
+      a = false,
+      b = false,
+      x = false,
+      y = false
+    }
+  end
+  
   
   for k, pressed in pairs(keys) do
     if pressed and self.keys[k] then
@@ -120,10 +128,13 @@ function Player:update(dt)
     self.pushCd = PUSH_COOLDOWN;
   end
   
-  if pulling then
-    self.joystick:setVibration( jpull, jpull )
-  else
-    self.joystick:setVibration( 0, 0 )
+  if self.joystick ~= nil then
+    if pulling then
+      self.joystick:setVibration( jpull, jpull )
+    else
+      self.joystick:setVibration( 0, 0 )
+    end
+    
   end
   
   if pulling or pushing then
@@ -196,7 +207,7 @@ function Player:draw()
   
   for k, particleSystem in pairs(self.particleSystems) do
     local x, y = self.body:getPosition()
-    love.graphics.draw(particleSystem, x, y)
+    love.graphics.draw(particleSystem, x+PLAYER_RADIUS/2, y+PLAYER_RADIUS/2)
   end
 end
 
