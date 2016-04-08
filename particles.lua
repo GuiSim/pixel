@@ -1,8 +1,8 @@
 Particle = {}
 
 function Particle.ballImpactWithPlayer()
-  local texture = love.graphics.newImage("assets/textures/smoke.png")
-  local emitter = love.graphics.newParticleSystem(texture,10)
+  local tex = love.graphics.newImage("assets/textures/smoke.png")
+  local emitter = love.graphics.newParticleSystem(tex,10)
   emitter:setDirection(0)
   emitter:setAreaSpread("uniform",1,1)
   emitter:setEmissionRate(200)
@@ -22,5 +22,30 @@ function Particle.ballImpactWithPlayer()
   emitter:setSizes(1)
   emitter:setSizeVariation(0)
   emitter:setColors(254,255,255,255, 255,255,255,255 )
+  return emitter;
+end
+
+function Particle.ballImpactWithAnything()
+  local tex = love.graphics.newImage("assets/textures/spark.png")
+  local emitter = love.graphics.newParticleSystem(tex,50)
+  emitter:setDirection(6.9388939039072e-16)
+  emitter:setAreaSpread("none",0,0)
+  emitter:setEmissionRate(357)
+  emitter:setEmitterLifetime(0.10000000149012)
+  emitter:setLinearAcceleration(0,0,0,0)
+  emitter:setParticleLifetime(0,0.5)
+  emitter:setRadialAcceleration(0,0)
+  emitter:setRotation(0,0)
+  emitter:setTangentialAcceleration(0,0)
+  emitter:setSpeed(88,90)
+  emitter:setSpin(0,0)
+  emitter:setSpinVariation(2.7755575615629e-17)
+  emitter:setLinearDamping(0,2)
+  emitter:setSpread(6.1999998092651)
+  emitter:setRelativeRotation(false)
+  emitter:setOffset(2.5,2.5)
+  emitter:setSizes(1,1,1,1,1,1,1,1)
+  emitter:setSizeVariation(1)
+  emitter:setColors(255,255,255,255 )
   return emitter;
 end

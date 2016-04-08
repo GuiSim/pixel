@@ -9,7 +9,8 @@ function Ball.create(def, game)
   local ball = {
     game = game,
     startingX = def.x,
-    startingY = def.y
+    startingY = def.y,
+    particleSystems = {}
   }
   
   setmetatable(ball, Ball)
@@ -28,7 +29,7 @@ function Ball.create(def, game)
 end
 
 function Ball:collisionBegin(other, collision)
-  
+    table.insert(self.particleSystems, Particle.ballImpactWithAnything())
 end
 
 
@@ -36,12 +37,20 @@ function Ball:control()
 end
 
 function Ball:update(dt)
+  for k, particleSystem in pairs(self.particleSystems) do
+    particleSystem:update(dt)
+  end
 end
 
 function Ball:draw()
   love.graphics.setColor(255, 255, 0);
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), BALL_RADIUS)
-    love.graphics.setColor(255, 255, 255);
+  love.graphics.setColor(255, 255, 255);
+  
+  for k, particleSystem in pairs(self.particleSystems) do
+    local x, y = self.body:getPosition()
+    love.graphics.draw(particleSystem, x+BALL_RADIUS/2, y+BALL_RADIUS/2)
+  end
 end
 
 function Ball:reset()

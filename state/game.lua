@@ -22,17 +22,15 @@ function game:enter(current, def)
 end
 
 function game.collisionBegin(a, b, collision)
-  if a:getBody():getUserData() ~= nil and b:getBody():getUserData() ~= nil then
-    aUserData = a:getBody():getUserData()
-    bUserData = b:getBody():getUserData()
-    
-    if aUserData.collisionBegin ~= nil then
-      aUserData:collisionBegin(bUserData, collision)
-    end
-    
-    if bUserData.collisionBegin ~= nil then
-      bUserData:collisionBegin(a, collision)
-    end
+  aUserData = a:getBody():getUserData()
+  bUserData = b:getBody():getUserData()
+  
+  if aUserData ~= nil and aUserData.collisionBegin ~= nil then
+    aUserData:collisionBegin(bUserData, collision)
+  end
+  
+  if bUserData ~= nil and bUserData.collisionBegin ~= nil then
+    bUserData:collisionBegin(a, collision)
   end
 end
 
@@ -49,7 +47,6 @@ function game:update(dt)
     if player.hitpoints <= 0 then
       playerThatDied = player;
       -- TODO: Play death animation
-      -- TODO: Scoreboard must persist.
     end
   end
   

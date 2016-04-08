@@ -21,7 +21,6 @@ function Player.create(def, game)
     
     pullApplied = 0,
     particleSystems = {}
-
   }
   
   setmetatable(player, Player)
@@ -41,7 +40,7 @@ function Player.create(def, game)
 end
 
 function Player:collisionBegin(other, collision)
-  if other.type == "Ball" and self.invulnerabilityTime <= 0 then
+  if other ~= nil and other.type == "Ball" and self.invulnerabilityTime <= 0 then
     local vx, vy = other.body:getLinearVelocity()
     
     local velocity = vector.len(vx, vy)
@@ -190,7 +189,7 @@ function Player:draw()
   
   for k, particleSystem in pairs(self.particleSystems) do
     local x, y = self.body:getPosition()
-    love.graphics.draw(particleSystem, x, y)
+    love.graphics.draw(particleSystem, x+PLAYER_RADIUS/2, y+PLAYER_RADIUS/2)
   end
 end
 
