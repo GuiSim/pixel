@@ -14,6 +14,25 @@ function game:enter(current, def)
   for k, entity in pairs(def.entities) do
     if EntityTypes[entity.type] ~= nil then
       self.entities[k] = EntityTypes[entity.type].create(entity, self);
+      self.entities[k].type = entity.type
+    end
+  end
+  
+  self.world:setCallbacks(game.collisionBegin, collisionEnd, preSolve, postSolve)
+  
+end
+
+function game.collisionBegin(a, b, collision)
+  if a:getBody():getUserData() ~= nil and b:getBody():getUserData() ~= nil then
+    aUserData = a:getBody():getUserData()
+    bUserData = b:getBody():getUserData()
+    
+    if aUserData.collisionBegin ~= nil then
+      aUserData:collisionBegin(bUserData, collision)
+    end
+    
+    if bUserData.collisionBegin ~= nil then
+      bUserData:collisionBegin(a, collision)
     end
   end
 end
@@ -26,34 +45,6 @@ function game:update(dt)
     entity:update(dt)
   end
   
-  --[[
-  local left = self.tiled.width * 16
-  local right = 0
-  local top = self.tiled.height * 16
-  local bottom = 0
-
-  for k, player in pairs(self.players) do
-    left = math.min(left, player.x - 120)
-    right = math.max(right, player.x + 128)
-    top = math.min(top, player.y - 40)
-    bottom = math.max(bottom, player.y + 40)
-  end
-
-  left = math.max(0, left)
-  right = math.min(self.tiled.width * 16, right)
-  top = math.max(0, top)
-  bottom = math.min(self.tiled.height * 16, bottom)
-
-  self.camera.scale = love.graphics.getWidth() / (right - left), love.graphics.getHeight() / (bottom - top)
-
-  local centerX, centerY = (left + right) / 2, (top + bottom) / 2
-
-  centerY = math.min( centerY * self.camera.scale, self.tiled.height * 16 - love.graphics.getHeight() / self.camera.scale / 2)
-
-  local x, y = math.floor((centerX - self.camera.x) * dt * 4), math.floor((centerY - self.camera.y) * dt * 4)
-
-  self.camera:move(x, y)
-  ]]--
 end
 
 function game:draw()

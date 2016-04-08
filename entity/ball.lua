@@ -8,12 +8,15 @@ Ball.mask = -1;
 function Ball.create(def, game)
   local joysticks = love.joystick.getJoysticks()
   local ball = {
-    game = game,
+    game = game
   }
+  
   setmetatable(ball, Ball)
   
   ball.body = love.physics.newBody(game.world, def.x, def.y, "dynamic")
   ball.body:setAngularDamping( 2 )
+  
+  ball.body:setUserData(ball)
   
   local fixture = love.physics.newFixture(ball.body, love.physics.newCircleShape(BALL_RADIUS), 1)
   fixture:setRestitution(1)
@@ -21,6 +24,10 @@ function Ball.create(def, game)
   table.insert(game.balls, ball)
 
   return ball
+end
+
+function Ball:collisionBegin(other, collision)
+  
 end
 
 
