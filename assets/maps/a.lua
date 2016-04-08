@@ -16,19 +16,6 @@ return {
       y = 32
     },
     {
-      type = 'Ball',
-      no = 2,
-      x = 64,
-      y = 32
-    },
-    {
-      type = 'PlayerBlock',
-      points = {BAR_LENGTH - BAR_WIDTH/2, 0, 
-                BAR_LENGTH + BAR_WIDTH/2, 0,
-                BAR_LENGTH + BAR_WIDTH/2, BAR_LENGTH,
-                BAR_LENGTH - BAR_WIDTH/2, BAR_LENGTH}
-    },
-    {
       type = 'Arena',
       polygons = {
         {
@@ -60,6 +47,19 @@ return {
                     BAR_LENGTH * 2 - BAR_WIDTH, BAR_LENGTH}
         }
       }
+    },
+    {
+      type = 'PlayerBlock',
+      points = {BAR_LENGTH - BAR_WIDTH/2, 0, 
+                BAR_LENGTH + BAR_WIDTH/2, 0,
+                BAR_LENGTH + BAR_WIDTH/2, BAR_LENGTH,
+                BAR_LENGTH - BAR_WIDTH/2, BAR_LENGTH}
+    },
+    {
+      type = 'Ball',
+      no = 2,
+      x = 64,
+      y = 32
     }
   }
 }

@@ -37,7 +37,9 @@ function Ball:update(dt)
 end
 
 function Ball:draw()
+  love.graphics.setColor(255, 255, 0);
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), BALL_RADIUS)
+    love.graphics.setColor(255, 255, 255);
 end
 
 return Ball

@@ -45,6 +45,15 @@ function game:update(dt)
     entity:update(dt)
   end
   
+  for k, player in pairs(self.players) do
+    if player.hitpoints <= 0 then
+      -- TODO: Play death animation
+      -- TODO: Scoreboard must persist.
+      Gamestate.switch(require('state.game'), require('assets.maps.a'))
+    end
+  end
+  
+  
 end
 
 function game:draw()

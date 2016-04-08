@@ -15,11 +15,11 @@ require "constants"
 
 -- entities
 EntityTypes = {
-  Ball = require "entity.ball",
   Player = require "entity.player",
   PlayerBlock= require "entity.playerBlock",
   Arena = require "entity.arena",
-  HitPoints = require "entity.hitpoints"
+  HitPoints = require "entity.hitpoints",
+  Ball = require "entity.ball"
 }
 
 function love.load()

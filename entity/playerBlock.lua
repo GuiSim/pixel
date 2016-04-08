@@ -25,6 +25,7 @@ end
 function PlayerBlock:draw()
   love.graphics.setColor(100, 100, 100)
   love.graphics.polygon('fill', self.points)
+  love.graphics.setColor(255,255,255)
 end
 
 return PlayerBlock
