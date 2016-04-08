@@ -4,6 +4,9 @@ Player.__index = Player
 Player.category = 1;
 Player.mask = -1;
 
+local pullSound = love.audio.newSource("assets/sounds/pullSound.mp3", "static")
+pullSound:setLooping(true)
+
 function Player.create(def, game)
   local joysticks = love.joystick.getJoysticks()
   local player = {
@@ -20,7 +23,8 @@ function Player.create(def, game)
     pushCd = 0,
     
     pullApplied = 0,
-    particleSystems = {}
+    particleSystems = {},
+    pullSound = pullSound:clone()
   }
   
   setmetatable(player, Player)
@@ -146,6 +150,10 @@ function Player:update(dt)
     
   end
   
+  if pulling then
+    love.audio.play( self.pullSound )
+  end
+  
   if pulling or pushing then
     local energieCost = 0;
     for k, ball in pairs(self.game.balls) do
@@ -218,7 +226,6 @@ function Player:draw()
     love.graphics.setColor(r, g, b, 255)
     love.graphics.circle('line', pullx, pully, PUSH_LENGTH)
   end
-  
   
   if self.invulnerabilityTime > 0 then
     r = 255;

@@ -4,6 +4,13 @@ Ball.__index = Ball
 Ball.category = 2;
 Ball.mask = -1;
 
+local ballplayercollionSound = love.audio.newSource("assets/sounds/ballPlayerCollision.mp3", "static")
+local wallCollision = {
+  love.audio.newSource("assets/sounds/fireballWallCollision.mp3", "static"),
+  love.audio.newSource("assets/sounds/fireballWallCollision2.mp3", "static"),
+  love.audio.newSource("assets/sounds/fireballWallCollision3.mp3", "static")
+}
+
 function Ball.create(def, game)
   local joysticks = love.joystick.getJoysticks()
   local ball = {
@@ -29,9 +36,13 @@ function Ball.create(def, game)
 end
 
 function Ball:collisionBegin(other, collision)
-  if (other:getUserData() ~= nil and other:getUserData().type == "Player") then
+  local body = other:getBody();
+  if (body:getUserData() ~= nil and body:getUserData().type == "Player") then
     table.insert(self.particleSystems, Particle.ballImpactWithPlayer())
+    love.audio.play(ballplayercollionSound:clone())
   else
+    local r = love.math.random( 1, #wallCollision )
+    love.audio.play(wallCollision[r]:clone())
     table.insert(self.particleSystems, Particle.ballImpactWithWall())
   end
 end
