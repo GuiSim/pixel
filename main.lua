@@ -13,6 +13,7 @@ debugWorld = require "debugWorld"
 
 -- entities
 EntityTypes = {
+  Ball = require "entity.ball",
   Player = require "entity.player",
   PlayerBlock= require "entity.playerBlock",
   Arena = require "entity.arena"

@@ -18,7 +18,6 @@ function Player.create(def, game)
   
   local fixture = love.physics.newFixture(player.body, love.physics.newCircleShape(radius), 1)
   fixture:setFilterData( Player.category, Player.mask, 0 )
-  
   table.insert(game.players, player)
 
   return player

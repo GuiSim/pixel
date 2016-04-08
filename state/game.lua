@@ -9,6 +9,7 @@ function game:enter(current, def)
   self.world = love.physics.newWorld(0, 0, false)
   self.camera = Camera()
   self.entities = {}
+  self.balls = {}
   self.players = {}
   for k, entity in pairs(def.entities) do
     if EntityTypes[entity.type] ~= nil then
