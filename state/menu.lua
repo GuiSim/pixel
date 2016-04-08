@@ -21,7 +21,7 @@ local cursor = love.graphics.newImage("assets/textures/startscreen_arrow.png")
 function menu:update(dt)
   sunParticles:update(dt);
   -- Hold escape to quit
-  if love.keyboard.isDown("escape") or love.joystick.getJoysticks()[1]:isGamepadDown("guide") then 
+  if love.keyboard.isDown("escape") or (love.joystick.getJoysticks()[1] and love.joystick.getJoysticks()[1]:isGamepadDown("guide")) then 
     menu.escapeHeldFor = menu.escapeHeldFor + dt
   else 
     menu.escapeHeldFor = 0
