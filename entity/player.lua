@@ -55,9 +55,9 @@ function Player:control()
     return 0, 0, 0, false
   end
   
-  x = self.joystick:getGamepadAxis('leftx')
-  y = self.joystick:getGamepadAxis('lefty')
-  tl = self.joystick:getGamepadAxis('triggerleft')
+  local x = self.joystick:getGamepadAxis('leftx')
+  local y = self.joystick:getGamepadAxis('lefty')
+  local tl = self.joystick:getGamepadAxis('triggerleft')
   
   if vector.len2(x,y) < 0.2 then
     x = 0
@@ -155,6 +155,8 @@ function Player:draw()
   love.graphics.setColor(r,g,b,a);
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), PLAYER_RADIUS)
   love.graphics.setColor(255,255,255)
+  
+  if  then
 end
 
 function Player:reset()
