@@ -12,7 +12,7 @@ function love.conf(config)
 
   config.window.title = "TopDownGame"         -- The window title (string)
   config.window.icon = nil                 -- Filepath to an image to use as the window's icon (string)
-  config.window.width = 800                -- The window width (number)
+  config.window.width = 1200                -- The window width (number)
   config.window.height = 600               -- The window height (number)
   config.window.borderless = false         -- Remove all border visuals from the window (boolean)
   config.window.resizable = true          -- Let the window be user-resizable (boolean)
