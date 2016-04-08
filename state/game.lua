@@ -84,6 +84,7 @@ function game:draw()
     end
     self.camera:detach()
   love.graphics.pop()
+  love.graphics.reset()
 end
 
 return game

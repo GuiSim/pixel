@@ -17,8 +17,9 @@ function Player.create(def, game)
     startingY = def.y,
     power = 1000,
     keys = { a = false, b = false, x = false, y = false },
-    pushCd = 0
-
+    pushCd = 0,
+    
+    pullApplied = 0
   }
   
   setmetatable(player, Player)
@@ -68,6 +69,11 @@ function Player:control()
     tl = 0
   end
   
+  return x, y, tl
+end
+
+function Player:update(dt)
+    
   local keys = {
     a = self.joystick:isGamepadDown('a'),
     b = self.joystick:isGamepadDown('b'),
@@ -85,15 +91,11 @@ function Player:control()
     end
   end
   
-  local pushing = keys['a'] and self.power >= PUSH_COST and self.pushCd == 0 
+  local pushing = keys['a'] and self:canPush()
   
-  return x, y, tl, pushing
-end
-
-function Player:update(dt)
-  local jx, jy, jpull, pushing = self:control()
+  local jx, jy, jpull = self:control()
   local pulling = jpull > 0;
-
+  self.pullApplied = jpull;
   
   self.invulnerabilityTime = math.max(0, self.invulnerabilityTime - dt);
   self.body:applyForce(vector.mul(PLAYER_FORCE, jx, jy));
@@ -134,7 +136,12 @@ function Player:update(dt)
   end
 end
 
+function Player:canPush()
+  return self.power >= PUSH_COST and self.pushCd == 0 
+end
+
 function Player:draw()
+  
   local r = 50;
   local g = 50;
   local b = 50;
@@ -146,6 +153,15 @@ function Player:draw()
     b = 255; 
   end
   
+  love.graphics.setColor(r, g, b, self.pullApplied * 100)
+  love.graphics.circle('fill', self.body:getX(), self.body:getY(), PULL_LENGTH)
+  
+  if self:canPush() then
+    love.graphics.setLineWidth(3);
+    love.graphics.setColor(r, g, b, 255)
+    love.graphics.circle('line', self.body:getX(), self.body:getY(), PUSH_LENGTH)
+  end
+  
   if self.invulnerabilityTime > 0 then
     r = 255;
     g = 255;
@@ -155,8 +171,6 @@ function Player:draw()
   love.graphics.setColor(r,g,b,a);
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), PLAYER_RADIUS)
   love.graphics.setColor(255,255,255)
-  
-  if  then
 end
 
 function Player:reset()
