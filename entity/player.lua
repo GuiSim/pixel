@@ -11,13 +11,14 @@ function Player.create(def, game)
     joystick = joysticks[tonumber(def.no)],
     no = def.no,
     hitpoints = PLAYER_HITPOINTS,
-<<<<<<< HEAD
+    invulnerabilityTime = 0,
+    score = 0,
+    startingX = def.x,
+    startingY = def.y
     power = 1000,
     keys = { a = false, b = false, x = false, y = false },
     pushCd = 0
-=======
-    invulnerabilityTime = 0
->>>>>>> bd6f266525af0ddd8a79843dc2e57216b037bbce
+
   }
   
   setmetatable(player, Player)
@@ -30,7 +31,8 @@ function Player.create(def, game)
   local fixture = love.physics.newFixture(player.body, love.physics.newCircleShape(PLAYER_RADIUS), PLAYER_DENSITY)  fixture:setFilterData( Player.category, Player.mask, 0 )
   table.insert(game.players, player)
 
-  game.entities["player_" .. def.no] = EntityTypes.HitPoints.create({player = player}, game);
+  game.entities["player_health_" .. def.no] = EntityTypes.HitPoints.create({player = player}, game);
+  game.entities["player_score_" .. def.no] = EntityTypes.Scoreboard.create({player = player}, game);
 
   return player
 end
@@ -89,14 +91,11 @@ function Player:control()
 end
 
 function Player:update(dt)
-<<<<<<< HEAD
   local jx, jy, jpull, pushing = self:control()
   local pulling = jpull > 0;
+
   
-=======
-  local jx, jy, jpull = self:control()
   self.invulnerabilityTime = math.max(0, self.invulnerabilityTime - dt);
->>>>>>> bd6f266525af0ddd8a79843dc2e57216b037bbce
   self.body:applyForce(vector.mul(PLAYER_FORCE, jx, jy));
   
   local x, y = self.body:getPosition();
@@ -139,7 +138,7 @@ function Player:draw()
   local r = 50;
   local g = 50;
   local b = 50;
-  local a = self.hitpoints*255/100;
+  local a = self.hitpoints*255/PLAYER_HITPOINTS;
   
   if self.no == 1 then
     r = 255;
@@ -152,14 +151,17 @@ function Player:draw()
     g = 255;
     b = 255;
   end
-<<<<<<< HEAD
-
-=======
       
   love.graphics.setColor(r,g,b,a);
->>>>>>> bd6f266525af0ddd8a79843dc2e57216b037bbce
   love.graphics.circle('fill', self.body:getX(), self.body:getY(), PLAYER_RADIUS)
   love.graphics.setColor(255,255,255)
 end
+
+function Player:reset()
+  self.body:setPosition(self.startingX, self.startingY)
+  self.body:setLinearVelocity(0,0,0)
+  self.hitpoints = PLAYER_HITPOINTS
+end
+
 
 return Player
