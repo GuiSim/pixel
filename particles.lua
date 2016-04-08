@@ -1,0 +1,26 @@
+Particle = {}
+
+function Particle.ballImpactWithPlayer()
+  local texture = love.graphics.newImage("assets/textures/smoke.png")
+  local emitter = love.graphics.newParticleSystem(texture,10)
+  emitter:setDirection(0)
+  emitter:setAreaSpread("uniform",1,1)
+  emitter:setEmissionRate(200)
+  emitter:setEmitterLifetime(1)
+  emitter:setLinearAcceleration(0,0,0,0)
+  emitter:setParticleLifetime(1,1)
+  emitter:setRadialAcceleration(25,46)
+  emitter:setRotation(0,0)
+  emitter:setTangentialAcceleration(0,0)
+  emitter:setSpeed(18,30)
+  emitter:setSpin(0,0)
+  emitter:setSpinVariation(0)
+  emitter:setLinearDamping(0,0)
+  emitter:setSpread(6)
+  emitter:setRelativeRotation(false)
+  emitter:setOffset(16,16)
+  emitter:setSizes(1)
+  emitter:setSizeVariation(0)
+  emitter:setColors(254,255,255,255, 255,255,255,255 )
+  return emitter;
+end
