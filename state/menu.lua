@@ -21,7 +21,6 @@ function menu:draw()
   love.graphics.draw(menuTitle, 0, 0);
   love.graphics.draw(menuTwoPlayers, 0, 0);
   love.graphics.draw(menuFourPlayers,0 ,0);
---  love.graphics.draw(cursor, 900 - menuTwoPlayers:getWidth()/2, menu.selection * 200 + 800)
   love.graphics.draw(cursor, 650, menu.selection * 200 + 350)
 end
 
