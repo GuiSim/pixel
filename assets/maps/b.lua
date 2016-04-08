@@ -93,6 +93,7 @@ return {
       x = TOP_LEFT_X + 32;
       y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2,
       texture = love.graphics.newImage("assets/textures/red.png"),
+      pullTexture = love.graphics.newImage("assets/textures/red_pull.png"),
       startDirection = 1,
       team = 1
     },
@@ -102,6 +103,7 @@ return {
       x = TOP_LEFT_X + BAR_LENGTH_HORIZONTAL - 32,
       y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2,
       texture = love.graphics.newImage("assets/textures/blue.png"),
+      pullTexture = love.graphics.newImage("assets/textures/blue_pull.png"),
       startDirection = -1,
       team = 2
     },

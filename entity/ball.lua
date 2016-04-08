@@ -18,7 +18,7 @@ function Ball.create(def, game)
     startingX = def.x,
     startingY = def.y,
     particleSystems = {},
-    texture = def.texture
+    texture = def.texture,
   }
   
   setmetatable(ball, Ball)
@@ -33,7 +33,9 @@ function Ball.create(def, game)
   fixture:setFilterData( Ball.category, Ball.mask, 0 )
   table.insert(game.balls, ball)
   
-  table.insert(ball.particleSystems, Particle.ballMovement())
+  ball.ballMovement = Particle.ballMovement()
+  
+  table.insert(ball.particleSystems, ball.ballMovement)
 
   return ball
 end
@@ -55,6 +57,7 @@ end
 function Ball:update(dt)
   for k, particleSystem in pairs(self.particleSystems) do
     particleSystem:update(dt)
+    self.ballMovement:setPosition(self.body:getX(), self.body:getY())
   end
 end
 
