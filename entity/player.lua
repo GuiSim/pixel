@@ -110,7 +110,7 @@ function Player:update(dt)
     self.body:setActive( false )
     love.audio.stop( self.pullSound )
     if (self.joystick) then
-      self.joystick:setVibration( 1, 1 )
+      self.joystick:setVibration( DEATH_VIRATION, DEATH_VIRATION )
     end
   end
   

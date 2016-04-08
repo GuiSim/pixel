@@ -44,6 +44,9 @@ end
 
 function game.leave()
   love.audio.stop( music )
+  for k, joystick in pairs(love.joystick.getJoysticks()) do
+    joystick:setVibration(0,0)
+  end
 end
 
 function game.collisionBegin(a, b, collision)
@@ -75,8 +78,10 @@ function game:update(dt)
   local nbTeamAlive = 0;
   for k, player in pairs(self.players) do
     if player.hitpoints > 0 then
-      nbTeamAlive = nbTeamAlive + 1;
-      teamAlive = player.team
+      if teamAlive ~=  player.team then
+        nbTeamAlive = nbTeamAlive + 1;
+        teamAlive = player.team
+      end
     end
   end
   
