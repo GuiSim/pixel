@@ -18,7 +18,7 @@ function Player.create(def, game)
     score = 0,
     startingX = def.x,
     startingY = def.y,
-    power = 1000,
+    power = PLAYER_STARTING_ENERGIE,
     keys = { a = false, b = false, x = false, y = false },
     pushCd = 0,
     
