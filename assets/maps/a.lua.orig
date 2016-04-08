@@ -10,16 +10,10 @@ return {
       y = 32
     },
     {
-      type = 'Player',
-      no = 2,
-      x = BAR_LENGTH * 2 - 32,
-      y = 32
-    },
-    {
+<<<<<<< HEAD
       type = 'PlayerBlock',
       points = {64, 0, 64, 300, 96, 300, 96, 0}
-    },
-    {
+=======
       type = 'Arena',
       polygons = {
         {
@@ -51,6 +45,7 @@ return {
                     BAR_LENGTH * 2 - BAR_WIDTH, BAR_LENGTH}
         }
       }
+>>>>>>> fdcf38e44077606487c2c9a68b28013e37a429d5
     }
   }
 }
