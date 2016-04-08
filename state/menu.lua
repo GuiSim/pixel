@@ -5,7 +5,7 @@ function menu:draw()
 end
 
 function menu:joystickpressed(joystick, button)
-  Gamestate.switch(require('state.game'), require('assets.maps.a'))
+  Gamestate.switch(require('state.game'), require('assets.maps.b'))
 end
 
 return menu
