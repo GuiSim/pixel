@@ -24,6 +24,7 @@ function PlayerBlock:update(dt)
 end
 
 function PlayerBlock:draw()
+  love.graphics.setColor(100, 100, 100)
   love.graphics.polygon('fill', self.points)
 end
 

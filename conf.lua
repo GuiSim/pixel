@@ -43,4 +43,5 @@ function love.conf(config)
   config.modules.video = true              -- Enable the video module (boolean)
   config.modules.window = true             -- Enable the window module (boolean)
   config.modules.thread = true             -- Enable the thread module (boolean)
+  
 end

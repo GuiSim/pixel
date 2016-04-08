@@ -20,6 +20,12 @@ EntityTypes = {
 }
 
 function love.load()
+  
+      -- Conf
+    love.physics.setMeter(50)
+    
     Gamestate.registerEvents()
     Gamestate.switch(require('state.menu'))
+  
+
 end
