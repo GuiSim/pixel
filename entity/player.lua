@@ -30,7 +30,13 @@ end
 
 function Player:collisionBegin(other, collision)
   if other.type == "Ball" then
-    self.hitpoints = self.hitpoints - BALL_DAMAGE
+    local vx, vy = other.body:getLinearVelocity()
+    
+    local velocity = vector.len(vx, vy)
+    
+    local damage = BALL_DAMAGE * velocity/BALL_DAMAGE_SPEED_SCALING
+    damage = math.min(damage, BALL_MAX_DAMAGE)
+    self.hitpoints = self.hitpoints - math.floor(damage)
   end
 end
 

@@ -24,7 +24,7 @@ EntityTypes = {
 
 function love.load()
   
-      -- Conf
+    -- Conf
     love.physics.setMeter(50)
     
     Gamestate.registerEvents()

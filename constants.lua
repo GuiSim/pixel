@@ -7,5 +7,7 @@ PLAYER_HITPOINTS = 100;
 BALL_DAMAGE = 10;
 
 BALL_RADIUS = 8;
+BALL_DAMAGE_SPEED_SCALING = 500; -- Higher leads to less damage based on speed
+BALL_MAX_DAMAGE = 20;
 
 PLAYER_RADIUS = 16; -- Size of the player's circle
