@@ -3,20 +3,20 @@ DEATH_VIRATION = 0.3 -- HMMMMMMMM 0 to 1
 
 PULL_LENGTH = 450; -- How far player can pull
 PULL_LENGTH2 = PULL_LENGTH * PULL_LENGTH; -- Square of how far player can pull
-PULL_FORCE = 500; -- Force at which the player pulls the ball
+PULL_FORCE = 600; -- Force at which the player pulls the ball
 
 PUSH_COST = 100;
-PUSH_COOLDOWN = 5;
+PUSH_COOLDOWN = 0;
 PUSH_LENGTH = 1000; -- How far player can push
 PUSH_LENGTH2 = PUSH_LENGTH * PUSH_LENGTH; -- Square of how far player can push
 PUSH_FORCE = 10000; -- Force at which the player pulls the ball
 
-PLAYER_FORCE = 6000; -- Force put on the player to move the joystick
+PLAYER_FORCE = 10000; -- Force put on the player to move the joystick
 PLAYER_DAMPENING = 5; -- Dampening on player movement
 PLAYER_DENSITY = 0.5; -- Player density (higher means more mass)
 PLAYER_HITPOINTS = 100;
 
-CONTROLL_RANGE = 0;
+CONTROLL_RANGE = 150;
 
 BALL_DENSITY =0.9;
 BALL_DAMAGE = 12;
@@ -27,8 +27,8 @@ BALL_MAX_VELOCITY = 1500
 
 PLAYER_RADIUS = 80; -- Size of the player's circle
 
-PLAYER_ENERGIE_GIVEN = 10; -- pull give energie to other
-PLAYER_ENERGIE_MAX = 10; -- pull give energie to other
+PLAYER_ENERGIE_GIVEN = 35; -- pull give energie to other
+PLAYER_ENERGIE_MAX = 35; -- pull give energie to other
 PLAYER_STARTING_ENERGIE = 50
 PLAYER_INVULNERABILITY_DURATION = 1.5; -- Duration of invulnerability following a player's hit (s)
 
