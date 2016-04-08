@@ -57,10 +57,15 @@ end
 
 function game:draw()
   love.graphics.clear(0,0,0,0)
+  love.graphics.setColor(255,255,255,255)
   love.graphics.push()
     self.camera:attach()
-    for k, entity in pairs(self.entities) do
-      entity:draw()
+    if love.keyboard.isDown('q') then
+      debugWorld(self.world, 0, 0, 2000, 2000)
+    else
+      for k, entity in pairs(self.entities) do
+        entity:draw()
+      end
     end
     self.camera:detach()
   love.graphics.pop()

@@ -16,7 +16,8 @@ EntityTypes = {
   Player = require "entity.player",
   Enemy = require "entity.enemy",
   Platform = require "entity.platform",
-  Block = require "entity.block"
+  Block = require "entity.block",
+  PlayerBlock= require "entity.playerBlock"
 }
 
 function love.load()
