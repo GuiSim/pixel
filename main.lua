@@ -11,6 +11,8 @@ bump = require 'bump'
 
 debugWorld = require "debugWorld"
 
+require "constants"
+
 -- entities
 EntityTypes = {
   Ball = require "entity.ball",
@@ -22,7 +24,7 @@ EntityTypes = {
 
 function love.load()
   
-      -- Conf
+    -- Conf
     love.physics.setMeter(50)
     
     Gamestate.registerEvents()

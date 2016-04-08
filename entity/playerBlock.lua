@@ -1,7 +1,6 @@
 local PlayerBlock = {}
 PlayerBlock.__index = PlayerBlock
 
-local radius = 16;
 PlayerBlock.category = -1;
 
 
@@ -15,7 +14,7 @@ function PlayerBlock.create(def, game)
   playerBlock.body = love.physics.newBody(game.world, 0, 0, "static")
 
   local fixture = love.physics.newFixture(playerBlock.body, love.physics.newPolygonShape(def.points), 1)
-  fixture:setFilterData( PlayerBlock.category, EntityTypes.Player.category, 0 )
+  fixture:setFilterData(PlayerBlock.category, EntityTypes.Player.category, 0)
   
   return playerBlock
 end
