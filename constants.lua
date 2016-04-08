@@ -15,7 +15,7 @@ PLAYER_DAMPENING = 5; -- Dampening on player movement
 PLAYER_DENSITY = 10; -- Player density (higher means more mass)
 PLAYER_HITPOINTS = 100;
 
-CONTROLL_RANGE = 75;
+CONTROLL_RANGE = 0;
 
 BALL_DENSITY = 0.09;
 BALL_DAMAGE = 8;
