@@ -1,9 +1,9 @@
 Particle = {}
 
-function Particle.ballImpactWithWall()
+function Particle.ballImpactWithWall(nx, ny, x, y)
   local tex = love.graphics.newImage("assets/textures/smoke.png")
   local emitter = love.graphics.newParticleSystem(tex,25)
-  emitter:setDirection(0)
+  emitter:setDirection(vector.angleTo(nx, ny))
   emitter:setAreaSpread("none",0,0)
   emitter:setEmissionRate(300)
   emitter:setEmitterLifetime(1)
@@ -18,17 +18,18 @@ function Particle.ballImpactWithWall()
   emitter:setLinearDamping(0,0)
   emitter:setSpread(2.7999999523163)
   emitter:setRelativeRotation(false)
-  emitter:setOffset(0,0)
+  emitter:setOffset(0, 0)
   emitter:setSizes(1)
   emitter:setSizeVariation(0)
-  emitter:setColors(255,255,255,255 )
+  emitter:setColors(255,255,255,255)
+  emitter:setPosition(x, y)
   return emitter;
 end
 
-function Particle.ballImpactWithPlayer()
+function Particle.ballImpactWithPlayer(nx, ny, x, y)
   local tex = love.graphics.newImage("assets/textures/spark.png")
   local emitter = love.graphics.newParticleSystem(tex,50)
-  emitter:setDirection(0)
+  emitter:setDirection(vector.angleTo(nx, ny))
   emitter:setAreaSpread("none",0,0)
   emitter:setEmissionRate(300)
   emitter:setEmitterLifetime(1)
@@ -43,10 +44,11 @@ function Particle.ballImpactWithPlayer()
   emitter:setLinearDamping(0,0)
   emitter:setSpread(5.5999999046326)
   emitter:setRelativeRotation(false)
-  emitter:setOffset(0,0)
+  emitter:setOffset(0, 0)
   emitter:setSizes(1)
   emitter:setSizeVariation(0)
-  emitter:setColors(255,255,255,255 )
+  emitter:setColors(255,255,255,255)
+  emitter:setPosition(x, y)
   return emitter;
 end
 
