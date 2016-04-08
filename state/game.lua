@@ -2,6 +2,9 @@ local orderZ = function(a,b)
   return a.z < b.z
 end
 
+local music = love.audio.newSource("assets/sounds/fightLoopedMusic.mp3")
+music:setLooping(true)
+music:setVolume( 0.5 )
 local game = {
 }
 
@@ -17,8 +20,13 @@ function game:enter(current, def)
       self.entities[k].type = entity.type
     end
   end
+  love.audio.play( music )
   
   self.world:setCallbacks(game.collisionBegin, collisionEnd, preSolve, postSolve)
+end
+
+function game.leave()
+  love.audio.stop( music )
 end
 
 function game.collisionBegin(a, b, collision)
