@@ -26,12 +26,14 @@ function Player.create(def, game)
     particleSystems = {},
     pullSound = pullSound:clone(),
     texture = def.texture,
+    pullTexture = def.pullTexture,
     direction = def.startDirection,
     startDirection = def.startDirection,
     
     team = def.team,
     active = true,
     deathTimer = 0,
+    pulling = false
   }
   
   setmetatable(player, Player)
@@ -141,7 +143,7 @@ function Player:update(dt)
     local pushing = keys['a'] and self:canPush()
     
     local jx, jy, j2x, j2y, jpull = self:control()
-    local pulling = jpull > 0;
+    self.pulling = jpull > 0;
     self.pullApplied = jpull;
     
     self.invulnerabilityTime = math.max(0, self.invulnerabilityTime - dt);
@@ -159,20 +161,20 @@ function Player:update(dt)
     end
     
     if self.joystick ~= nil then
-      if pulling then
+      if self.pulling then
         self.joystick:setVibration( jpull * VIRATION, jpull * VIRATION)
       else
         self.joystick:setVibration( 0, 0 )
       end
     end
     
-    if pulling then
+    if self.pulling then
       love.audio.play( self.pullSound )
     else
       love.audio.stop( self.pullSound )
     end
     
-    if pulling or pushing then
+    if self.pulling or pushing then
       local energieCost = 0;
       
       for k, ball in pairs(self.game.balls) do
@@ -183,7 +185,7 @@ function Player:update(dt)
         local len = vector.len(diffX, diffY);
         
         -- Pull skill
-        if pulling and len < PULL_LENGTH then
+        if self.pulling and len < PULL_LENGTH then
             local energie = jpull * (1 - len / PULL_LENGTH);
             energieCost = energieCost + energie;
             ball.body:applyForce(vector.mul(energie * PULL_FORCE / len, diffX, diffY))
@@ -215,6 +217,7 @@ function Player:update(dt)
     self.deathTimer = 0;
     self.joystick:setVibration( 0, 0 )
   end
+  
   
   for k, particleSystem in pairs(self.particleSystems) do
     particleSystem:update(dt)
@@ -281,14 +284,18 @@ function Player:draw()
       elseif jx < 0 then
         self.direction = -1;
       end
-      
-  --    love.graphics.draw(self.texture, x-self.texture:getWidth()/2, y-self.texture:getHeight())
-      love.graphics.draw(self.texture, x, y, 0, self.direction, 1, self.texture:getWidth()/2, self.texture:getHeight())
+      -- Choose texture according to pull stance
+      local textureToUse;
+      if self.pulling then
+        textureToUse = self.pullTexture;
+      else
+        textureToUse = self.texture;
+      end
+      love.graphics.draw(textureToUse, x, y, 0, self.direction, 1, textureToUse:getWidth()/2, textureToUse:getHeight());
     end
     
   end
   
-  love.graphics.setColor(255,255,255,255);
   
   for k, particleSystem in pairs(self.particleSystems) do
     local x, y = self.body:getPosition()
