@@ -27,8 +27,8 @@ BALL_MAX_VELOCITY = 1500
 
 PLAYER_RADIUS = 80; -- Size of the player's circle
 
-PLAYER_ENERGIE_GIVEN = 35; -- pull give energie to other
-PLAYER_ENERGIE_MAX = 35; -- pull give energie to other
+PLAYER_ENERGIE_GIVEN = 50; -- pull give energie to other
+PLAYER_ENERGIE_MAX = 50; -- pull give energie to other
 PLAYER_STARTING_ENERGIE = 50
 PLAYER_INVULNERABILITY_DURATION = 1.5; -- Duration of invulnerability following a player's hit (s)
 
