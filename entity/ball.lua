@@ -32,10 +32,6 @@ function Ball:collisionBegin(other, collision)
     table.insert(self.particleSystems, Particle.ballImpactWithAnything())
 end
 
-
-function Ball:control()
-end
-
 function Ball:update(dt)
   for k, particleSystem in pairs(self.particleSystems) do
     particleSystem:update(dt)

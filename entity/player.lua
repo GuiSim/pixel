@@ -62,18 +62,18 @@ function Player:control()
   
   local x = self.joystick:getGamepadAxis('leftx')
   local y = self.joystick:getGamepadAxis('lefty')
-  local tl = self.joystick:getGamepadAxis('triggerleft')
+  local t = math.max(self.joystick:getGamepadAxis('triggerleft'), self.joystick:getGamepadAxis('triggerright'))
   
   if vector.len2(x,y) < 0.2 then
     x = 0
     y = 0
   end
   
-  if tl < 0.1 then
-    tl = 0
+  if t < 0.1 then
+    t = 0
   end
   
-  return x, y, tl
+  return x, y, t
 end
 
 function Player:update(dt)
@@ -133,7 +133,9 @@ function Player:update(dt)
           ball.body:applyForce(vector.mul(energie * PULL_FORCE / len, diffX, diffY))
       end
       if pushing and len < PUSH_LENGTH then
-          ball.body:setLinearVelocity(vector.mul((1 - len / PUSH_LENGTH) * PUSH_FORCE / len, diffX, diffY))
+        local normalX, normalY = vector.div( len, diffX, diffY)
+        local velocity = math.min(BALL_MAX_VELOCITY, (1 - len / PUSH_LENGTH) * PUSH_FORCE)
+        ball.body:setLinearVelocity(vector.mul(-1 * velocity, normalX, normalY))
       end
     end
     if energieCost > 0 then
