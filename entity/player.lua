@@ -14,7 +14,7 @@ function Player.create(def, game)
     invulnerabilityTime = 0,
     score = 0,
     startingX = def.x,
-    startingY = def.y
+    startingY = def.y,
     power = 1000,
     keys = { a = false, b = false, x = false, y = false },
     pushCd = 0
