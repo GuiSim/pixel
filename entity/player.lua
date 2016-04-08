@@ -111,6 +111,12 @@ function Player:update(dt)
     self.pushCd = PUSH_COOLDOWN;
   end
   
+  if pulling then
+    self.joystick:setVibration( jpull, jpull )
+  else
+    self.joystick:setVibration( 0, 0 )
+  end
+  
   if pulling or pushing then
     local energieCost = 0;
     for k, ball in pairs(self.game.balls) do
