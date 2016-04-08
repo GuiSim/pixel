@@ -62,6 +62,20 @@ return {
       }
     },
     {
+      type = 'Puller',
+      no = 1,
+      x = 300,
+      y = 300,
+      direction = 1
+    },
+    {
+      type = 'Pusher',
+      no = 1,
+      x = 300,
+      y = 100,
+      direction = -1
+    },
+    {
       type = 'Ball',
       no = 2,
       x = 64,

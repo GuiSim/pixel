@@ -25,3 +25,9 @@ PLAYER_RADIUS = 16; -- Size of the player's circle
 PLAYER_ENERGIE_GIVEN = 10; -- pull give energie to other
 PLAYER_ENERGIE_MAX = 10; -- pull give energie to other
 PLAYER_INVULNERABILITY_DURATION = 1; -- Duration of invulnerability following a player's hit (s)
+
+PULLER_FORCE = 3000
+PULLER_RANGE = 50
+
+PUSHER_FORCE = 3000
+PUSHER_RANGE = 50
