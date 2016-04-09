@@ -1,7 +1,7 @@
 Particle = {}
 
 function Particle.ballImpactWithWall(nx, ny, x, y)
-  local tex = love.graphics.newImage("assets/textures/smoke.png")
+  local tex = love.graphics.newImage("assets/textures/particle.png")
   local emitter = love.graphics.newParticleSystem(tex,25)
   emitter:setDirection(vector.angleTo(nx, ny))
   emitter:setAreaSpread("none",0,0)
