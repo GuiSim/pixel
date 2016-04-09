@@ -65,6 +65,14 @@ return {
       }
     },
     {
+      type = "StaticImage",
+      x = 0,
+      y = 0,
+      texture = love.graphics.newImage("assets/textures/LavaStage_LavaGlow_merged.png"),
+      pulseCycle = 1,
+      pulseMin = 0
+    },
+    {
       type = "Debris",
       minX = 400, maxX = 1600,
       minY = 400, maxY = 800,
