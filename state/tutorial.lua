@@ -30,7 +30,8 @@ end
 
 function tutorial:joystickpressed(joystick, button)
   if joystick:isGamepadDown("start") then
-    Gamestate.switch(Game, require('assets.maps.b'), Menu.selections[Menu.selection].playerCount)
+--    Gamestate.switch(Game, require('assets.maps.b'), Menu.selections[Menu.selection].playerCount)
+    Gamestate.switch(Game, require('assets.maps.tutorial_map'), Menu.selections[Menu.selection].playerCount)
   end
 end
 
