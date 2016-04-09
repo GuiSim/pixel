@@ -198,7 +198,7 @@ function Player:update(dt)
       for k, pullable in pairs(self.game.pullables) do
         if pullable.active then
           local pullableX, pullableY = pullable.body:getPosition();
-          local pullx, pully = vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE)
+          local pullx, pully = self:pullPosition()
           local diffX, diffY =  vector.sub(pullx,pully, pullableX, pullableY);
           local len = vector.len(diffX, diffY);
           
@@ -210,7 +210,8 @@ function Player:update(dt)
               pullable.body:applyForce(vector.mul(energie * PULL_FORCE / len, diffX, diffY))
           end
           
-          
+          diffX, diffY =  vector.sub(x, y, pullableX, pullableY);
+          len = vector.len(diffX, diffY);
           -- Push skill
           if pushing and len < PUSH_LENGTH then
             local normalX, normalY = vector.div( len, diffX, diffY)
@@ -250,7 +251,15 @@ function Player:update(dt)
 end
 
 function Player:canPush()
-  return self.power >= PUSH_COST and self.pushCd == 0 
+  local x, y = self.body:getPosition();
+  local jx, jy, j2x, j2y, jpull = self:control();
+  return vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE);
+end
+
+function Player:pullPosition()
+  local x, y = self.body:getPosition();
+  local jx, jy, j2x, j2y, jpull = self:control();
+  return vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE);
 end
 
 function Player:draw()  
