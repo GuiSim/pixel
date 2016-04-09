@@ -5,9 +5,11 @@ function Bump.create(def, game)
   local bump = {
     game = game,
     x = def.x,
-    y = def.y
+    y = def.y,
+    timer = 0
   }
   setmetatable(bump, Bump)
+  table.insert(game.bumps, bump)
   
   bump.body = love.physics.newBody(game.world, def.x, def.y,"static")
   
@@ -24,16 +26,17 @@ function Bump:collisionBegin(other, collision)
     local x, y = body:getPosition();
     local dirX, dirY =  vector.normalize(vector.sub(self.x, self.y, x, y));
     body:setLinearVelocity(vector.mul(-1 * BUMP_FORCE, dirX, dirY))
+    self.timer = BUMP_PUSH_ANIMATION
   end
 end
 
 function Bump:update(dt)
+  if self.timer > 0 then
+    self.timer = self.timer - dt;
+  end
 end
 
 function Bump:draw()
-  love.graphics.setColor(255, 0,  255, 100);
-  love.graphics.circle('fill', self.x, self.y, BUMP_RADIUS)
-  love.graphics.setColor(255, 255, 255, 255);
 end
 
 return Bump

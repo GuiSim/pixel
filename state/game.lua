@@ -20,6 +20,8 @@ function game:enter(current, def, numberOfPlayer)
   self.debris = {}
   self.players = {}
   self.pullers = {}
+  self.pushers = {}
+  self.bumps = {}
   self.pullables = {}
   self.teamScores = {}
   self.numberOfTeam = 0
