@@ -1,4 +1,4 @@
-local BAR_WIDTH = 16; -- The width of the _BARS_
+local BAR_WIDTH = 8; -- The width of the _BARS_
 local BAR_LENGTH_VERTICAL = 780;
 local BAR_LENGTH_HORIZONTAL = 1700;
 
@@ -24,8 +24,17 @@ return {
   music = love.audio.newSource("assets/sounds/music/musicArena3.mp3"),
   entities = {
     {
+      type = 'PlayerBlock',
+      points = {
+        MAP_WIDTH/2 - BAR_WIDTH/2, 0, 
+        MAP_WIDTH/2 + BAR_WIDTH/2, 0,
+        MAP_WIDTH/2 + BAR_WIDTH/2, MAP_HEIGHT,
+        MAP_WIDTH/2 - BAR_WIDTH/2, MAP_HEIGHT
+      }
+    },
+    {
       type = 'Arena',
-      texture = love.graphics.newImage("assets/textures/arena_d.jpg"),
+      texture = love.graphics.newImage("assets/textures/LavaStage_V01.jpg"),
       polygons = {
         {
           name = "rect_top",
@@ -86,29 +95,60 @@ return {
     },
     {
       type = "Bump",
-      x = 200,
-      y = 134
+      x = 202,
+      y = 28,
+      texture = love.graphics.newImage("assets/textures/LavaStage_RuneTopleft_glow.png"),
+      textureNormal = love.graphics.newImage("assets/textures/LavaStage_RuneTopleft_neutre.png"),
+      textureAt = {
+        x = 170,
+        y = 15,
+      }
     },
     {
       type = "Bump",
-      x = 205,
-      y = MAP_HEIGHT - 140
+      x = 207,
+      y = 904,
+      texture = love.graphics.newImage("assets/textures/LavaStage_RuneTopleft_glow.png"),
+      textureNormal = love.graphics.newImage("assets/textures/LavaStage_RuneTopleft_neutre.png"),
+      textureAt = {
+        x = 166,
+        y = 800,
+      }
     },
     {
       type = "Bump",
-      x = MAP_WIDTH - 200,
-      y = 134
+      x = 1743,
+      y = 50,
+      texture = love.graphics.newImage("assets/textures/LavaStage_RuneTopright_glow.png"),
+      textureNormal = love.graphics.newImage("assets/textures/LavaStage_RuneTopright_neutre.png"),
+      textureAt = {
+        x = 1639,
+        y = 2,
+      }
     },
     {
       type = "Bump",
-      x = MAP_WIDTH - 205,
-      y = MAP_HEIGHT - 140
+      x = 1716,
+      y = 938,
+      texture = love.graphics.newImage("assets/textures/LavaStage_RuneTopright_glow.png"),
+      textureNormal = love.graphics.newImage("assets/textures/LavaStage_RuneTopright_neutre.png"),
+      textureAt = {
+        x = 1645,
+        y = 834
+      }
     },
     {
       type = 'Ball',
       no = 2,
       x = MAP_WIDTH/2,
-      y = MAP_HEIGHT/2,
+      y = MAP_HEIGHT/2 + 50,
+      texture = love.graphics.newImage("assets/textures/fireball.png")
+    },
+    {
+      type = 'Ball',
+      no = 2,
+      x = MAP_WIDTH/2,
+      y = MAP_HEIGHT/2 - 50,
       texture = love.graphics.newImage("assets/textures/fireball.png")
     },
     {
