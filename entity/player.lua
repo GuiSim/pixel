@@ -126,7 +126,7 @@ function Player:update(dt)
     vibrate = DEATH_VIRATION;
   end
   
-  if self.active then
+  if self.active and self.game.transition <= 0 then
     
     local keys;
     -- Update key (Just pressed)
@@ -301,7 +301,7 @@ function Player:draw()
     local x, y = self.body:getPosition();
     local pullx, pully = vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE)
     
-    if self.active then
+    if self.active and self.game.transition <= 0 then
       
       pullX, pullY = self:pullPosition()
       love.graphics.setColor(255, 255, 255, self.pullApplied * 100)
