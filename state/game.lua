@@ -129,7 +129,7 @@ function game:update(dt)
     end
     if nbTeamAlive == 1 then
       self.waitForAnimation = true
-      self.teamScores[nbTeamAlive] = self.teamScores[nbTeamAlive] + 1
+      self.teamScores[teamAlive] = self.teamScores[nbTeamAlive] + 1
     end
   else
     local stillAnimated = false;
@@ -150,6 +150,9 @@ function game:update(dt)
       for k, debris in pairs(self.debris) do
         debris:reset()
       end
+      self.transition = GAME_TRANSITION
+      self.transitionCanvas = self.canvas;
+      self.canvas = love.graphics.newCanvas(width, height, "normal", 4)
     end
   end
 end

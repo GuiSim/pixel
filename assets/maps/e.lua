@@ -20,75 +20,90 @@ function toPolygon(x, y, width, height)
 end
 
 return {
-  nextMap = "assets.maps.e",
-  music = love.audio.newSource("assets/sounds/music/musicArena3.mp3"),
+  nextMap = "assets.maps.c",
+  music = love.audio.newSource("assets/sounds/music/musicArena1.mp3"),
   entities = {
     {
+      type = 'PlayerBlock',
+      points = {
+        MAP_WIDTH/2 - BAR_WIDTH/2, TOP_LEFT_Y, 
+        MAP_WIDTH/2 + BAR_WIDTH/2, TOP_LEFT_Y,
+        MAP_WIDTH/2 + BAR_WIDTH/2, TOP_LEFT_Y + BAR_LENGTH_VERTICAL,
+        MAP_WIDTH/2 - BAR_WIDTH/2, TOP_LEFT_Y + BAR_LENGTH_VERTICAL
+      }
+    },
+    {
       type = 'Arena',
-      texture = love.graphics.newImage("assets/textures/arena_d.jpg"),
+      texture = love.graphics.newImage("assets/textures/arena_b.jpg"),
       polygons = {
         {
-          name = "rect_top",
-          points = {0,0,
-                    1920,0,
-                    0,94,
-                    1920,94}
+          name = "top_bar",
+          points = toPolygon(TOP_LEFT_X, TOP_LEFT_Y, BAR_LENGTH_HORIZONTAL, BAR_WIDTH)
         },
         {
-          name = "rect_bottom",
-          points = {0,977,
-                    1920,977,
-                    0,1080,
-                    1920,1080}
-        }
-      },
-      circles = {
-        {
-          x = -200,
-          y = MAP_HEIGHT/2,
-          radius = 550
+          name = "bottom_bar",
+          points = toPolygon(TOP_LEFT_X, BOTTOM_LEFT_Y, BAR_LENGTH_HORIZONTAL, BAR_WIDTH)
         },
         {
-          x= MAP_WIDTH+200,
-          y = MAP_HEIGHT/2,
-          radius = 550
+          name = "left_bar",
+          points = toPolygon(TOP_LEFT_X, TOP_LEFT_Y, BAR_WIDTH, BAR_LENGTH_VERTICAL)
+        },
+        {
+          name = "right_bar",
+          points = toPolygon(TOP_RIGHT_X, TOP_RIGHT_Y, BAR_WIDTH, BAR_LENGTH_VERTICAL)
         }
       }
     },
     {
-      type = "Debris",
-      minX = 400, maxX = 1600,
-      minY = 400, maxY = 800,
-      texture = love.graphics.newImage("assets/textures/crate.png")
+      type = "StaticImage",
+      x = 105,
+      y = 165,
+      texture = love.graphics.newImage("assets/textures/arena_b_runes_top.png"),
+      pulseCycle = 3,
+      pulseMin = 100
     },
     {
-      type = "Debris",
-      minX = 400, maxX = 1600,
-      minY = 400, maxY = 800,
-      texture = love.graphics.newImage("assets/textures/crate.png")
+      type = "StaticImage",
+      x = 110,
+      y = 931,
+      texture = love.graphics.newImage("assets/textures/arena_b_runes_bottom.png"),
+      pulseCycle = 3,
+      pulseMin = 100
     },
     {
-      type = "Debris",
-      minX = 400, maxX = 1600,
-      minY = 400, maxY = 800,
-      texture = love.graphics.newImage("assets/textures/crate.png")
+      type = "StaticImage",
+      x = 102,
+      y = 195,
+      texture = love.graphics.newImage("assets/textures/arena_b_runes_left.png"),
+      pulseCycle = 3,
+      pulseMin = 100
     },
     {
-      type = "Debris",
-      minX = 400, maxX = 1600,
-      minY = 400, maxY = 800,
-      texture = love.graphics.newImage("assets/textures/crate.png")
+      type = "StaticImage",
+      x = 1798,
+      y = 195,
+      texture = love.graphics.newImage("assets/textures/arena_b_runes_right.png"),
+      pulseCycle = 3,
+      pulseMin = 100
     },
     {
-      type = "Pusher",
+      type = "Ball",
       x = MAP_WIDTH/2,
-      y = MAP_HEIGHT/2
+      y = MAP_HEIGHT/2 - 200,
+      texture = love.graphics.newImage("assets/textures/fireball.png")
     },
     {
       type = 'Ball',
       no = 2,
       x = MAP_WIDTH/2,
-      y = MAP_HEIGHT/2,
+      y = MAP_HEIGHT/2 + 200,
+      texture = love.graphics.newImage("assets/textures/fireball.png")
+    },
+    {
+      type = 'Ball',
+      no = 2,
+      x = MAP_WIDTH/2,
+      y = MAP_HEIGHT/2 ,
       texture = love.graphics.newImage("assets/textures/fireball.png")
     },
     {
@@ -97,7 +112,7 @@ return {
     {
       type = 'Player',
       no = 1,
-      x = TOP_LEFT_X + 525;
+      x = TOP_LEFT_X + 300;
       y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2 - 250,
       texture = love.graphics.newImage("assets/textures/red.png"),
       pullTexture = love.graphics.newImage("assets/textures/red_pull.png"),
@@ -111,7 +126,7 @@ return {
     {
       type = 'Player',
       no = 2,
-      x = TOP_LEFT_X + BAR_LENGTH_HORIZONTAL - 525,
+      x = TOP_LEFT_X + BAR_LENGTH_HORIZONTAL - 300,
       y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2 + 250,
       texture = love.graphics.newImage("assets/textures/blue.png"),
       pullTexture = love.graphics.newImage("assets/textures/blue_pull.png"),
@@ -125,7 +140,7 @@ return {
     {
       type = 'Player',
       no = 3,
-      x = TOP_LEFT_X + 525;
+      x = TOP_LEFT_X + 300;
       y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2 + 250,
       texture = love.graphics.newImage("assets/textures/pink.png"),
       pullTexture = love.graphics.newImage("assets/textures/pink_pull.png"),
@@ -139,7 +154,7 @@ return {
     {
       type = 'Player',
       no = 4,
-      x = TOP_LEFT_X + BAR_LENGTH_HORIZONTAL - 525,
+      x = TOP_LEFT_X + BAR_LENGTH_HORIZONTAL - 300,
       y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2 - 250,
       texture = love.graphics.newImage("assets/textures/green.png"),
       pullTexture = love.graphics.newImage("assets/textures/green_pull.png"),
@@ -149,6 +164,12 @@ return {
       pull2Texture = love.graphics.newImage("assets/textures/pull2.png"),
       startDirection = -1,
       team = 2
+    },
+    {
+      type = "StaticImage",
+      x = 0,
+      y = MAP_HEIGHT-280,
+      texture = love.graphics.newImage("assets/textures/arena_b_overlay.png")
     }
   }
 }
