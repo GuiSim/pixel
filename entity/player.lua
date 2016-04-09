@@ -34,6 +34,7 @@ function Player.create(def, game)
     shieldInvincibleTexture = def.shieldInvincibleTexture,
     pull1Texture = def.pull1Texture,
     pull2Texture = def.pull2Texture,
+    shadowTexture = love.graphics.newImage("assets/textures/shadow.png"),
     
     direction = def.startDirection,
     startDirection = def.startDirection,
@@ -340,6 +341,9 @@ function Player:draw()
       else
         textureToUse = self.texture;
       end
+      love.graphics.setColor(255,255,255,150);
+      love.graphics.draw(self.shadowTexture, x, y, 0, 1, 1, self.shadowTexture:getWidth()/2, -self.shadowTexture:getHeight())
+      love.graphics.setColor(255,255,255,255);
       love.graphics.draw(textureToUse, x, y, 0, self.direction, 1, textureToUse:getWidth()/2, textureToUse:getHeight()/2);
       
       if self.active then
