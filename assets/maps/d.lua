@@ -80,14 +80,9 @@ return {
       texture = love.graphics.newImage("assets/textures/crate.png")
     },
     {
-      type = "Puller",
+      type = "Pusher",
       x = MAP_WIDTH/2,
-      y = 256
-    },
-    {
-      type = "Puller",
-      x = MAP_WIDTH/2,
-      y = 812
+      y = MAP_HEIGHT/2
     },
     {
       type = 'Ball',
