@@ -23,6 +23,7 @@ end
 
 return {
   nextMap = "assets.maps.b",
+  music = love.audio.newSource("assets/sounds/music/musicTutorial.mp3"),
   entities = {
     {
       type = 'Arena',
