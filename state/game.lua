@@ -131,36 +131,6 @@ function game:draw()
     end
   end
   
-  love.graphics.reset()
-  love.graphics.setCanvas(self.canvas)
-  
-  love.graphics.setShader(pullShader)
-  
-  love.graphics.setColor(255,255,255,255)
-  pullShader:send('timer', love.timer.getTime( ));
-  pullShader:send('length',PULL_LENGTH);
-  pullShader:send('startAt',PLAYER_RADIUS);
-  local nbPosition = 0;
-  local pullings = {};
-  local positions = {};
-  for k, player in pairs(self.players) do
-    if player.pullApplied > 0 then
-      table.insert(pullings, player.pullApplied);
-      table.insert(positions, {player.body:getX(), player.body:getY()});
-    end
-  end
-  
-  local nbPosition = #pullings;
-  for i = nbPosition + 1, 4 do
-    table.insert(pullings, 0);
-    table.insert(positions, {0, 0});
-  end
-  
-  pullShader:send('pullings', unpack(pullings));
-  pullShader:send('positions', unpack(positions));
-  
-  love.graphics.draw(self.preCanvas)
-  
   --[[
   love.graphics.setShader(pullShader)
   
