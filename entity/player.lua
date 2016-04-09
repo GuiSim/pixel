@@ -247,6 +247,12 @@ function Player:canPush()
 end
 
 function Player:draw()  
+  
+  for k, particleSystem in pairs(self.particleSystems) do
+    local x, y = self.body:getPosition()
+    love.graphics.draw(particleSystem, 0, 0)
+  end
+  
   local r = 50;
   local g = 50;
   local b = 50;
@@ -330,11 +336,6 @@ function Player:draw()
   end
   
   love.graphics.setColor(255,255,255,255);
-  
-  for k, particleSystem in pairs(self.particleSystems) do
-    local x, y = self.body:getPosition()
-    love.graphics.draw(particleSystem, 0, 0)
-  end
 end
 
 function Player:reset()
