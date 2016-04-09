@@ -42,7 +42,8 @@ function menu:update(dt)
   end
   
   if love.keyboard.isDown('p') then
-    Gamestate.switch(require('state.tutorial'))
+--    Gamestate.switch(require('state.tutorial'))
+    Gamestate.switch(Game, require('assets.maps.tutorial_map'), Menu.selections[Menu.selection].playerCount)
   end
 end
 
@@ -68,7 +69,9 @@ end
 
 function menu:joystickpressed(joystick, button)
   if joystick:isGamepadDown("start") then
-    Gamestate.switch(require('state.tutorial'))
+--    Gamestate.switch(require('state.tutorial'))
+    Gamestate.switch(Game, require('assets.maps.tutorial_map'), Menu.selections[Menu.selection].playerCount)
+
   end
 
   -- Handle navigation with dpad

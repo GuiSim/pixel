@@ -1,3 +1,4 @@
+-- TEXT ONLY TUTORIAL. MIGHT NOT BE USED.
 
 local tutorial = {
 

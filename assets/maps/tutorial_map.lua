@@ -22,6 +22,7 @@ function toPolygon(x, y, width, height)
 end
 
 return {
+  nextMap = "assets.maps.b",
   entities = {
     {
       type = 'Arena',
