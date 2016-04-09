@@ -11,7 +11,7 @@ local menu = {
 
 local menuChangeSound = love.audio.newSource("assets/sounds/menuChange.mp3", "static")
 local menuSelect = love.audio.newSource("assets/sounds/menuSelect.mp3", "static")
-local menuMusic = love.audio.newSource("assets/sounds/musicStartScreen.mp3", "stream")
+local menuMusic = love.audio.newSource("assets/sounds/music/musicStartScreen.mp3", "stream")
 
 local sunParticles = Particle.sunMenu();
 local menuBackground = love.graphics.newImage("assets/textures/startscreen_bg.jpg")

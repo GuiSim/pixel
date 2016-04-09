@@ -2,9 +2,7 @@ local orderZ = function(a,b)
   return a.z < b.z
 end
 
-local music = love.audio.newSource("assets/sounds/musicArena1.mp3", "stream")
-music:setLooping(true)
-music:setVolume( 0.7 )
+
 local game = {
 }
 
@@ -30,6 +28,10 @@ function game:enter(current, def, numberOfPlayer)
   self.currentMap = def
   self.nextMap = def.nextMap
   self.waitForAnimation = false
+  self.music = def.music
+  
+  self.music:setLooping(true)
+  self.music:setVolume( 0.7 )
 
   for k, entity in pairs(def.entities) do
     if EntityTypes[entity.type] ~= nil then
@@ -46,13 +48,13 @@ function game:enter(current, def, numberOfPlayer)
     game.entities["team_score_" .. i] = EntityTypes.Scoreboard.create({team = i}, game);
   end
 
-  love.audio.play( music )
+  love.audio.play( self.music )
 
   self.world:setCallbacks(game.collisionBegin, collisionEnd, preSolve, postSolve)
 end
 
-function game.leave()
-  love.audio.stop( music )
+function game:leave()
+  love.audio.stop( self.music )
   for k, joystick in pairs(love.joystick.getJoysticks()) do
     joystick:setVibration(0,0)
   end
