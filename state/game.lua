@@ -24,6 +24,8 @@ function game:enter(current, def, numberOfPlayer)
   self.bumps = {}
   self.pullables = {}
   self.teamScores = {}
+  self.transition = 0
+  self.transitionCanvas = null
   self.numberOfTeam = 0
   self.currentMap = def
   self.nextMap = def.nextMap
@@ -32,6 +34,12 @@ function game:enter(current, def, numberOfPlayer)
   
   self.music:setLooping(true)
   self.music:setVolume( 0.7 )
+  
+  if(current == game) then
+    self.transition = GAME_TRANSITION
+    self.transitionCanvas = current.canvas;
+    self.canvas = love.graphics.newCanvas(width, height, "normal", 4)
+  end
 
   for k, entity in pairs(def.entities) do
     if EntityTypes[entity.type] ~= nil then
@@ -82,6 +90,10 @@ end
 
 function game:update(dt)
   self.world:update(dt)
+  
+  if (self.transition > 0) then
+    self.transition = self.transition - dt;
+  end
 
   if love.keyboard.isDown("1") then
     Gamestate.switch(Game, require('assets.maps.tutorial_map'), Menu.selections[Menu.selection].playerCount)
@@ -149,6 +161,9 @@ function game:draw()
 
   love.graphics.clear(0,0,0,0)
   love.graphics.setColor(255,255,255,255)
+
+  
+  love.graphics.setColor(255,255,255,255)
   if love.keyboard.isDown('q') then
     debugWorld(self.world, 0, 0, 2000, 2000)
     love.graphics.reset()
@@ -156,10 +171,15 @@ function game:draw()
     love.graphics.draw(self.canvas)
     
     return;
-  else
-    for k, entity in pairs(self.entities) do
-      entity:draw()
-    end
+  end
+  
+  for k, entity in pairs(self.entities) do
+    entity:draw()
+  end
+  
+  if self.transition > 0 then
+    love.graphics.setColor(255,255,255, 255 * self.transition / GAME_TRANSITION)
+    love.graphics.draw(self.transitionCanvas)
   end
   
   love.graphics.reset()
