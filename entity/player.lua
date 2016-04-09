@@ -174,6 +174,7 @@ function Player:update(dt)
     if pushing then
       self.power = self.power - PUSH_COST
       self.pushCd = PUSH_COOLDOWN;
+      love.audio.stop(self.pushSound)
       love.audio.play(self.pushSound)
     end
     
@@ -308,6 +309,7 @@ function Player:draw()
       
       if self:canPush() then
         if not self.hasPlayedPushReadySound then
+          love.audio.stop(self.pushReadySound)
           love.audio.play(self.pushReadySound)
           self.hasPlayedPushReadySound = true
         end

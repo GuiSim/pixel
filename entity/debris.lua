@@ -25,8 +25,9 @@ function Debris.create(def, game)
   local width = def.texture:getWidth()
   local height = def.texture:getHeight()
 
-  local fixture = love.physics.newFixture(debris.body, love.physics.newRectangleShape(0, 0, width, height), def.density)
+  local fixture = love.physics.newFixture(debris.body, love.physics.newRectangleShape(0, 0, width, height), DEBRIS_DENSITY)
   fixture:setFilterData(EntityTypes.Ball.category, EntityTypes.Ball.mask, 0)
+  fixture:setRestitution(0.2)
   table.insert(game.debris, debris)
   table.insert(game.pullables, debris)
 

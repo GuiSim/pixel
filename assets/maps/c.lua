@@ -20,48 +20,53 @@ function toPolygon(x, y, width, height)
 end
 
 return {
-  nextMap = "assets.maps.c",
+  nextMap = "assets.maps.b",
   entities = {
     {
-      type = 'PlayerBlock',
-      points = {
-        MAP_WIDTH/2 - BAR_WIDTH/2, TOP_LEFT_Y, 
-        MAP_WIDTH/2 + BAR_WIDTH/2, TOP_LEFT_Y,
-        MAP_WIDTH/2 + BAR_WIDTH/2, TOP_LEFT_Y + BAR_LENGTH_VERTICAL,
-        MAP_WIDTH/2 - BAR_WIDTH/2, TOP_LEFT_Y + BAR_LENGTH_VERTICAL
-      }
-    },
-    {
       type = 'Arena',
-      texture = love.graphics.newImage("assets/textures/arena_b.jpg"),
+      texture = love.graphics.newImage("assets/textures/arena_c.jpg"),
       polygons = {
         {
-          name = "top_bar",
-          points = toPolygon(TOP_LEFT_X, TOP_LEFT_Y, BAR_LENGTH_HORIZONTAL, BAR_WIDTH)
+          name = "top_left_triangle",
+          points = {0,0,
+                    607,31,
+                    0, 919}
         },
         {
-          name = "bottom_bar",
-          points = toPolygon(TOP_LEFT_X, BOTTOM_LEFT_Y, BAR_LENGTH_HORIZONTAL, BAR_WIDTH)
+          name = "upper_right_triangle",
+          points = {1290,0,
+                    1920,0,
+                    1920,900}
         },
         {
-          name = "left_bar",
-          points = toPolygon(TOP_LEFT_X, TOP_LEFT_Y, BAR_WIDTH, BAR_LENGTH_VERTICAL)
+          name = "lower_left_triangle",
+          points = {0,171,
+                    0,1080,
+                    637,1080}
         },
         {
-          name = "right_bar",
-          points = toPolygon(TOP_RIGHT_X, TOP_RIGHT_Y, BAR_WIDTH, BAR_LENGTH_VERTICAL)
+          name = "lower_right_triangle",
+          points = {1920,176,
+                    1920,1080,
+                    1266,1080}
+        },
+        {
+          name = "upper_rect",
+          points =  {0,0,
+                     1920,0,
+                     0,35,
+                     1920,35}
+        },
+        {
+          name = "botton_rect",
+          points = {0,1040,
+                    1920,1040,
+                    0,1080,
+                    1920,1080}
         }
       }
     },
     {
-      type = "StaticImage",
-      x = 0,
-      y = 0,
-      texture = love.graphics.newImage("assets/textures/arena_b_runes.png"),
-      pulseCycle = 3,
-      pulseMin = 100
-    },
-    {
       type = "Debris",
       minX = 400, maxX = 1600,
       minY = 400, maxY = 800,
@@ -84,6 +89,16 @@ return {
       minX = 400, maxX = 1600,
       minY = 400, maxY = 800,
       texture = love.graphics.newImage("assets/textures/crate.png")
+    },
+    {
+      type = "Puller",
+      x = MAP_WIDTH/2,
+      y = 256
+    },
+    {
+      type = "Puller",
+      x = MAP_WIDTH/2,
+      y = 812
     },
     {
       type = 'Ball',
@@ -150,12 +165,6 @@ return {
       pull2Texture = love.graphics.newImage("assets/textures/pull2.png"),
       startDirection = -1,
       team = 2
-    },
-    {
-      type = "StaticImage",
-      x = 0,
-      y = 0,
-      texture = love.graphics.newImage("assets/textures/arena_b_overlay.png")
     }
   }
 }

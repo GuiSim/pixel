@@ -12,7 +12,7 @@ PUSH_COST = 0;
 PUSH_COOLDOWN = 8;
 PUSH_LENGTH = 1000; -- How far player can push
 PUSH_LENGTH2 = PUSH_LENGTH * PUSH_LENGTH; -- Square of how far player can push
-PUSH_FORCE = 20000; -- Force at which the player pulls the ball
+PUSH_FORCE = 2000; -- Force at which the player pulls the ball
 PUSH_ANIMATION = 0.3 -- in sec
 
 PLAYER_FORCE = 10000; -- Force put on the player to move the joystick
@@ -20,6 +20,7 @@ PLAYER_DAMPENING = 5; -- Dampening on player movement
 PLAYER_DENSITY = 0.5; -- Player density (higher means more mass)
 PLAYER_HITPOINTS = 100;
 
+DEBRIS_DENSITY = 0.5;
 DEBRIS_HITPOINTS = 50;
 DEBRIS_MIN_LUMINOSITY = 100;
 
@@ -30,7 +31,8 @@ BALL_DAMAGE = 12;
 BALL_RADIUS = 16;
 BALL_DAMAGE_SPEED_SCALING = 450; -- Higher leads to less damage based on speed
 BALL_MAX_DAMAGE = 25;
-BALL_MAX_VELOCITY = 1000
+--BALL_MAX_VELOCITY = 1000
+BALL_MAX_VELOCITY = 9999999
 
 PLAYER_RADIUS = 80; -- Size of the player's circle
 
@@ -39,8 +41,8 @@ PLAYER_ENERGIE_MAX = 50; -- pull give energie to other
 PLAYER_STARTING_ENERGIE = 50
 PLAYER_INVULNERABILITY_DURATION = 1.5; -- Duration of invulnerability following a player's hit (s)
 
-PULLER_FORCE = 3000
-PULLER_RANGE = 50
+PULLER_FORCE = 1000
+PULLER_RANGE = 200
 
 PUSHER_FORCE = 3000
 PUSHER_RANGE = 50
