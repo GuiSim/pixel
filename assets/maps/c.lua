@@ -20,6 +20,7 @@ function toPolygon(x, y, width, height)
 end
 
 return {
+  nextMap = "assets.maps.b",
   entities = {
     {
       type = 'Arena',
@@ -112,7 +113,7 @@ return {
     {
       type = 'Player',
       no = 1,
-      x = TOP_LEFT_X + 32;
+      x = TOP_LEFT_X + 200;
       y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2,
       texture = love.graphics.newImage("assets/textures/red.png"),
       pullTexture = love.graphics.newImage("assets/textures/red_pull.png"),
@@ -126,7 +127,7 @@ return {
     {
       type = 'Player',
       no = 2,
-      x = TOP_LEFT_X + BAR_LENGTH_HORIZONTAL - 32,
+      x = TOP_LEFT_X + BAR_LENGTH_HORIZONTAL - 200,
       y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2,
       texture = love.graphics.newImage("assets/textures/blue.png"),
       pullTexture = love.graphics.newImage("assets/textures/blue_pull.png"),
@@ -140,7 +141,7 @@ return {
     {
       type = 'Player',
       no = 3,
-      x = TOP_LEFT_X + 300;
+      x = TOP_LEFT_X + 500;
       y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2,
       texture = love.graphics.newImage("assets/textures/pink.png"),
       pullTexture = love.graphics.newImage("assets/textures/pink_pull.png"),
@@ -154,7 +155,7 @@ return {
     {
       type = 'Player',
       no = 4,
-      x = TOP_LEFT_X + BAR_LENGTH_HORIZONTAL - 300,
+      x = TOP_LEFT_X + BAR_LENGTH_HORIZONTAL - 500,
       y = (TOP_LEFT_Y + BOTTOM_LEFT_Y)/2,
       texture = love.graphics.newImage("assets/textures/green.png"),
       pullTexture = love.graphics.newImage("assets/textures/green_pull.png"),
