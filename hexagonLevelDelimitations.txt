@@ -1,0 +1,6 @@
+Triangle upper left: (0,0), (607,31), (0,919)
+Triangle upper right: (1290,0), (1920,0), (1920,900)
+Triangle lower left: (0,171), (0,1080), (637,1080)
+Triangle lower right: (1920,176), (1920,1080), (1266,1080)
+Rectangle upper: (0,0), (1920,0), (0,35), (1920,35)
+Rectangle lower: (0,1040), (1920,1040), (0,1080), (1920,1080)
