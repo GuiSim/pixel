@@ -10,6 +10,7 @@ local menu = {
 }
 
 local menuChangeSound = love.audio.newSource("assets/sounds/menuChange.mp3", "static")
+local menuSelect = love.audio.newSource("assets/sounds/menuSelect.mp3", "static")
 local menuMusic = love.audio.newSource("assets/sounds/musicStartScreen.mp3", "stream")
 
 local sunParticles = Particle.sunMenu();
@@ -69,6 +70,7 @@ end
 
 function menu:joystickpressed(joystick, button)
   if joystick:isGamepadDown("start") then
+    love.audio.play(menuSelect)
 --    Gamestate.switch(require('state.tutorial'))
     Gamestate.switch(Game, require('assets.maps.tutorial_map'), Menu.selections[Menu.selection].playerCount)
 
