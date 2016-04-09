@@ -12,12 +12,20 @@ function Arena.create(def, game)
   setmetatable(arena, Arena)
   
   polygons = def.polygons
+  circles = def.circles
   
   for k, polygon in pairs(polygons) do
     local polygonBody = love.physics.newBody(game.world, 0, 0, "static")
     local fixture = love.physics.newFixture(polygonBody, love.physics.newPolygonShape(polygon.points))
   end
   
+  if circles then
+    for k, circle in pairs(circles) do
+      local circleBody = love.physics.newBody(game.world, circle.x, circle.y, "static")
+      local fixture = love.physics.newFixture(circleBody, love.physics.newCircleShape(circle.radius))
+    end
+  end
+
   return arena
 end
 
@@ -28,7 +36,14 @@ function Arena:draw()
     for k, polygon in pairs(polygons) do
       love.graphics.setColor(100, 100, 255)
       love.graphics.polygon("fill", polygon.points)
-    end    
+    end
+    if circles then
+      for k, circle in pairs(circles) do
+        love.graphics.setColor(100, 100, 255)
+        love.graphics.circle("fill", circle.x, circle.y, circle.radius)
+      end
+    end
+    
   end
   
 end

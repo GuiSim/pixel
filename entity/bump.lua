@@ -37,9 +37,6 @@ function Bump:update(dt)
 end
 
 function Bump:draw()
-  love.graphics.setColor(255, 0,  255, 100);
-  love.graphics.circle('fill', self.x, self.y, BUMP_RADIUS)
-  love.graphics.setColor(255, 255, 255, 255);
 end
 
 return Bump
