@@ -114,6 +114,7 @@ function Player:update(dt)
     self.hitpoints = 0;
     self.deathTimer = DEATH_TIMER;
     self.active = false;
+    self.canPushEmitter:pause()
     self.body:setActive( false )
     love.audio.stop( self.pullSound )
     if (self.joystick) then
