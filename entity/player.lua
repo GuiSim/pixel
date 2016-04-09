@@ -134,7 +134,9 @@ function Player:update(dt)
         a = self.joystick:isGamepadDown('a'),
         b = self.joystick:isGamepadDown('b'),
         x = self.joystick:isGamepadDown('x'),
-        y = self.joystick:isGamepadDown('y')
+        y = self.joystick:isGamepadDown('y'),
+        lb = self.joystick:isGamepadDown('leftshoulder'),
+        rb = self.joystick:isGamepadDown('rightshoulder'),
       }
     else 
       keys = {
@@ -155,7 +157,7 @@ function Player:update(dt)
       end
     end
     
-    local pushing = keys['a'] and self:canPush()
+    local pushing = (keys['a'] or keys['lb'] or keys['rb']) and self:canPush()
     
     local jx, jy, j2x, j2y, jpull = self:control()
     
