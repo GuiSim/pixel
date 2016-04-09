@@ -18,6 +18,7 @@ function Debris.create(def, game)
   debris.particle:stop() -- Stop it, we'll start it when the box explodes.
   
   debris.body = love.physics.newBody(game.world, debris.startingX, debris.startingY, "dynamic")
+  debris.body:setAngle(math.random(0,100))
   debris.body:setAngularDamping(3)
   debris.body:setLinearDamping(3)
   debris.body:setUserData(debris)

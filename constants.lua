@@ -13,15 +13,15 @@ PUSH_COOLDOWN = 8;
 PUSH_LENGTH = 1000; -- How far player can push
 PUSH_LENGTH2 = PUSH_LENGTH * PUSH_LENGTH; -- Square of how far player can push
 PUSH_FORCE = 2000; -- Force at which the player pulls the ball
-PUSH_ANIMATION = 0.3 -- in sec
+PUSH_ANIMATION = 0.3 -- in sec;
 
 PLAYER_FORCE = 10000; -- Force put on the player to move the joystick
 PLAYER_DAMPENING = 5; -- Dampening on player movement
 PLAYER_DENSITY = 1.1; -- Player density (higher means more mass)
-PLAYER_HITPOINTS = 100;
+PLAYER_HITPOINTS = 50;
 
 DEBRIS_DENSITY = 0.5;
-DEBRIS_HITPOINTS = 50;
+DEBRIS_HITPOINTS = 25;
 DEBRIS_MIN_LUMINOSITY = 100;
 
 CONTROLL_RANGE = 150;
@@ -29,8 +29,8 @@ CONTROLL_RANGE = 150;
 BALL_DENSITY =0.9;
 BALL_DAMAGE = 12;
 BALL_RADIUS = 16;
-BALL_DAMAGE_SPEED_SCALING = 450; -- Higher leads to less damage based on speed
-BALL_MAX_DAMAGE = 25;
+BALL_DAMAGE_SPEED_SCALING = 1000;
+BALL_MAX_DAMAGE = 50;
 BALL_MAX_VELOCITY = 9999999;
 BALL_REBOUND = 0.8; -- 0..1, is 100% energy kept on bounce, 0 is none.
 
