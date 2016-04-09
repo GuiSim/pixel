@@ -6,7 +6,7 @@ DEATH_VIRATION = 0.3 -- HMMMMMMMM 0 to 1
 PULL_LENGTH = 450; -- How far player can pull
 PULL_LENGTH2 = PULL_LENGTH * PULL_LENGTH; -- Square of how far player can pull
 PULL_FORCE = 800; -- Force at which the player pulls the ball
-PULL_DAMPENING = 0.8;
+PULL_DAMPENING = 0.8; -- Shitty degradation over length.
 
 PUSH_COST = 0;
 PUSH_COOLDOWN = 8;
