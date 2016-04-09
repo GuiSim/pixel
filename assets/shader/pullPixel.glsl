@@ -1,13 +1,14 @@
 
 extern number nbPosition;
 
-extern number pullingsLength[6];
 extern number pullings[6];
+extern number pullingsLength[6];
+extern number pullingsDirection[6];
 extern vec2 pullingsPosition[6];
 
-extern number pushingLength;
-extern number pushings[4];
-extern vec2 pushingsPosition[4];
+extern number pushings[8];
+extern number pushingsLength[8];
+extern vec2 pushingsPosition[8];
 
 extern number length;
 extern number startAt;
@@ -15,7 +16,8 @@ extern number timer;
 
 vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords )
 {
-  float wave = mod(-timer, 1);
+  float waveIn = mod(-timer, 1);
+  float waveOut = mod(timer, 1);
   
   float tcX = 0;
   float tcY = 0;
@@ -26,6 +28,9 @@ vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords 
     number pulling = pullings[i];
     vec2 position = pullingsPosition[i];
     number pullingLength = pullingsLength[i];
+    number direction = pullingsDirection[i];
+    
+    float wave = direction < 0 ? waveIn : waveOut;
     
     vec2 xy = (screen_coords - position) / pullingLength;
     float dist2 = ((xy.x * xy.x) + (xy.y * xy.y));
@@ -68,6 +73,7 @@ vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords 
   for(int i = 0; i < 4; i++){
   
     number pushing = pushings[i];
+    number pushingLength = pushingsLength[i];
     vec2 position = pushingsPosition[i];
     
     vec2 xy = (screen_coords - position) / pushingLength;
@@ -83,14 +89,14 @@ vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords 
     
     float dist = sqrt(dist2);
 
-    float waveDist = abs(dist - pushing) / 0.1;
+    float waveDist = abs(dist - pushing) / 0.1;//((pushingLength / 1000 ) * 0.099 + 0.001);
     
     if ( waveDist >= 1){
       continue;
     }
     
     vec2 xy2 = (xy) * pushingLength;
-    xy2 += xy / dist * (1 - waveDist) * 30;
+    xy2 += xy / dist * (1 - waveDist) * 30;// * (0.5 + (pushingLength / 1000 ) * 0.5) ;
     
     vec2 localTc = (position + xy2) / love_ScreenSize.xy;
     

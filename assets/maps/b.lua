@@ -93,6 +93,11 @@ return {
       texture = love.graphics.newImage("assets/textures/fireball.png")
     },
     {
+      type = 'Bump',
+      x = MAP_WIDTH/2,
+      y = MAP_HEIGHT/2,
+    },
+    {
       type = 'Wave',
     },
     {

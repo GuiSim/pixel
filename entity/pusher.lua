@@ -8,6 +8,7 @@ function Pusher.create(def, game)
     y = def.y
   }
   setmetatable(pusher, Pusher)
+  table.insert(game.pushers, pusher)
   return pusher
 end
 
