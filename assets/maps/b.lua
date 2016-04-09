@@ -56,9 +56,33 @@ return {
     },
     {
       type = "StaticImage",
-      x = 0,
-      y = 0,
-      texture = love.graphics.newImage("assets/textures/arena_b_runes.png"),
+      x = 105,
+      y = 165,
+      texture = love.graphics.newImage("assets/textures/arena_b_runes_top.png"),
+      pulseCycle = 3,
+      pulseMin = 100
+    },
+    {
+      type = "StaticImage",
+      x = 110,
+      y = 931,
+      texture = love.graphics.newImage("assets/textures/arena_b_runes_bottom.png"),
+      pulseCycle = 3,
+      pulseMin = 100
+    },
+    {
+      type = "StaticImage",
+      x = 102,
+      y = 195,
+      texture = love.graphics.newImage("assets/textures/arena_b_runes_left.png"),
+      pulseCycle = 3,
+      pulseMin = 100
+    },
+    {
+      type = "StaticImage",
+      x = 1798,
+      y = 195,
+      texture = love.graphics.newImage("assets/textures/arena_b_runes_right.png"),
       pulseCycle = 3,
       pulseMin = 100
     },
