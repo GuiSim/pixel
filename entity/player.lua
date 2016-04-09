@@ -270,9 +270,9 @@ function Player:draw()
     love.graphics.draw(particleSystem, 0, 0)
   end
   
-  local r = 50;
-  local g = 50;
-  local b = 50;
+  local r = 150;
+  local g = 150;
+  local b = 150;
   local a = 255;
   
   if self.team == 1 then
@@ -288,12 +288,6 @@ function Player:draw()
   
   if not self.active and self.deathTimer > 0 then
     a = (self.deathTimer / DEATH_TIMER) * 255
-  end
-    
-  if self.active and self.invulnerabilityTime > 0 then
-    r = 255;
-    g = 255;
-    b = 255;
   end
     
   if self.active or self.deathTimer > 0 then
@@ -351,10 +345,10 @@ function Player:draw()
       if self.active then
         local shieldTextureToUse;
         if self.invulnerabilityTime > 0 then
-          love.graphics.setColor(255,255,255, 150);
+          love.graphics.setColor(r,g,b, 150);
           shieldTextureToUse = self.shieldInvincibleTexture;
         else
-          love.graphics.setColor(255,255,255,(self.hitpoints/PLAYER_HITPOINTS)*255)
+          love.graphics.setColor(r,g,b, (self.hitpoints/PLAYER_HITPOINTS)*255)
           shieldTextureToUse = self.shieldTexture;
         end
         love.graphics.draw(shieldTextureToUse, x, y, 0, 1, 1, self.shieldTexture:getWidth()/2, self.shieldTexture:getHeight()/2);

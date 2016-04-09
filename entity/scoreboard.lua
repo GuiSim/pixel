@@ -1,7 +1,7 @@
 local Scoreboard = {}
 Scoreboard.__index = Scoreboard
 
-local font = love.graphics.newFont('assets/UnZialish.ttf',64)
+local font = love.graphics.newFont('assets/UnZialish.ttf', 48)
 
 function Scoreboard.create(def, game)
   local scoreboard = {
@@ -15,29 +15,43 @@ end
 
 function Scoreboard:draw()
   love.graphics.setFont(font);
-  local space = love.graphics.getWidth() / (self.game.numberOfTeam + 1);
   
   local r = 50;
   local g = 50;
   local b = 50;
   local a = 255;
   
+  local x = 0;
+  local y = 0;
+  local xText = 0;
+  local yText = 0;
+  
   if self.team == 1 then
-    r = 255;
+    r = 150;
   elseif self.team == 2 then 
-    b = 255; 
+    b = 150; 
+    x = love.graphics.getWidth();
+    xText = x - 64;
   elseif self.team == 3 then 
-    g = 255; 
+    g = 150; 
+    y = love.graphics.getHeight();
+    yText = y - 64;
   elseif self.team == 4 then 
-    r = 255; 
-    b = 255; 
+    r = 150; 
+    b = 150; 
+    x = love.graphics.getWidth();
+    xText = x - 64;
+    y = love.graphics.getHeight() ;
+    yText = y - 64;
   end
   
   love.graphics.setColor(r, g, b, a)
   
-  love.graphics.printf(self.game.teamScores[self.team], space * (self.team - 0.5), 0, space,'center')
+  love.graphics.circle('fill', x, y, 82)
   
   love.graphics.setColor(255, 255, 255, 255)
+  
+  love.graphics.printf(self.game.teamScores[self.team], xText, yText, 64,'center')
 end
 
 function Scoreboard:update(dt)
