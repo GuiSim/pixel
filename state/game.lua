@@ -18,7 +18,9 @@ function game:enter(current, def, numberOfPlayer)
   self.camera = Camera()
   self.entities = {}
   self.balls = {}
+  self.debris = {}
   self.players = {}
+  self.pullables = {}
   self.teamScores = {}
   self.numberOfTeam = 0
   
@@ -85,6 +87,7 @@ function game:update(dt)
     end
   end
   
+  -- TODO : Fix this shit.
   if nbTeamAlive == 1 then
     self.teamScores[nbTeamAlive] = self.teamScores[nbTeamAlive] + 1
     local stillAnimated = false;
@@ -100,6 +103,9 @@ function game:update(dt)
       end
       for k, ball in pairs(self.balls) do
         ball:reset()
+      end
+      for k, debris in pairs(self.debris) do
+        debris:reset()
       end
     end
   end

@@ -17,7 +17,7 @@ function Ball.create(def, game)
     startingX = def.x,
     startingY = def.y,
     particleSystems = {},
-    texture = def.texture,
+    texture = def.texture
   }
   
   setmetatable(ball, Ball)
@@ -31,6 +31,7 @@ function Ball.create(def, game)
   fixture:setRestitution(1)
   fixture:setFilterData( Ball.category, Ball.mask, 0 )
   table.insert(game.balls, ball)
+  table.insert(game.pullables, ball)
   
   ball.ballMovement = Particle.ballMovement()
   

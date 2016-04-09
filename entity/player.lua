@@ -185,18 +185,18 @@ function Player:update(dt)
     if self.pulling or pushing then
       local energieCost = 0;
       
-      for k, ball in pairs(self.game.balls) do
+      for k, pullable in pairs(self.game.pullables) do
         
-        local ballX, ballY = ball.body:getPosition();
+        local pullableX, pullableY = pullable.body:getPosition();
         local pullx, pully = vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE)
-        local diffX, diffY =  vector.sub(pullx,pully, ballX, ballY);
+        local diffX, diffY =  vector.sub(pullx,pully, pullableX, pullableY);
         local len = vector.len(diffX, diffY);
         
         -- Pull skill
         if self.pulling and len < PULL_LENGTH then
             local energie = jpull * (1 - len / PULL_LENGTH);
             energieCost = energieCost + energie;
-            ball.body:applyForce(vector.mul(energie * PULL_FORCE / len, diffX, diffY))
+            pullable.body:applyForce(vector.mul(energie * PULL_FORCE / len, diffX, diffY))
         end
         
         
@@ -204,17 +204,18 @@ function Player:update(dt)
         if pushing and len < PUSH_LENGTH then
           local normalX, normalY = vector.div( len, diffX, diffY)
           local velocity = math.min(BALL_MAX_VELOCITY, (1 - len / PUSH_LENGTH) * PUSH_FORCE)
-          ball.body:setLinearVelocity(vector.mul(-1 * velocity, normalX, normalY))
+          pullable.body:setLinearVelocity(vector.mul(-1 * velocity, normalX, normalY))
         end
         
-      end
       
-      
-      -- Give energie to other player
-      if energieCost > 0 then
-        for k, player in pairs(self.game.players) do
-          if player ~= self then
-            player.power = math.max(player.power + energieCost * dt * PLAYER_ENERGIE_GIVEN, PLAYER_ENERGIE_MAX)
+        if pullable.type == "Ball" then
+          -- Give energie to other player
+          if energieCost > 0 then
+            for k, player in pairs(self.game.players) do
+              if player.team ~= self.team then
+                player.power = math.max(player.power + energieCost * dt * PLAYER_ENERGIE_GIVEN, PLAYER_ENERGIE_MAX)
+              end
+            end
           end
         end
       end
@@ -223,7 +224,10 @@ function Player:update(dt)
     self.deathTimer = self.deathTimer - dt;
   else
     self.deathTimer = 0;
-    self.joystick:setVibration( 0, 0 )
+    if self.joystick then
+      self.joystick:setVibration( 0, 0 )
+    end
+    
   end
   
   

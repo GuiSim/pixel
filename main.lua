@@ -26,11 +26,16 @@ EntityTypes = {
   Ball = require "entity.ball",
   Scoreboard = require "entity.scoreboard",
   Layer = require "entity.layer",
-  StaticImage = require "entity.staticImage"
+  StaticImage = require "entity.staticImage",
+  Debris = require "entity.debris"
 }
 
 
 Game = require('state.game');
+
+-- Intitialize RNGeezus
+math.randomseed(os.time());
+math.random(); math.random(); math.random()
 
 function love.load()
   

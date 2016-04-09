@@ -61,6 +61,14 @@ return {
       pulseMin = 100
     },
     {
+      type = "Debris",
+      minX = 400, maxX = 1600,
+      minY = 400, maxY = 800,
+      density = 1,
+      texture = love.graphics.newImage("assets/textures/crate.png"),
+    
+    },
+    {
       type = 'Ball',
       no = 2,
       x = MAP_WIDTH/2,
