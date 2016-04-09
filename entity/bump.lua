@@ -45,6 +45,7 @@ function Bump:draw()
   
   love.graphics.setColor(255,255,255, alpha * 255)
   love.graphics.circle('fill', self.x, self.y, BUMP_RADIUS)
+  love.graphics.setColor(255,255,255,255)
 end
 
 return Bump
