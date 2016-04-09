@@ -201,7 +201,8 @@ function Player:update(dt)
           
           -- Pull skill
           if self.pulling and len < PULL_LENGTH then
-              local energie = jpull * (1 - len / PULL_LENGTH);
+              local distancePower = (len / PULL_LENGTH) * PULL_DAMPENING
+              local energie = jpull * (1 - (distancePower))
               energieCost = energieCost + energie;
               pullable.body:applyForce(vector.mul(energie * PULL_FORCE / len, diffX, diffY))
           end

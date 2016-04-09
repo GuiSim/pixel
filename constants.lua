@@ -5,20 +5,22 @@ DEATH_VIRATION = 0.3 -- HMMMMMMMM 0 to 1
 
 PULL_LENGTH = 450; -- How far player can pull
 PULL_LENGTH2 = PULL_LENGTH * PULL_LENGTH; -- Square of how far player can pull
-PULL_FORCE = 600; -- Force at which the player pulls the ball
+PULL_FORCE = 800; -- Force at which the player pulls the ball
+PULL_DAMPENING = 0.8;
 
 PUSH_COST = 0;
 PUSH_COOLDOWN = 8;
 PUSH_LENGTH = 1000; -- How far player can push
 PUSH_LENGTH2 = PUSH_LENGTH * PUSH_LENGTH; -- Square of how far player can push
-PUSH_FORCE = 5000; -- Force at which the player pulls the ball
+PUSH_FORCE = 20000; -- Force at which the player pulls the ball
 
 PLAYER_FORCE = 10000; -- Force put on the player to move the joystick
 PLAYER_DAMPENING = 5; -- Dampening on player movement
 PLAYER_DENSITY = 0.5; -- Player density (higher means more mass)
 PLAYER_HITPOINTS = 100;
 
-DEBRIS_HITPOINTS = 10
+DEBRIS_HITPOINTS = 50;
+DEBRIS_MIN_LUMINOSITY = 100;
 
 CONTROLL_RANGE = 150;
 

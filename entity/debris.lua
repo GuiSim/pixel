@@ -35,7 +35,7 @@ end
 
 function Debris:draw()
   if self.hitpoints > 0 then
-    local rgb = self.hitpoints / DEBRIS_HITPOINTS * 255
+    local rgb = (self.hitpoints / DEBRIS_HITPOINTS * (255-DEBRIS_MIN_LUMINOSITY) + DEBRIS_MIN_LUMINOSITY)
     love.graphics.setColor(rgb, rgb, rgb)
     love.graphics.draw(self.texture, self.body:getX(), self.body:getY(), self.body:getAngle(), 1, 1, self.texture:getWidth()/2, self.texture:getHeight()/2)
     love.graphics.setColor(255,255,255,255);
