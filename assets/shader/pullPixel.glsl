@@ -19,8 +19,7 @@ vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords 
   float waveIn = mod(-timer, 1);
   float waveOut = mod(timer, 1);
   
-  float tcX = 0;
-  float tcY = 0;
+  vec2 tcs[14];
   int nbTc = 0;
 
   for(int i = 0; i < 4; i++){
@@ -40,6 +39,12 @@ vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords 
     }
     
     float dist = sqrt(dist2);
+    
+    if(dist > 0.7){
+      continue;
+    }
+    
+    dist = dist / 0.7;
     
     float abc = startAt;
   
@@ -61,11 +66,7 @@ vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords 
     vec2 xy2 = (xy) * pullingLength;
     xy2 += xy * (1 - dist) * (1 - dist) * pullingLength * pulling * 0.25;
     
-    vec2 localTc = (position + xy2) / love_ScreenSize.xy;
-    
-    tcX += localTc.x;
-    tcY += localTc.y;
-    
+    tcs[nbTc] = (position + xy2) / love_ScreenSize.xy;
     nbTc++;
   }
   
@@ -98,10 +99,7 @@ vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords 
     vec2 xy2 = (xy) * pushingLength;
     xy2 += xy / dist * (1 - waveDist) * 30;// * (0.5 + (pushingLength / 1000 ) * 0.5) ;
     
-    vec2 localTc = (position + xy2) / love_ScreenSize.xy;
-    
-    tcX += localTc.x;
-    tcY += localTc.y;
+    tcs[nbTc] = (position + xy2) / love_ScreenSize.xy;
     
     nbTc++;
   }
@@ -110,7 +108,25 @@ vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords 
     return Texel(texture, texture_coords);
   }
   
-  vec2 tc = vec2(tcX, tcY) / nbTc;
+  float sumDist = 0;
   
-  return Texel(texture, tc);
+  vec2 tc = vec2(0, 0);
+  
+  for(int i = 0; i < nbTc; i++){
+    vec2 diffTc = tcs[i] - texture_coords;
+    float lengthTc = sqrt((diffTc.x * diffTc.x) + (diffTc.y * diffTc.y));
+    sumDist += lengthTc;
+  }
+  
+  if(sumDist < 0.000000000001){ // :/
+    return Texel(texture, texture_coords);
+  }
+  
+  for(int i = 0; i < nbTc; i++){
+    vec2 diffTc = tcs[i] - texture_coords;
+    float lengthTc = sqrt((diffTc.x * diffTc.x) + (diffTc.y * diffTc.y));
+    tc = tc + diffTc * lengthTc / sumDist;
+  }
+  
+  return Texel(texture, tc + texture_coords);
 }
