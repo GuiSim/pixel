@@ -71,16 +71,13 @@ function menu:joystickpressed(joystick, button)
     Gamestate.switch(Game, require('assets.maps.b'), menu.selections[menu.selection].playerCount)
   end
 
-  if not joystick:isGamepadDown("dpleft") and not joystick:isGamepadDown("dpright") then
-    -- Handle navigation with dpad
-    if joystick:isGamepadDown("dpdown") then
-      menu.moveSelection(1)
-    elseif joystick:isGamepadDown("dpup") then
-      menu.moveSelection(-1)
-    elseif joystick:isGamepadDown("back") then
-      menu.moveSelection(1)
-    end
-    
+  -- Handle navigation with dpad
+  if joystick:isGamepadDown("dpdown") then
+    menu.moveSelection(1)
+  elseif joystick:isGamepadDown("dpup") then
+    menu.moveSelection(-1)
+  elseif joystick:isGamepadDown("back") then
+    menu.moveSelection(1)
   end
   
   if menu.selection > #menu.selections then
