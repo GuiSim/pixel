@@ -8,6 +8,7 @@ function Puller.create(def, game)
     y = def.y
   }
   setmetatable(puller, Puller)
+  table.insert(game.pullers, puller)
   return puller
 end
 
@@ -26,9 +27,6 @@ function Puller:update(dt)
 end
 
 function Puller:draw()
-  love.graphics.setColor(0, 255, 0, 25);
-  love.graphics.circle('fill', self.x, self.y, PULLER_RANGE)
-  love.graphics.setColor(255, 255, 255, 255);
 end
 
 return Puller

@@ -24,12 +24,12 @@ function Wave:draw()
   
   love.graphics.setColor(255,255,255,255)
   pullShader:send('timer', love.timer.getTime( ));
-  pullShader:send('pullingLength',PULL_LENGTH);
   pullShader:send('pushingLength',PUSH_LENGTH);
   pullShader:send('startAt',PLAYER_RADIUS);
 
   local pullings = {};
   local pullingsPosition = {};
+  local pullingsLength = {};
   local pushings = {};
   local pushingsPosition = {}
   
@@ -40,6 +40,7 @@ function Wave:draw()
       table.insert(pullings, player.pullApplied * (player.active and 1 or player.deathTimer));
       local pullx, pully = player:pullPosition()
       table.insert(pullingsPosition, {pullx, pully});
+      table.insert(pullingsLength, PULL_LENGTH);
     end
     
     if player.pushCd > 0 then
@@ -48,15 +49,23 @@ function Wave:draw()
     end
     
   end
+  for k, puller in pairs(self.game.pullers) do
+    table.insert(pullings, 1);
+    table.insert(pullingsPosition, {puller.x, puller.y});
+    table.insert(pullingsLength, PULLER_RANGE);
+  end
   
   local nbPosition = #pullings;
-  for i = nbPosition + 1, 4 do
+  for i = nbPosition + 1, 6 do
     table.insert(pullings, 0);
     table.insert(pullingsPosition, {0, 0});
+    table.insert(pullingsLength, 0);
   end
+  
   
   pullShader:send('pullings', unpack(pullings));
   pullShader:send('pullingsPosition', unpack(pullingsPosition));
+  pullShader:send('pullingsLength', unpack(pullingsLength));
   
   nbPosition = #pushings;
   for i = nbPosition + 1, 4 do
