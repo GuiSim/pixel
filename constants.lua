@@ -17,7 +17,7 @@ PUSH_ANIMATION = 0.3 -- in sec
 
 PLAYER_FORCE = 10000; -- Force put on the player to move the joystick
 PLAYER_DAMPENING = 5; -- Dampening on player movement
-PLAYER_DENSITY = 0.5; -- Player density (higher means more mass)
+PLAYER_DENSITY = 1.1; -- Player density (higher means more mass)
 PLAYER_HITPOINTS = 100;
 
 DEBRIS_DENSITY = 0.5;
@@ -34,7 +34,7 @@ BALL_MAX_DAMAGE = 25;
 --BALL_MAX_VELOCITY = 1000
 BALL_MAX_VELOCITY = 9999999
 
-PLAYER_RADIUS = 80; -- Size of the player's circle
+PLAYER_RADIUS = 50; -- Size of the player's circle
 
 PLAYER_ENERGIE_GIVEN = 50; -- pull give energie to other
 PLAYER_ENERGIE_MAX = 50; -- pull give energie to other
