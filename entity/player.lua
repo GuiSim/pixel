@@ -48,6 +48,9 @@ function Player.create(def, game)
     player.joystick:setVibration( 1, 1 )
   end
   
+  player.canPushEmitter = Particle.ballMovement() -- Particle.canPush()
+  table.insert(player.particleSystems, player.canPushEmitter)
+  
   player.body = love.physics.newBody(game.world, def.x, def.y, "dynamic")
   player.body:setLinearDamping(PLAYER_DAMPENING)
   
@@ -282,9 +285,12 @@ function Player:draw()
       love.graphics.draw(self.pull2Texture, x, y, 0, 1, 1, self.pull2Texture:getWidth()/2, self.pull2Texture:getHeight()/2);
       
       if self:canPush() then
-        love.graphics.setLineWidth(3);
-        love.graphics.setColor(r, g, b, 255)
-        love.graphics.circle('line', pullx, pully, PUSH_LENGTH)
+        self.canPushEmitter:start()
+        --love.graphics.setLineWidth(3);
+        --love.graphics.setColor(r, g, b, 255)
+        --love.graphics.circle('line', pullx, pully, PUSH_LENGTH)
+      else
+        self.canPushEmitter:pause()
       end
       
       love.graphics.setColor(r,g,b,a);
