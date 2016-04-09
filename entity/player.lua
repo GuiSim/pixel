@@ -186,34 +186,35 @@ function Player:update(dt)
       local energieCost = 0;
       
       for k, pullable in pairs(self.game.pullables) do
+        if pullable.active then
+          local pullableX, pullableY = pullable.body:getPosition();
+          local pullx, pully = vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE)
+          local diffX, diffY =  vector.sub(pullx,pully, pullableX, pullableY);
+          local len = vector.len(diffX, diffY);
+          
+          -- Pull skill
+          if self.pulling and len < PULL_LENGTH then
+              local energie = jpull * (1 - len / PULL_LENGTH);
+              energieCost = energieCost + energie;
+              pullable.body:applyForce(vector.mul(energie * PULL_FORCE / len, diffX, diffY))
+          end
+          
+          
+          -- Push skill
+          if pushing and len < PUSH_LENGTH then
+            local normalX, normalY = vector.div( len, diffX, diffY)
+            local velocity = math.min(BALL_MAX_VELOCITY, (1 - len / PUSH_LENGTH) * PUSH_FORCE)
+            pullable.body:setLinearVelocity(vector.mul(-1 * velocity, normalX, normalY))
+          end
+          
         
-        local pullableX, pullableY = pullable.body:getPosition();
-        local pullx, pully = vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE)
-        local diffX, diffY =  vector.sub(pullx,pully, pullableX, pullableY);
-        local len = vector.len(diffX, diffY);
-        
-        -- Pull skill
-        if self.pulling and len < PULL_LENGTH then
-            local energie = jpull * (1 - len / PULL_LENGTH);
-            energieCost = energieCost + energie;
-            pullable.body:applyForce(vector.mul(energie * PULL_FORCE / len, diffX, diffY))
-        end
-        
-        
-        -- Push skill
-        if pushing and len < PUSH_LENGTH then
-          local normalX, normalY = vector.div( len, diffX, diffY)
-          local velocity = math.min(BALL_MAX_VELOCITY, (1 - len / PUSH_LENGTH) * PUSH_FORCE)
-          pullable.body:setLinearVelocity(vector.mul(-1 * velocity, normalX, normalY))
-        end
-        
-      
-        if pullable.type == "Ball" then
-          -- Give energie to other player
-          if energieCost > 0 then
-            for k, player in pairs(self.game.players) do
-              if player.team ~= self.team then
-                player.power = math.max(player.power + energieCost * dt * PLAYER_ENERGIE_GIVEN, PLAYER_ENERGIE_MAX)
+          if pullable.type == "Ball" then
+            -- Give energie to other player
+            if energieCost > 0 then
+              for k, player in pairs(self.game.players) do
+                if player.team ~= self.team then
+                  player.power = math.max(player.power + energieCost * dt * PLAYER_ENERGIE_GIVEN, PLAYER_ENERGIE_MAX)
+                end
               end
             end
           end

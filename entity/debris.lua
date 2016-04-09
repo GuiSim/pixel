@@ -4,10 +4,13 @@ Debris.__index = Debris
 
 function Debris.create(def, game)
   local debris = {
+    game = game,
     texture = def.texture,
     density = def.density,
     startingX = math.random(def.minX, def.maxX),
-    startingY = math.random(def.minY, def.maxY)
+    startingY = math.random(def.minY, def.maxY),
+    hitpoints = DEBRIS_HITPOINTS,
+    active = true
   }
   setmetatable(debris, Debris)
   
@@ -28,16 +31,52 @@ function Debris.create(def, game)
 end
 
 function Debris:draw()
-  love.graphics.draw(self.texture, self.body:getX(), self.body:getY(), self.body:getAngle(), 1, 1, self.texture:getWidth()/2, self.texture:getHeight()/2)
-  love.graphics.setColor(255,255,255,255);
+  if self.hitpoints > 0 then
+    local rgb = self.hitpoints / DEBRIS_HITPOINTS * 255
+    love.graphics.setColor(rgb, rgb, rgb)
+    love.graphics.draw(self.texture, self.body:getX(), self.body:getY(), self.body:getAngle(), 1, 1, self.texture:getWidth()/2, self.texture:getHeight()/2)
+    love.graphics.setColor(255,255,255,255);
+  end
+end
+
+function Debris:collisionBegin(other, collision)
+  local body = other:getBody();
+  local entity = body:getUserData();
+  if entity ~= nil and entity.type == "Ball" then
+    local vx, vy = body:getLinearVelocity()
+    local velocity = vector.len(vx, vy)
+    local damage = BALL_DAMAGE * velocity/BALL_DAMAGE_SPEED_SCALING
+    damage = math.min(damage, BALL_MAX_DAMAGE)
+    self.hitpoints = self.hitpoints - math.floor(damage)
+  end
+  
+  if self.hitpoints <= 0 then
+    self.active = false
+  end
+  
 end
 
 function Debris:update(dt)
+  if not self.active then 
+    self.body:setActive(false)
+  end
   
 end
 
 function Debris:reset()
+  self.body:setActive(true)
+  
+  local width = self.texture:getWidth()
+  local height = self.texture:getHeight()
+
+  local fixture = love.physics.newFixture(self.body, love.physics.newRectangleShape(0, 0, width, height), self.density)
+  fixture:setFilterData(EntityTypes.Ball.category, EntityTypes.Ball.mask, 0)
+  
   self.body:setPosition(self.startingX, self.startingY)
+  self.body:setLinearVelocity(0,0)
+  self.body:setAngularVelocity(0,0)
+  self.hitpoints = DEBRIS_HITPOINTS
+  self.active = true
 end
 
 

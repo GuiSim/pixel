@@ -17,7 +17,8 @@ function Ball.create(def, game)
     startingX = def.x,
     startingY = def.y,
     particleSystems = {},
-    texture = def.texture
+    texture = def.texture,
+    active = true
   }
   
   setmetatable(ball, Ball)
