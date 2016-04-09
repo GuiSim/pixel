@@ -73,6 +73,9 @@ return {
       texture = love.graphics.newImage("assets/textures/fireball.png")
     },
     {
+      type = 'Wave',
+    },
+    {
       type = 'Player',
       no = 1,
       x = 250,

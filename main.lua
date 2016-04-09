@@ -28,7 +28,8 @@ EntityTypes = {
   Scoreboard = require "entity.scoreboard",
   Layer = require "entity.layer",
   StaticImage = require "entity.staticImage",
-  Debris = require "entity.debris"
+  Debris = require "entity.debris",
+  Wave = require "entity.wave"
 }
 
 
