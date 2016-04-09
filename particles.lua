@@ -129,11 +129,11 @@ end
 
 function Particle.boxExplosion()
   local tex = love.graphics.newImage("assets/textures/woodParticle.png")
-  local emitter = love.graphics.newParticleSystem(tex,3)
+  local emitter = love.graphics.newParticleSystem(tex,4)
   emitter:setDirection(0)
   emitter:setAreaSpread("none",0,0)
   emitter:setEmissionRate(150)
-  emitter:setEmitterLifetime(0.5)
+  emitter:setEmitterLifetime(0.2)
   emitter:setLinearAcceleration(0,0,0,0)
   emitter:setParticleLifetime(0.5,0.5)
   emitter:setRadialAcceleration(50,100)
