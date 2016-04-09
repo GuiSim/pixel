@@ -13,6 +13,7 @@ function HitPoints.create(def, game)
 end
 
 function HitPoints:draw()
+  --[[
   local playerNo = self.player.no;
     if self.player.hitpoints < 30 then
       love.graphics.setColor(255,200,200);
@@ -25,6 +26,7 @@ function HitPoints:draw()
     love.graphics.print("Player " .. playerNo ..": " .. self.player.hitpoints, (playerNo -1) * 200, 500)
     love.graphics.print(self.player.power, (playerNo -1) * 200, 530)
     love.graphics.setColor(255,255,255)
+    ]]--
 end
 
 function HitPoints:update(dt)

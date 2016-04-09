@@ -15,6 +15,9 @@ function Wave:update(dt)
 end
 
 function Wave:draw()
+  love.graphics.setCanvas(self.game.preCanvas)
+  love.graphics.draw(self.game.canvas)
+  
   love.graphics.setCanvas(self.game.canvas)
   
   love.graphics.setShader(pullShader)
@@ -67,7 +70,7 @@ function Wave:draw()
   love.graphics.draw(self.game.preCanvas)
   
   love.graphics.reset()
-  love.graphics.setCanvas(self.game.canvas, self.game.preCanvas)
+  love.graphics.setCanvas(self.game.canvas)
 end
 
 return Wave
