@@ -25,7 +25,8 @@ function Player.create(def, game)
     pullApplied = 0,
     particleSystems = {},
     pullSound = pullSound:clone(),
-    pushReadySound = love.audio.newSource("assets/sounds/pushReadySound.mp3"),
+    pushReadySound = love.audio.newSource("assets/sounds/pushReadySound.mp3", "static"),
+    pushSound = love.audio.newSource("assets/sounds/pushSound.mp3", "static"),
     
     texture = def.texture,
     pullTexture = def.pullTexture,
@@ -171,6 +172,7 @@ function Player:update(dt)
     if pushing then
       self.power = self.power - PUSH_COST
       self.pushCd = PUSH_COOLDOWN;
+      love.audio.play(self.pushSound)
     end
     
     if self.joystick ~= nil then
