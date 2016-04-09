@@ -26,6 +26,8 @@ function Scoreboard:draw()
   local xText = 0;
   local yText = 0;
   
+  
+  
   if self.team == 1 then
     r = 150;
   elseif self.team == 2 then 
@@ -33,12 +35,12 @@ function Scoreboard:draw()
     x = love.graphics.getWidth();
     xText = x - 64;
   elseif self.team == 3 then 
-    g = 150; 
+    r = 150; 
+    b = 150; 
     y = love.graphics.getHeight();
     yText = y - 64;
   elseif self.team == 4 then 
-    r = 150; 
-    b = 150; 
+    g = 150; 
     x = love.graphics.getWidth();
     xText = x - 64;
     y = love.graphics.getHeight() ;
