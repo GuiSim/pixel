@@ -20,11 +20,13 @@ function Player.create(def, game)
     startingY = def.y,
     power = PLAYER_STARTING_ENERGIE,
     keys = { a = false, b = false, x = false, y = false },
-    pushCd = 0,
+    pushCd = 5,
     
     pullApplied = 0,
     particleSystems = {},
     pullSound = pullSound:clone(),
+    pushReadySound = love.audio.newSource("assets/sounds/pushReadySound.mp3", "static"),
+    pushSound = love.audio.newSource("assets/sounds/pushSound.mp3", "static"),
     
     texture = def.texture,
     pullTexture = def.pullTexture,
@@ -114,6 +116,7 @@ function Player:update(dt)
     self.hitpoints = 0;
     self.deathTimer = DEATH_TIMER;
     self.active = false;
+    self.canPushEmitter:pause()
     self.body:setActive( false )
     love.audio.stop( self.pullSound )
     if (self.joystick) then
@@ -169,6 +172,7 @@ function Player:update(dt)
     if pushing then
       self.power = self.power - PUSH_COST
       self.pushCd = PUSH_COOLDOWN;
+      love.audio.play(self.pushSound)
     end
     
     if self.joystick ~= nil then
@@ -246,6 +250,12 @@ function Player:canPush()
 end
 
 function Player:draw()  
+  
+  for k, particleSystem in pairs(self.particleSystems) do
+    local x, y = self.body:getPosition()
+    love.graphics.draw(particleSystem, 0, 0)
+  end
+  
   local r = 50;
   local g = 50;
   local b = 50;
@@ -286,6 +296,11 @@ function Player:draw()
       love.graphics.draw(self.pull2Texture, x, y, 0, 1, 1, self.pull2Texture:getWidth()/2, self.pull2Texture:getHeight()/2);
       
       if self:canPush() then
+        if not self.hasPlayedPushReadySound then
+          love.audio.play(self.pushReadySound)
+          self.hasPlayedPushReadySound = true
+        end
+        
         self.canPushEmitter:start()
         --love.graphics.setLineWidth(3);
         --love.graphics.setColor(r, g, b, 255)
@@ -295,7 +310,11 @@ function Player:draw()
       end
       
       love.graphics.setColor(r,g,b,a);
+    else
+      -- Can't push, reset that flag.
+      self.hasPlayedPushReadySound = false
     end
+    
     
     if self.texture then
       love.graphics.setColor(255,255,255, a)
@@ -329,11 +348,6 @@ function Player:draw()
   end
   
   love.graphics.setColor(255,255,255,255);
-  
-  for k, particleSystem in pairs(self.particleSystems) do
-    local x, y = self.body:getPosition()
-    love.graphics.draw(particleSystem, 0, 0)
-  end
 end
 
 function Player:reset()

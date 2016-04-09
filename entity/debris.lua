@@ -10,9 +10,12 @@ function Debris.create(def, game)
     startingX = math.random(def.minX, def.maxX),
     startingY = math.random(def.minY, def.maxY),
     hitpoints = DEBRIS_HITPOINTS,
-    active = true
+    active = true,
+    particle = Particle.boxExplosion()
   }
   setmetatable(debris, Debris)
+  
+  debris.particle:stop() -- Stop it, we'll start it when the box explodes.
   
   debris.body = love.physics.newBody(game.world, debris.startingX, debris.startingY, "dynamic")
   debris.body:setAngularDamping(3)
@@ -37,6 +40,7 @@ function Debris:draw()
     love.graphics.draw(self.texture, self.body:getX(), self.body:getY(), self.body:getAngle(), 1, 1, self.texture:getWidth()/2, self.texture:getHeight()/2)
     love.graphics.setColor(255,255,255,255);
   end
+  love.graphics.draw(self.particle, 0, 0)
 end
 
 function Debris:collisionBegin(other, collision)
@@ -52,11 +56,15 @@ function Debris:collisionBegin(other, collision)
   
   if self.hitpoints <= 0 then
     self.active = false
+    self.particle:reset()
+    self.particle:start()
   end
   
 end
 
 function Debris:update(dt)
+  self.particle:setPosition(self.body:getX(), self.body:getY())
+  self.particle:update(dt)
   if not self.active then 
     self.body:setActive(false)
   end

@@ -24,6 +24,8 @@ function game:enter(current, def, numberOfPlayer)
   self.pullables = {}
   self.teamScores = {}
   self.numberOfTeam = 0
+  self.currentMap = def
+  self.nextMap = def.nextMap
 
   for k, entity in pairs(def.entities) do
     if EntityTypes[entity.type] ~= nil then
@@ -65,10 +67,29 @@ function game.collisionBegin(a, b, collision)
   end
 end
 
+function game:joystickpressed(joystick, button)
+  if self.nextMap and joystick:isGamepadDown("start") then
+    Gamestate.switch(Game, require(self.nextMap), Menu.selections[Menu.selection].playerCount)
+  end
+end
+
 
 function game:update(dt)
   self.world:update(dt)
 
+  if love.keyboard.isDown("1") then
+    Gamestate.switch(Game, require('assets.maps.tutorial_map'), Menu.selections[Menu.selection].playerCount)
+  end
+  
+  if love.keyboard.isDown("2") then
+    Gamestate.switch(Game, require('assets.maps.b'), Menu.selections[Menu.selection].playerCount)
+  end
+  
+  if self.nextMap and love.keyboard.isDown("space") then
+    Gamestate.switch(Game, require(self.nextMap), Menu.selections[Menu.selection].playerCount)
+  end
+  
+  
   if love.keyboard.isDown("escape") or (love.joystick.getJoysticks()[1] and love.joystick.getJoysticks()[1]:isGamepadDown("guide")) then
     Gamestate.switch(Menu)
   end
@@ -151,5 +172,7 @@ function game:draw()
   love.graphics.setCanvas(canvas)
   love.graphics.draw(self.canvas)
 end
+
+
 
 return game

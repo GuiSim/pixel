@@ -18,7 +18,7 @@ PLAYER_DAMPENING = 5; -- Dampening on player movement
 PLAYER_DENSITY = 0.5; -- Player density (higher means more mass)
 PLAYER_HITPOINTS = 100;
 
-DEBRIS_HITPOINTS = 50
+DEBRIS_HITPOINTS = 10
 
 CONTROLL_RANGE = 150;
 
