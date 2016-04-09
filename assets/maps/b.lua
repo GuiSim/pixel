@@ -90,25 +90,25 @@ return {
       type = "Debris",
       minX = 400, maxX = 1600,
       minY = 400, maxY = 800,
-      texture = love.graphics.newImage("assets/textures/crate.png")
+      texture = love.graphics.newImage("assets/textures/crate_plain.png")
     },
     {
       type = "Debris",
       minX = 400, maxX = 1600,
       minY = 400, maxY = 800,
-      texture = love.graphics.newImage("assets/textures/crate.png")
+      texture = love.graphics.newImage("assets/textures/crate_plain.png")
     },
     {
       type = "Debris",
       minX = 400, maxX = 1600,
       minY = 400, maxY = 800,
-      texture = love.graphics.newImage("assets/textures/crate.png")
+      texture = love.graphics.newImage("assets/textures/crate_plain.png")
     },
     {
       type = "Debris",
       minX = 400, maxX = 1600,
       minY = 400, maxY = 800,
-      texture = love.graphics.newImage("assets/textures/crate.png")
+      texture = love.graphics.newImage("assets/textures/crate_plain.png")
     },
     {
       type = 'Ball',

@@ -35,6 +35,7 @@ function Player.create(def, game)
     pull1Texture = def.pull1Texture,
     pull2Texture = def.pull2Texture,
     pullParticle = Particle.vacuum(),
+
     shadowTexture = love.graphics.newImage("assets/textures/shadow.png"),
     
     direction = def.startDirection,

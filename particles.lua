@@ -177,3 +177,28 @@ function Particle.vacuum()
   emitter:setColors(255,255,255,0, 255,255,255,255, 255,255,255,0 )
   return emitter;
 end
+
+function Particle.push()
+  local tex = love.graphics.newImage("assets/textures/wisp.png")
+  emitter = love.graphics.newParticleSystem(tex,30)
+  emitter:setDirection(-1.6000000238419)
+  emitter:setAreaSpread("uniform",20,20)
+  emitter:setEmissionRate(10)
+  emitter:setEmitterLifetime(-1)
+  emitter:setLinearAcceleration(0,0,0,0)
+  emitter:setParticleLifetime(1,1)
+  emitter:setRadialAcceleration(0,0)
+  emitter:setRotation(-6.3837823915947e-16,0)
+  emitter:setTangentialAcceleration(0,0)
+  emitter:setSpeed(0,0)
+  emitter:setSpin(0,0)
+  emitter:setSpinVariation(0)
+  emitter:setLinearDamping(0,0)
+  emitter:setSpread(0.10000000149012)
+  emitter:setRelativeRotation(false)
+  emitter:setOffset(tex:getWidth()/2, tex:getHeight()/2)
+  emitter:setSizes(1, 100)
+  emitter:setSizeVariation(0)
+  emitter:setColors(255,255,255,0, 255,255,255,255, 255,255,255,0 )
+  return emitter;
+end
