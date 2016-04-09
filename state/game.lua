@@ -120,28 +120,63 @@ function game:draw()
   love.graphics.setColor(255,255,255,255)
   if love.keyboard.isDown('q') then
     debugWorld(self.world, 0, 0, 2000, 2000)
+    love.graphics.reset()
+    love.graphics.setCanvas(canvas)
+    love.graphics.draw(self.canvas)
+    
+    return;
   else
     for k, entity in pairs(self.entities) do
       entity:draw()
     end
   end
+  
   love.graphics.reset()
   love.graphics.setCanvas(self.canvas)
   
   love.graphics.setShader(pullShader)
   
   love.graphics.setColor(255,255,255,255)
-  pullShader:send('canvas', self.preCanvas);
-  
+  pullShader:send('timer', love.timer.getTime( ));
+  pullShader:send('length',PULL_LENGTH);
+  pullShader:send('startAt',PLAYER_RADIUS);
+  local nbPosition = 0;
+  local pullings = {};
+  local positions = {};
   for k, player in pairs(self.players) do
-    if player.pullApplied then
-      pullShader:send('pulling', player.pullApplied);
-      pullShader:send('position', {player.body:getX(), player.body:getY()});
-      pullShader:send('length',PULL_LENGTH);
-      love.graphics.circle('fill', player.body:getX(), player.body:getY(), PULL_LENGTH)
+    if player.pullApplied > 0 then
+      table.insert(pullings, player.pullApplied);
+      table.insert(positions, {player.body:getX(), player.body:getY()});
     end
   end
   
+  local nbPosition = #pullings;
+  for i = nbPosition + 1, 4 do
+    table.insert(pullings, 0);
+    table.insert(positions, {0, 0});
+  end
+  
+  pullShader:send('pullings', unpack(pullings));
+  pullShader:send('positions', unpack(positions));
+  
+  love.graphics.draw(self.preCanvas)
+  
+  --[[
+  love.graphics.setShader(pullShader)
+  
+  love.graphics.setColor(255,255,255,255)
+  pushShader:send('length',PULL_LENGTH);
+  pushShader:send('startAt',0);
+  
+  for k, player in pairs(self.players) do
+    if PUSH_COOLDOWN - player.pushCd < 0.3 then
+      pushShader:send('timer', PUSH_COOLDOWN - player.pushCd);
+      pushShader:send('pulling', player.pullApplied);
+      pushShader:send('position', {player.body:getX(), player.body:getY()});
+      love.graphics.circle('fill', player.body:getX(), player.body:getY(), PULL_LENGTH)
+    end
+  end
+  ]]--
   love.graphics.reset()
   love.graphics.setCanvas(canvas)
   love.graphics.draw(self.canvas)
