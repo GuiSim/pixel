@@ -33,6 +33,7 @@ EntityTypes = {
 
 
 Game = require('state.game');
+Menu = require('state.menu');
 
 -- Intitialize RNGeezus
 math.randomseed(os.time());
@@ -44,7 +45,7 @@ function love.load()
     love.physics.setMeter(50)
     
     Gamestate.registerEvents()
-    Gamestate.switch(require('state.menu'))
+    Gamestate.switch(Menu)
   
 
 end
