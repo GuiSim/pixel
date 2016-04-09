@@ -155,7 +155,7 @@ return {
     {
       type = "StaticImage",
       x = 0,
-      y = 0,
+      y = MAP_HEIGHT-280,
       texture = love.graphics.newImage("assets/textures/arena_b_overlay.png")
     }
   }
