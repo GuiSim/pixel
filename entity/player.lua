@@ -242,8 +242,13 @@ function Player:update(dt)
     end
   elseif self.deathTimer > 0 then
     self.deathTimer = self.deathTimer - dt;
+    vibrate = 1;
   else
     self.deathTimer = 0;
+  end
+  
+  if PLAYER_INVULNERABILITY_DURATION - self.invulnerabilityTime < 0.15 then  
+    vibrate = 1;
   end
   
   

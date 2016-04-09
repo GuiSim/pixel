@@ -20,7 +20,7 @@ function toPolygon(x, y, width, height)
 end
 
 return {
-  nextMap = "assets.maps.c",
+  nextMap = "assets.maps.tutorial_map",
   music = love.audio.newSource("assets/sounds/music/musicArena1.mp3"),
   entities = {
     {

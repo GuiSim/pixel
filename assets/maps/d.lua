@@ -85,6 +85,26 @@ return {
       y = MAP_HEIGHT/2
     },
     {
+      type = "Bump",
+      x = 200,
+      y = 134
+    },
+    {
+      type = "Bump",
+      x = 205,
+      y = MAP_HEIGHT - 140
+    },
+    {
+      type = "Bump",
+      x = MAP_WIDTH - 200,
+      y = 134
+    },
+    {
+      type = "Bump",
+      x = MAP_WIDTH - 205,
+      y = MAP_HEIGHT - 140
+    },
+    {
       type = 'Ball',
       no = 2,
       x = MAP_WIDTH/2,
