@@ -10,7 +10,8 @@ local game = {
 
 function game:init()
   local width, height = love.graphics.getWidth(), love.graphics.getHeight();
-  game.canvas = love.graphics.newCanvas(width, height)
+  self.canvas = love.graphics.newCanvas(width, height)
+  self.preCanvas = love.graphics.newCanvas(width, height)
 end
 
 function game:enter(current, def, numberOfPlayer)
@@ -108,21 +109,33 @@ end
 function game:draw()
   local canvas = love.graphics.getCanvas();
   love.graphics.reset()
-  love.graphics.setCanvas(self.canvas)
+  love.graphics.setCanvas(self.canvas, self.preCanvas)
 
   love.graphics.clear(0,0,0,0)
   love.graphics.setColor(255,255,255,255)
-  love.graphics.push()
-    self.camera:attach()
-    if love.keyboard.isDown('q') then
-      debugWorld(self.world, 0, 0, 2000, 2000)
-    else
-      for k, entity in pairs(self.entities) do
-        entity:draw()
-      end
+  if love.keyboard.isDown('q') then
+    debugWorld(self.world, 0, 0, 2000, 2000)
+  else
+    for k, entity in pairs(self.entities) do
+      entity:draw()
     end
-    self.camera:detach()
-  love.graphics.pop()
+  end
+  love.graphics.reset()
+  love.graphics.setCanvas(self.canvas)
+  
+  love.graphics.setShader(pullShader)
+  
+  love.graphics.setColor(255,255,255,255)
+  pullShader:send('canvas', self.preCanvas);
+  
+  for k, player in pairs(self.players) do
+    if player.pullApplied then
+      pullShader:send('pulling', player.pullApplied);
+      pullShader:send('position', {player.body:getX(), player.body:getY()});
+      pullShader:send('length',PULL_LENGTH);
+      love.graphics.circle('fill', player.body:getX(), player.body:getY(), PULL_LENGTH)
+    end
+  end
   
   love.graphics.reset()
   love.graphics.setCanvas(canvas)
