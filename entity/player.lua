@@ -307,13 +307,13 @@ function Player:draw()
         --love.graphics.setColor(r, g, b, 255)
         --love.graphics.circle('line', pullx, pully, PUSH_LENGTH)
       else
+        -- Can't push, reset that flag.
+        self.hasPlayedPushReadySound = false
         self.canPushEmitter:pause()
       end
       
       love.graphics.setColor(r,g,b,a);
-    else
-      -- Can't push, reset that flag.
-      self.hasPlayedPushReadySound = false
+
     end
     
     
