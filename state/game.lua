@@ -10,8 +10,8 @@ local game = {
 
 function game:init()
   local width, height = love.graphics.getWidth(), love.graphics.getHeight();
-  self.canvas = love.graphics.newCanvas(width, height)
-  self.preCanvas = love.graphics.newCanvas(width, height)
+  self.canvas = love.graphics.newCanvas(width, height, "normal", 4)
+  self.preCanvas = love.graphics.newCanvas(width, height, "normal", 4)
 end
 
 function game:enter(current, def, numberOfPlayer)
@@ -135,7 +135,7 @@ end
 function game:draw()
   local canvas = love.graphics.getCanvas();
   love.graphics.reset()
-  love.graphics.setCanvas(self.canvas, self.preCanvas)
+  love.graphics.setCanvas(self.canvas)
 
   love.graphics.clear(0,0,0,0)
   love.graphics.setColor(255,255,255,255)
@@ -152,22 +152,6 @@ function game:draw()
     end
   end
   
-  --[[
-  love.graphics.setShader(pullShader)
-  
-  love.graphics.setColor(255,255,255,255)
-  pushShader:send('length',PULL_LENGTH);
-  pushShader:send('startAt',0);
-  
-  for k, player in pairs(self.players) do
-    if PUSH_COOLDOWN - player.pushCd < 0.3 then
-      pushShader:send('timer', PUSH_COOLDOWN - player.pushCd);
-      pushShader:send('pulling', player.pullApplied);
-      pushShader:send('position', {player.body:getX(), player.body:getY()});
-      love.graphics.circle('fill', player.body:getX(), player.body:getY(), PULL_LENGTH)
-    end
-  end
-  ]]--
   love.graphics.reset()
   love.graphics.setCanvas(canvas)
   love.graphics.draw(self.canvas)

@@ -15,6 +15,9 @@ function Wave:update(dt)
 end
 
 function Wave:draw()
+  love.graphics.setCanvas(self.game.preCanvas)
+  love.graphics.draw(self.game.canvas)
+  
   love.graphics.setCanvas(self.game.canvas)
   
   love.graphics.setShader(pullShader)
@@ -32,10 +35,18 @@ function Wave:draw()
   
   
   for k, player in pairs(self.game.players) do
+    
     if player.pullApplied > 0 then
-      table.insert(pullings, player.pullApplied);
-      table.insert(pullingsPosition, {player.body:getX(), player.body:getY()});
+      table.insert(pullings, player.pullApplied * (player.active and 1 or player.deathTimer));
+      local pullx, pully = player:pullPosition()
+      table.insert(pullingsPosition, {pullx, pully});
     end
+    
+    if player.pushCd > 0 then
+      table.insert(pushings, (PUSH_COOLDOWN - player.pushCd) / PUSH_ANIMATION * (player.active and 1 or player.deathTimer));
+      table.insert(pushingsPosition, {player.body:getX(), player.body:getY()});
+    end
+    
   end
   
   local nbPosition = #pullings;
@@ -46,14 +57,6 @@ function Wave:draw()
   
   pullShader:send('pullings', unpack(pullings));
   pullShader:send('pullingsPosition', unpack(pullingsPosition));
-  
-  -- PUSH
-  for k, player in pairs(self.game.players) do
-    if player.pushCd > 0 then
-      table.insert(pushings, (PUSH_COOLDOWN - player.pushCd) / 0.3);
-      table.insert(pushingsPosition, {player.body:getX(), player.body:getY()});
-    end
-  end
   
   nbPosition = #pushings;
   for i = nbPosition + 1, 4 do
@@ -67,7 +70,7 @@ function Wave:draw()
   love.graphics.draw(self.game.preCanvas)
   
   love.graphics.reset()
-  love.graphics.setCanvas(self.game.canvas, self.game.preCanvas)
+  love.graphics.setCanvas(self.game.canvas)
 end
 
 return Wave

@@ -13,6 +13,7 @@ PUSH_COOLDOWN = 8;
 PUSH_LENGTH = 1000; -- How far player can push
 PUSH_LENGTH2 = PUSH_LENGTH * PUSH_LENGTH; -- Square of how far player can push
 PUSH_FORCE = 2000; -- Force at which the player pulls the ball
+PUSH_ANIMATION = 0.3 -- in sec
 
 PLAYER_FORCE = 10000; -- Force put on the player to move the joystick
 PLAYER_DAMPENING = 5; -- Dampening on player movement

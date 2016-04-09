@@ -34,10 +34,12 @@ vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords 
     }
     
     float dist = sqrt(dist2);
+    
+    float abc = startAt;
   
-    if(dist * pullingLength < startAt){
-      return Texel(texture, texture_coords);
-    }
+    //if(dist * pullingLength < startAt){
+    //  return Texel(texture, texture_coords);
+    //}
     
     if(pulling == 0){
       continue;
@@ -87,7 +89,7 @@ vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords 
     }
     
     vec2 xy2 = (xy) * pushingLength;
-    xy2 += xy / dist * (1 - waveDist) * 50;
+    xy2 += xy / dist * (1 - waveDist) * 30;
     
     vec2 localTc = (position + xy2) / love_ScreenSize.xy;
     
