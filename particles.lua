@@ -123,7 +123,8 @@ function Particle.playerPushReady()
   emitter:setOffset(0,0)
   emitter:setSizes(1)
   emitter:setSizeVariation(0)
-  emitter:setColors(255,255,255,255 )
+  emitter:setColors(255,255,255,255)
+  return emitter;
 end
 
 function Particle.boxExplosion(nx, ny, x, y)

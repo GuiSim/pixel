@@ -48,7 +48,7 @@ function Player.create(def, game)
     player.joystick:setVibration( 1, 1 )
   end
   
-  player.canPushEmitter = Particle.ballMovement() -- Particle.canPush()
+  player.canPushEmitter = Particle.playerPushReady()
   table.insert(player.particleSystems, player.canPushEmitter)
   
   player.body = love.physics.newBody(game.world, def.x, def.y, "dynamic")
@@ -236,6 +236,7 @@ function Player:update(dt)
   
   
   for k, particleSystem in pairs(self.particleSystems) do
+    particleSystem:setPosition(self.body:getX(), self.body:getY())
     particleSystem:update(dt)
   end
 end
@@ -331,7 +332,7 @@ function Player:draw()
   
   for k, particleSystem in pairs(self.particleSystems) do
     local x, y = self.body:getPosition()
-    love.graphics.draw(particleSystem, x+PLAYER_RADIUS/2, y+PLAYER_RADIUS/2)
+    love.graphics.draw(particleSystem, 0, 0)
   end
 end
 
