@@ -1,7 +1,7 @@
 
 extern number nbPosition;
 
-extern number pullingLength;
+extern number pullingsLength[6];
 extern number pullings[6];
 extern vec2 pullingsPosition[6];
 
@@ -25,6 +25,7 @@ vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords 
   
     number pulling = pullings[i];
     vec2 position = pullingsPosition[i];
+    number pullingLength = pullingsLength[i];
     
     vec2 xy = (screen_coords - position) / pullingLength;
     float dist2 = ((xy.x * xy.x) + (xy.y * xy.y));
