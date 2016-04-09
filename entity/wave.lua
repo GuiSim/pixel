@@ -50,7 +50,7 @@ function Wave:draw()
   -- PUSH
   for k, player in pairs(self.game.players) do
     if player.pushCd > 0 then
-      table.insert(pushings, (PUSH_COOLDOWN - player.pushCd) / 0.3);
+      table.insert(pushings, (PUSH_COOLDOWN - player.pushCd) / PUSH_ANIMATION);
       table.insert(pushingsPosition, {player.body:getX(), player.body:getY()});
     end
   end

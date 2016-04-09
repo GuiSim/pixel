@@ -112,6 +112,9 @@ function Player:control()
 end
 
 function Player:update(dt)
+    
+  local vibrate = 0;
+    
   if self.active and self.hitpoints <= 0 then
     self.hitpoints = 0;
     self.deathTimer = DEATH_TIMER;
@@ -119,9 +122,7 @@ function Player:update(dt)
     self.canPushEmitter:pause()
     self.body:setActive( false )
     love.audio.stop( self.pullSound )
-    if (self.joystick) then
-      self.joystick:setVibration( DEATH_VIRATION, DEATH_VIRATION )
-    end
+    vibrate = DEATH_VIRATION;
   end
   
   if self.active then
@@ -157,6 +158,7 @@ function Player:update(dt)
     local pushing = keys['a'] and self:canPush()
     
     local jx, jy, j2x, j2y, jpull = self:control()
+    
     self.pulling = jpull > 0;
     self.pullApplied = jpull;
     
@@ -175,11 +177,13 @@ function Player:update(dt)
       love.audio.play(self.pushSound)
     end
     
+    if PUSH_COOLDOWN - self.pushCd < PUSH_ANIMATION then
+      vibrate = math.max(vibrate, 1);
+    end
+    
     if self.joystick ~= nil then
       if self.pulling then
-        self.joystick:setVibration( jpull * VIRATION, jpull * VIRATION)
-      else
-        self.joystick:setVibration( 0, 0 )
+        vibrate = math.max(vibrate, jpull * VIRATION);
       end
     end
     
@@ -191,7 +195,6 @@ function Player:update(dt)
     
     if self.pulling or pushing then
       local energieCost = 0;
-      
       for k, pullable in pairs(self.game.pullables) do
         if pullable.active then
           local pullableX, pullableY = pullable.body:getPosition();
@@ -232,16 +235,16 @@ function Player:update(dt)
     self.deathTimer = self.deathTimer - dt;
   else
     self.deathTimer = 0;
-    if self.joystick then
-      self.joystick:setVibration( 0, 0 )
-    end
-    
   end
   
   
   for k, particleSystem in pairs(self.particleSystems) do
     particleSystem:setPosition(self.body:getX(), self.body:getY())
     particleSystem:update(dt)
+  end
+  
+  if self.joystick then
+    self.joystick:setVibration( vibrate, vibrate )
   end
 end
 

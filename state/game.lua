@@ -152,22 +152,6 @@ function game:draw()
     end
   end
   
-  --[[
-  love.graphics.setShader(pullShader)
-  
-  love.graphics.setColor(255,255,255,255)
-  pushShader:send('length',PULL_LENGTH);
-  pushShader:send('startAt',0);
-  
-  for k, player in pairs(self.players) do
-    if PUSH_COOLDOWN - player.pushCd < 0.3 then
-      pushShader:send('timer', PUSH_COOLDOWN - player.pushCd);
-      pushShader:send('pulling', player.pullApplied);
-      pushShader:send('position', {player.body:getX(), player.body:getY()});
-      love.graphics.circle('fill', player.body:getX(), player.body:getY(), PULL_LENGTH)
-    end
-  end
-  ]]--
   love.graphics.reset()
   love.graphics.setCanvas(canvas)
   love.graphics.draw(self.canvas)
