@@ -128,7 +128,7 @@ function Particle.playerPushReady()
 end
 
 function Particle.boxExplosion(nx, ny, x, y)
-  local tex = love.graphics.newImage("assets/textures/spark.png")
+  local tex = love.graphics.newImage("assets/textures/woodParticle.png")
   local emitter = love.graphics.newParticleSystem(tex,10)
   emitter:setDirection(0)
   emitter:setAreaSpread("none",0,0)
