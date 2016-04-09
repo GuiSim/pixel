@@ -8,6 +8,7 @@ function Puller.create(def, game)
     y = def.y
   }
   setmetatable(puller, Puller)
+  table.insert(game.pullers, puller)
   return puller
 end
 

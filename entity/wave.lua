@@ -48,9 +48,13 @@ function Wave:draw()
     end
     
   end
+  for k, puller in pairs(self.game.pullers) do
+    table.insert(pullings, PULLER_FORCE);
+    table.insert(pullingsPosition, {puller.x, puller.y});
+  end
   
   local nbPosition = #pullings;
-  for i = nbPosition + 1, 4 do
+  for i = nbPosition + 1, 6 do
     table.insert(pullings, 0);
     table.insert(pullingsPosition, {0, 0});
   end

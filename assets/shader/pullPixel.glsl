@@ -2,8 +2,8 @@
 extern number nbPosition;
 
 extern number pullingLength;
-extern number pullings[4];
-extern vec2 pullingsPosition[4];
+extern number pullings[6];
+extern vec2 pullingsPosition[6];
 
 extern number pushingLength;
 extern number pushings[4];
@@ -37,9 +37,9 @@ vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords 
     
     float abc = startAt;
   
-    //if(dist * pullingLength < startAt){
-    //  return Texel(texture, texture_coords);
-    //}
+    // if(dist * pullingLength < startAt){
+    //   return Texel(texture, texture_coords);
+    // }
     
     if(pulling == 0){
       continue;
