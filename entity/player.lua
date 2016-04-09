@@ -331,7 +331,6 @@ function Player:draw()
     
     
     if self.texture then
-      love.graphics.setColor(255,255,255, a)
       if jx > 0 then
         self.direction = 1;
       elseif jx < 0 then
@@ -346,7 +345,7 @@ function Player:draw()
       end
       love.graphics.setColor(255,255,255,150);
       love.graphics.draw(self.shadowTexture, x, y, 0, 1, 1, self.shadowTexture:getWidth()/2, -self.shadowTexture:getHeight())
-      love.graphics.setColor(255,255,255,255);
+      love.graphics.setColor(255,255,255, a)
       love.graphics.draw(textureToUse, x, y, 0, self.direction, 1, textureToUse:getWidth()/2, textureToUse:getHeight()/2);
       
       if self.active then

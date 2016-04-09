@@ -27,9 +27,6 @@ function Pusher:update(dt)
 end
 
 function Pusher:draw()
-  love.graphics.setColor(0, 255, 255, 100);
-  love.graphics.circle('fill', self.x, self.y, PUSHER_RANGE)
-  love.graphics.setColor(255, 255, 255, 255);
 end
 
 return Pusher

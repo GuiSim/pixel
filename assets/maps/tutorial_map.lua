@@ -79,7 +79,7 @@ return {
     {
       type = 'Player',
       no = 1,
-      x = 250,
+      x = 240,
       y = 900,
       texture = love.graphics.newImage("assets/textures/red.png"),
       pullTexture = love.graphics.newImage("assets/textures/red_pull.png"),
@@ -93,7 +93,7 @@ return {
     {
       type = 'Player',
       no = 2,
-      x = 1750,
+      x = 1700,
       y = 200,
       texture = love.graphics.newImage("assets/textures/blue.png"),
       pullTexture = love.graphics.newImage("assets/textures/blue_pull.png"),
@@ -107,7 +107,7 @@ return {
     {
       type = 'Player',
       no = 3,
-      x = 500,
+      x = 440,
       y = 900,
       texture = love.graphics.newImage("assets/textures/pink.png"),
       pullTexture = love.graphics.newImage("assets/textures/pink_pull.png"),
