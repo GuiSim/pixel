@@ -20,11 +20,12 @@ function Player.create(def, game)
     startingY = def.y,
     power = PLAYER_STARTING_ENERGIE,
     keys = { a = false, b = false, x = false, y = false },
-    pushCd = 0,
+    pushCd = 5,
     
     pullApplied = 0,
     particleSystems = {},
     pullSound = pullSound:clone(),
+    pushReadySound = love.audio.newSource("assets/sounds/pushReadySound.mp3"),
     
     texture = def.texture,
     pullTexture = def.pullTexture,
@@ -293,6 +294,11 @@ function Player:draw()
       love.graphics.draw(self.pull2Texture, x, y, 0, 1, 1, self.pull2Texture:getWidth()/2, self.pull2Texture:getHeight()/2);
       
       if self:canPush() then
+        if not self.hasPlayedPushReadySound then
+          love.audio.play(self.pushReadySound)
+          self.hasPlayedPushReadySound = true
+        end
+        
         self.canPushEmitter:start()
         --love.graphics.setLineWidth(3);
         --love.graphics.setColor(r, g, b, 255)
@@ -302,7 +308,11 @@ function Player:draw()
       end
       
       love.graphics.setColor(r,g,b,a);
+    else
+      -- Can't push, reset that flag.
+      self.hasPlayedPushReadySound = false
     end
+    
     
     if self.texture then
       love.graphics.setColor(255,255,255, a)
