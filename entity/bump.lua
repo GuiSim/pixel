@@ -37,6 +37,14 @@ function Bump:update(dt)
 end
 
 function Bump:draw()
+  local alpha = self.timer / BUMP_PUSH_ANIMATION;
+  if(alpha <= 0) then
+    alpha = 0
+  end
+  alpha = alpha * 0.75 + 0.25
+  
+  love.graphics.setColor(255,255,255, alpha * 255)
+  love.graphics.circle('fill', self.x, self.y, BUMP_RADIUS)
 end
 
 return Bump

@@ -27,7 +27,6 @@ function Scoreboard:draw()
   local yText = 0;
   
   
-  
   if self.team == 1 then
     r = 150;
   elseif self.team == 2 then 
