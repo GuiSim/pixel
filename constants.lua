@@ -5,8 +5,8 @@ PULL_LENGTH = 450; -- How far player can pull
 PULL_LENGTH2 = PULL_LENGTH * PULL_LENGTH; -- Square of how far player can pull
 PULL_FORCE = 600; -- Force at which the player pulls the ball
 
-PUSH_COST = 100;
-PUSH_COOLDOWN = 3;
+PUSH_COST = 0;
+PUSH_COOLDOWN = 10;
 PUSH_LENGTH = 1000; -- How far player can push
 PUSH_LENGTH2 = PUSH_LENGTH * PUSH_LENGTH; -- Square of how far player can push
 PUSH_FORCE = 10000; -- Force at which the player pulls the ball
