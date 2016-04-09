@@ -13,6 +13,7 @@ function Arena.create(def, game)
   setmetatable(arena, Arena)
   
   polygons = def.polygons
+  local circles = {}
   if def.circles then
     circles = def.circles
   end
