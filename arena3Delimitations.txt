@@ -1,0 +1,4 @@
+Rectangle top: (0,0), (1920,0), (0,94), (1920,94)
+Rectangle bottom: (0,977), (1920,977), (0,1080), (1920,1080)
+Circle left: (347,537)
+Circle right: (1571,537)
