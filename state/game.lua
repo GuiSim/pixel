@@ -2,9 +2,9 @@ local orderZ = function(a,b)
   return a.z < b.z
 end
 
-local music = love.audio.newSource("assets/sounds/fightLoopedMusic.mp3")
+local music = love.audio.newSource("assets/sounds/musicArena1.mp3", "stream")
 music:setLooping(true)
-music:setVolume( 0.5 )
+music:setVolume( 0.7 )
 local game = {
 }
 
@@ -45,7 +45,7 @@ end
 
 function game.leave()
   love.audio.stop( music )
-  for k, joystick in pairs(love.joystick.getJoysticks) do
+  for k, joystick in pairs(love.joystick.getJoysticks()) do
     joystick:setVibration(0,0)
   end
 end

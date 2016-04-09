@@ -18,15 +18,21 @@ function Player.create(def, game)
     score = 0,
     startingX = def.x,
     startingY = def.y,
-    power = 1000,
+    power = PLAYER_STARTING_ENERGIE,
     keys = { a = false, b = false, x = false, y = false },
     pushCd = 0,
     
     pullApplied = 0,
     particleSystems = {},
     pullSound = pullSound:clone(),
+    
     texture = def.texture,
     pullTexture = def.pullTexture,
+    shieldTexture = def.shieldTexture,
+    shieldInvincibleTexture = def.shieldInvincibleTexture,
+    pull1Texture = def.pull1Texture,
+    pull2Texture = def.pull2Texture,
+    
     direction = def.startDirection,
     startDirection = def.startDirection,
     
@@ -107,7 +113,9 @@ function Player:update(dt)
     self.active = false;
     self.body:setActive( false )
     love.audio.stop( self.pullSound )
-    self.joystick:setVibration( DEATH_VIRATION, DEATH_VIRATION )
+    if (self.joystick) then
+      self.joystick:setVibration( DEATH_VIRATION, DEATH_VIRATION )
+    end
   end
   
   if self.active then
@@ -264,8 +272,9 @@ function Player:draw()
     
     if self.active then
       
-      love.graphics.setColor(r, g, b, self.pullApplied * 100)
-      love.graphics.circle('fill', pullx, pully, PULL_LENGTH)
+      love.graphics.setColor(255, 255, 255, self.pullApplied * 100)
+      love.graphics.draw(self.pull1Texture, x, y, 0, 1, 1, self.pull1Texture:getWidth()/2, self.pull1Texture:getHeight()/2);
+      love.graphics.draw(self.pull2Texture, x, y, 0, 1, 1, self.pull2Texture:getWidth()/2, self.pull2Texture:getHeight()/2);
       
       if self:canPush() then
         love.graphics.setLineWidth(3);
@@ -274,7 +283,6 @@ function Player:draw()
       end
       
       love.graphics.setColor(r,g,b,a);
-      love.graphics.circle('fill', x, y, PLAYER_RADIUS)
     end
     
     if self.texture then
@@ -291,7 +299,19 @@ function Player:draw()
       else
         textureToUse = self.texture;
       end
-      love.graphics.draw(textureToUse, x, y, 0, self.direction, 1, textureToUse:getWidth()/2, textureToUse:getHeight());
+      love.graphics.draw(textureToUse, x, y, 0, self.direction, 1, textureToUse:getWidth()/2, textureToUse:getHeight()/2);
+      
+      if self.active then
+        local shieldTextureToUse;
+        if self.invulnerabilityTime > 0 then
+          love.graphics.setColor(255,255,255, 150);
+          shieldTextureToUse = self.shieldInvincibleTexture;
+        else
+          love.graphics.setColor(255,255,255,(self.hitpoints/PLAYER_HITPOINTS)*255)
+          shieldTextureToUse = self.shieldTexture;
+        end
+        love.graphics.draw(shieldTextureToUse, x, y, 0, 1, 1, self.shieldTexture:getWidth()/2, self.shieldTexture:getHeight()/2);
+      end
     end
     
   end
@@ -312,6 +332,7 @@ function Player:reset()
   self.body:setActive(true)
   self.active = true;
   self.deathTimer = 0;
+  self.invulnerabilityTime = 0;
 end
 
 
