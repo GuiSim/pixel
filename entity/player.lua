@@ -302,6 +302,7 @@ function Player:draw()
     
     if self.active then
       
+      pullX, pullY = self:pullPosition()
       love.graphics.setColor(255, 255, 255, self.pullApplied * 100)
       love.graphics.draw(self.pull1Texture, x, y, 0, 1, 1, self.pull1Texture:getWidth()/2, self.pull1Texture:getHeight()/2);
       love.graphics.draw(self.pull2Texture, x, y, 0, 1, 1, self.pull2Texture:getWidth()/2, self.pull2Texture:getHeight()/2);
