@@ -1,6 +1,6 @@
 SCREEN_WIDTH = 1920;
 
-VIRATION = 0.1 -- HMMMMMMMM 0 to 1
+VIRATION = 0.12 -- HMMMMMMMM 0 to 1
 DEATH_VIRATION = 0.3 -- HMMMMMMMM 0 to 1
 
 PULL_LENGTH = 450; -- How far player can pull
