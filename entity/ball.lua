@@ -29,7 +29,7 @@ function Ball.create(def, game)
   ball.body:setUserData(ball)
 
   local fixture = love.physics.newFixture(ball.body, love.physics.newCircleShape(BALL_RADIUS), BALL_DENSITY)
-  fixture:setRestitution(1)
+  fixture:setRestitution(BALL_REBOUND)
   fixture:setFilterData( Ball.category, Ball.mask, 0 )
   table.insert(game.balls, ball)
   table.insert(game.pullables, ball)

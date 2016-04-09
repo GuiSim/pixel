@@ -31,8 +31,8 @@ BALL_DAMAGE = 12;
 BALL_RADIUS = 16;
 BALL_DAMAGE_SPEED_SCALING = 450; -- Higher leads to less damage based on speed
 BALL_MAX_DAMAGE = 25;
---BALL_MAX_VELOCITY = 1000
-BALL_MAX_VELOCITY = 9999999
+BALL_MAX_VELOCITY = 9999999;
+BALL_REBOUND = 0.8; -- 0..1, is 100% energy kept on bounce, 0 is none.
 
 PLAYER_RADIUS = 50; -- Size of the player's circle
 
