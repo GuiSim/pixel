@@ -26,7 +26,7 @@ function Puller:update(dt)
 end
 
 function Puller:draw()
-  love.graphics.setColor(0, 255, 0, 100);
+  love.graphics.setColor(0, 255, 0, 25);
   love.graphics.circle('fill', self.x, self.y, PULLER_RANGE)
   love.graphics.setColor(255, 255, 255, 255);
 end

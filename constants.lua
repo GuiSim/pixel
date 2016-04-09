@@ -41,8 +41,8 @@ PLAYER_ENERGIE_MAX = 50; -- pull give energie to other
 PLAYER_STARTING_ENERGIE = 50
 PLAYER_INVULNERABILITY_DURATION = 1.5; -- Duration of invulnerability following a player's hit (s)
 
-PULLER_FORCE = 3000
-PULLER_RANGE = 50
+PULLER_FORCE = 1000
+PULLER_RANGE = 200
 
 PUSHER_FORCE = 3000
 PUSHER_RANGE = 50
