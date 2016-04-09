@@ -26,6 +26,7 @@ function game:enter(current, def, numberOfPlayer)
   self.numberOfTeam = 0
   self.currentMap = def
   self.nextMap = def.nextMap
+  self.waitForAnimation = false
 
   for k, entity in pairs(def.entities) do
     if EntityTypes[entity.type] ~= nil then
@@ -98,19 +99,22 @@ function game:update(dt)
     entity:update(dt)
   end
 
-  local teamAlive = 0;
-  local nbTeamAlive = 0;
-  for k, player in pairs(self.players) do
-    if player.hitpoints > 0 then
-      if teamAlive ~=  player.team then
-        nbTeamAlive = nbTeamAlive + 1;
-        teamAlive = player.team
+  if not self.waitForAnimation then
+    local teamAlive = 0;
+    local nbTeamAlive = 0;
+    for k, player in pairs(self.players) do
+      if player.hitpoints > 0 then
+        if teamAlive ~=  player.team then
+          nbTeamAlive = nbTeamAlive + 1;
+          teamAlive = player.team
+        end
       end
     end
-  end
-
-  if nbTeamAlive == 1 then
-    self.teamScores[nbTeamAlive] = self.teamScores[nbTeamAlive] + 1
+    if nbTeamAlive == 1 then
+      self.waitForAnimation = true
+      self.teamScores[nbTeamAlive] = self.teamScores[nbTeamAlive] + 1
+    end
+  else
     local stillAnimated = false;
     for k, player in pairs(self.players) do
       if player.deathTimer > 0 then
@@ -118,6 +122,7 @@ function game:update(dt)
       end
     end
     if not stillAnimated then
+      self.waitForAnimation = false
       -- Reset scene
       for k, player in pairs(self.players) do
         player:reset()

@@ -252,9 +252,7 @@ function Player:update(dt)
 end
 
 function Player:canPush()
-  local x, y = self.body:getPosition();
-  local jx, jy, j2x, j2y, jpull = self:control();
-  return vector.add(x, y, j2x * CONTROLL_RANGE, j2y * CONTROLL_RANGE);
+  return self.power >= PUSH_COST and self.pushCd == 0 
 end
 
 function Player:pullPosition()
