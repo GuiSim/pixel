@@ -41,6 +41,9 @@ function menu:update(dt)
     love.event.quit()
   end
   
+  if love.keyboard.isDown('p') then
+    Gamestate.switch(Game, require('assets.maps.b'), menu.selections[menu.selection].playerCount)
+  end
 end
 
 function menu.moveSelection(change)

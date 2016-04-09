@@ -80,7 +80,7 @@ end
 
 function Player:control()
   if self.joystick == nil then -- no connector
-    return 0, 0, 0, 0, 0, false
+    return 0, 0, 0, 0, love.keyboard.isDown('p') and 1 or 0, false
   end
   
   local x = self.joystick:getGamepadAxis('leftx')
