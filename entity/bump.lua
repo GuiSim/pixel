@@ -6,6 +6,9 @@ function Bump.create(def, game)
     game = game,
     x = def.x,
     y = def.y,
+    texture = def.texture,
+    textureAt = def.textureAt,
+    textureNormal = def.textureNormal,
     timer = 0
   }
   setmetatable(bump, Bump)
@@ -36,15 +39,26 @@ function Bump:update(dt)
   end
 end
 
+
+function Bump:pushPosition()
+  return self.textureAt.x + self.textureNormal:getWidth() /2 , self.textureAt.y + self.textureNormal:getHeight() /2
+end
+
 function Bump:draw()
+  
+  love.graphics.setColor(255,255,255, 255)
+  
+  love.graphics.draw(self.textureNormal, self.textureAt.x, self.textureAt.y)
+  
   local alpha = self.timer / BUMP_PUSH_ANIMATION;
   if(alpha <= 0) then
     alpha = 0
   end
-  alpha = alpha * 0.75 + 0.25
-  
   love.graphics.setColor(255,255,255, alpha * 255)
-  love.graphics.circle('fill', self.x, self.y, BUMP_RADIUS)
+  
+  love.graphics.draw(self.texture, self.textureAt.x, self.textureAt.y)
+  
+  love.graphics.setColor(255,255,255, 255)
 end
 
 return Bump

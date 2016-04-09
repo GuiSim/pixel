@@ -68,12 +68,14 @@ function Wave:draw()
   
   for k, bump in pairs(self.game.bumps) do
     local time = 1 - (bump.timer / BUMP_PUSH_ANIMATION);
-    local startAt = BUMP_RADIUS / BUMP_PUSH_LENGTH;
+    local startAt = BUMP_PUSH_MIN / BUMP_PUSH_LENGTH;
     
     time = time * ( 1 - startAt ) + startAt;
     
+    local bumpx,bumpy = bump:pushPosition()
+    
     table.insert(pushings, time);
-    table.insert(pushingsPosition, {bump.x, bump.y});
+    table.insert(pushingsPosition, {bumpx, bumpy});
     table.insert(pushingsLength, BUMP_PUSH_LENGTH);
   end
   
