@@ -46,7 +46,13 @@ function Ball:collisionBegin(other, collision)
   local nx, ny = collision:getNormal( )
   local body = other:getBody();
   if (body:getUserData() ~= nil and body:getUserData().type == "Player") then
-    table.insert(self.particleSystems, Particle.ballImpactWithPlayer(nx, ny, x, y))
+    
+    local vx, vy = self.body:getLinearVelocity()
+    local velocity = vector.len(vx, vy)
+    local damageRatio = math.min(1, velocity/BALL_DAMAGE_SPEED_SCALING);
+    local damage = BALL_DAMAGE * damageRatio
+    
+    table.insert(self.particleSystems, Particle.ballImpactWithPlayer(nx, ny, x, y, damageRatio))
     love.audio.play(ballplayercollionSound:clone())
   else
     local r = love.math.random( 1, #wallCollision )
