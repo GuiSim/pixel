@@ -13,6 +13,7 @@ debugWorld = require "debugWorld"
 
 require "constants"
 require "particles"
+require "shader"
 
 -- entities
 EntityTypes = {

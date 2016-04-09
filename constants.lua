@@ -5,8 +5,8 @@ PULL_LENGTH = 450; -- How far player can pull
 PULL_LENGTH2 = PULL_LENGTH * PULL_LENGTH; -- Square of how far player can pull
 PULL_FORCE = 600; -- Force at which the player pulls the ball
 
-PUSH_COST = 100;
-PUSH_COOLDOWN = 3;
+PUSH_COST = 0;
+PUSH_COOLDOWN = 10;
 PUSH_LENGTH = 1000; -- How far player can push
 PUSH_LENGTH2 = PUSH_LENGTH * PUSH_LENGTH; -- Square of how far player can push
 PUSH_FORCE = 10000; -- Force at which the player pulls the ball
@@ -27,8 +27,8 @@ BALL_MAX_VELOCITY = 1500
 
 PLAYER_RADIUS = 80; -- Size of the player's circle
 
-PLAYER_ENERGIE_GIVEN = 35; -- pull give energie to other
-PLAYER_ENERGIE_MAX = 35; -- pull give energie to other
+PLAYER_ENERGIE_GIVEN = 50; -- pull give energie to other
+PLAYER_ENERGIE_MAX = 50; -- pull give energie to other
 PLAYER_STARTING_ENERGIE = 50
 PLAYER_INVULNERABILITY_DURATION = 1.5; -- Duration of invulnerability following a player's hit (s)
 

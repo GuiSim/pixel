@@ -10,7 +10,8 @@ local game = {
 
 function game:init()
   local width, height = love.graphics.getWidth(), love.graphics.getHeight();
-  -- to create canvas
+  self.canvas = love.graphics.newCanvas(width, height)
+  self.preCanvas = love.graphics.newCanvas(width, height)
 end
 
 function game:enter(current, def, numberOfPlayer)
@@ -23,7 +24,7 @@ function game:enter(current, def, numberOfPlayer)
   self.pullables = {}
   self.teamScores = {}
   self.numberOfTeam = 0
-  
+
   for k, entity in pairs(def.entities) do
     if EntityTypes[entity.type] ~= nil then
       if entity.type ~= 'Player' or entity.no <= numberOfPlayer then
@@ -33,14 +34,14 @@ function game:enter(current, def, numberOfPlayer)
       end
     end
   end
-  
+
   for i= 1, self.numberOfTeam do
     self.teamScores[i] = 0
     game.entities["team_score_" .. i] = EntityTypes.Scoreboard.create({team = i}, game);
   end
-  
+
   love.audio.play( music )
-  
+
   self.world:setCallbacks(game.collisionBegin, collisionEnd, preSolve, postSolve)
 end
 
@@ -54,11 +55,11 @@ end
 function game.collisionBegin(a, b, collision)
   aUserData = a:getBody():getUserData()
   bUserData = b:getBody():getUserData()
-  
+
   if aUserData ~= nil and aUserData.collisionBegin ~= nil then
     aUserData:collisionBegin(b, collision)
   end
-  
+
   if bUserData ~= nil and bUserData.collisionBegin ~= nil then
     bUserData:collisionBegin(a, collision)
   end
@@ -67,15 +68,15 @@ end
 
 function game:update(dt)
   self.world:update(dt)
-  
-  if love.keyboard.isDown("escape") or (love.joystick.getJoysticks()[1] and love.joystick.getJoysticks()[1]:isGamepadDown("guide")) then 
+
+  if love.keyboard.isDown("escape") or (love.joystick.getJoysticks()[1] and love.joystick.getJoysticks()[1]:isGamepadDown("guide")) then
     Gamestate.switch(require('state.menu'))
   end
 
   for k, entity in pairs(self.entities) do
     entity:update(dt)
   end
-  
+
   local teamAlive = 0;
   local nbTeamAlive = 0;
   for k, player in pairs(self.players) do
@@ -86,8 +87,7 @@ function game:update(dt)
       end
     end
   end
-  
-  -- TODO : Fix this shit.
+
   if nbTeamAlive == 1 then
     self.teamScores[nbTeamAlive] = self.teamScores[nbTeamAlive] + 1
     local stillAnimated = false;
@@ -112,20 +112,39 @@ function game:update(dt)
 end
 
 function game:draw()
+  local canvas = love.graphics.getCanvas();
+  love.graphics.reset()
+  love.graphics.setCanvas(self.canvas, self.preCanvas)
+
   love.graphics.clear(0,0,0,0)
   love.graphics.setColor(255,255,255,255)
-  love.graphics.push()
-    self.camera:attach()
-    if love.keyboard.isDown('q') then
-      debugWorld(self.world, 0, 0, 2000, 2000)
-    else
-      for k, entity in pairs(self.entities) do
-        entity:draw()
-      end
+  if love.keyboard.isDown('q') then
+    debugWorld(self.world, 0, 0, 2000, 2000)
+  else
+    for k, entity in pairs(self.entities) do
+      entity:draw()
     end
-    self.camera:detach()
-  love.graphics.pop()
+  end
   love.graphics.reset()
+  love.graphics.setCanvas(self.canvas)
+  
+  love.graphics.setShader(pullShader)
+  
+  love.graphics.setColor(255,255,255,255)
+  pullShader:send('canvas', self.preCanvas);
+  
+  for k, player in pairs(self.players) do
+    if player.pullApplied then
+      pullShader:send('pulling', player.pullApplied);
+      pullShader:send('position', {player.body:getX(), player.body:getY()});
+      pullShader:send('length',PULL_LENGTH);
+      love.graphics.circle('fill', player.body:getX(), player.body:getY(), PULL_LENGTH)
+    end
+  end
+  
+  love.graphics.reset()
+  love.graphics.setCanvas(canvas)
+  love.graphics.draw(self.canvas)
 end
 
 return game
