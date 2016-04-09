@@ -20,50 +20,38 @@ function toPolygon(x, y, width, height)
 end
 
 return {
-  nextMap = "assets.maps.d",
-  music = love.audio.newSource("assets/sounds/music/musicArena2.mp3"),
+  nextMap = "assets.maps.b",
+  music = love.audio.newSource("assets/sounds/music/musicArena3.mp3"),
   entities = {
     {
       type = 'Arena',
-      texture = love.graphics.newImage("assets/textures/arena_c.jpg"),
+      texture = love.graphics.newImage("assets/textures/arena_d.jpg"),
       polygons = {
         {
-          name = "top_left_triangle",
+          name = "rect_top",
           points = {0,0,
-                    607,31,
-                    0, 919}
-        },
-        {
-          name = "upper_right_triangle",
-          points = {1290,0,
                     1920,0,
-                    1920,900}
+                    0,94,
+                    1920,94}
         },
         {
-          name = "lower_left_triangle",
-          points = {0,171,
-                    0,1080,
-                    637,1080}
-        },
-        {
-          name = "lower_right_triangle",
-          points = {1920,176,
-                    1920,1080,
-                    1266,1080}
-        },
-        {
-          name = "upper_rect",
-          points =  {0,0,
-                     1920,0,
-                     0,35,
-                     1920,35}
-        },
-        {
-          name = "botton_rect",
-          points = {0,1040,
-                    1920,1040,
+          name = "rect_bottom",
+          points = {0,977,
+                    1920,977,
                     0,1080,
                     1920,1080}
+        }
+      },
+      circles = {
+        {
+          x = -200,
+          y = MAP_HEIGHT/2,
+          radius = 550
+        },
+        {
+          x= MAP_WIDTH+200,
+          y = MAP_HEIGHT/2,
+          radius = 550
         }
       }
     },
