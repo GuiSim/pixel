@@ -34,7 +34,7 @@ BALL_MAX_DAMAGE = 25;
 BALL_MAX_VELOCITY = 9999999;
 BALL_REBOUND = 0.8; -- 0..1, is 100% energy kept on bounce, 0 is none.
 
-PLAYER_RADIUS = 50; -- Size of the player's circle
+PLAYER_RADIUS = 60; -- Size of the player's circle
 
 PLAYER_ENERGIE_GIVEN = 50; -- pull give energie to other
 PLAYER_ENERGIE_MAX = 50; -- pull give energie to other
