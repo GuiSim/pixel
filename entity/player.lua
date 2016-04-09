@@ -34,6 +34,7 @@ function Player.create(def, game)
     shieldInvincibleTexture = def.shieldInvincibleTexture,
     pull1Texture = def.pull1Texture,
     pull2Texture = def.pull2Texture,
+    pullParticle = Particle.vacuum(),
     shadowTexture = love.graphics.newImage("assets/textures/shadow.png"),
     
     direction = def.startDirection,
@@ -53,6 +54,7 @@ function Player.create(def, game)
   
   player.canPushEmitter = Particle.playerPushReady()
   table.insert(player.particleSystems, player.canPushEmitter)
+  player.pullParticle:stop()
   
   player.body = love.physics.newBody(game.world, def.x, def.y, "dynamic")
   player.body:setLinearDamping(PLAYER_DAMPENING)
@@ -254,6 +256,9 @@ function Player:update(dt)
     particleSystem:update(dt)
   end
   
+  self.pullParticle:setEmissionRate(10 * self.pullApplied)
+  self.pullParticle:update(dt)
+  
   if self.joystick then
     self.joystick:setVibration( vibrate, vibrate )
   end
@@ -275,7 +280,7 @@ function Player:draw()
     local x, y = self.body:getPosition()
     love.graphics.draw(particleSystem, 0, 0)
   end
-  
+    
   local r = 150;
   local g = 150;
   local b = 150;
@@ -309,9 +314,12 @@ function Player:draw()
     if self.active and self.game.transition <= 0 then
       
       pullX, pullY = self:pullPosition()
-      love.graphics.setColor(255, 255, 255, self.pullApplied * 100)
-      love.graphics.draw(self.pull1Texture, x, y, 0, 1, 1, self.pull1Texture:getWidth()/2, self.pull1Texture:getHeight()/2);
-      love.graphics.draw(self.pull2Texture, x, y, 0, 1, 1, self.pull2Texture:getWidth()/2, self.pull2Texture:getHeight()/2);
+
+      love.graphics.draw(self.pullParticle, self.body:getX(), self.body:getY())
+      love.graphics.setColor(255,255,255,255);
+
+--      love.graphics.draw(self.pull1Texture, x, y, 0, 1, 1, self.pull1Texture:getWidth()/2, self.pull1Texture:getHeight()/2);
+--      love.graphics.draw(self.pull2Texture, x, y, 0, 1, 1, self.pull2Texture:getWidth()/2, self.pull2Texture:getHeight()/2);
       
       if self:canPush() then
         if not self.hasPlayedPushReadySound then
@@ -333,6 +341,13 @@ function Player:draw()
       love.graphics.setColor(r,g,b,a);
 
     end
+    
+    if self.pulling then
+      self.pullParticle:start()
+    else
+      self.pullParticle:pause()
+    end
+    
     
     
     if self.texture then
@@ -367,7 +382,6 @@ function Player:draw()
     end
     
   end
-  
   love.graphics.setColor(255,255,255,255);
 end
 
