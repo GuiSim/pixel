@@ -151,7 +151,7 @@ return {
       pull1Texture = love.graphics.newImage("assets/textures/pull1.png"),
       pull2Texture = love.graphics.newImage("assets/textures/pull2.png"),
       startDirection = 1,
-      team = 1
+      team = 3
     },
     {
       type = 'Player',
@@ -165,7 +165,7 @@ return {
       pull1Texture = love.graphics.newImage("assets/textures/pull1.png"),
       pull2Texture = love.graphics.newImage("assets/textures/pull2.png"),
       startDirection = -1,
-      team = 2
+      team = 4
     }
   }
 }
