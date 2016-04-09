@@ -277,13 +277,16 @@ function Player:draw()
   
   if self.team == 1 then
     r = 255;
+    g = 100;
+    b = 100;
   elseif self.team == 2 then 
     b = 255; 
   elseif self.team == 3 then 
-    g = 255; 
+    r = 255;
+    g = 50;
+    b = 255;
   elseif self.team == 4 then 
-    r = 255; 
-    b = 255; 
+    g = 255; 
   end
   
   if not self.active and self.deathTimer > 0 then
