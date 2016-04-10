@@ -24,7 +24,6 @@ function Wave:draw()
   
   love.graphics.setColor(255,255,255,255)
   pullShader:send('timer', love.timer.getTime( ));
-  pullShader:send('startAt',PLAYER_RADIUS);
 
   local pullings = {};
   local pullingsPosition = {};
